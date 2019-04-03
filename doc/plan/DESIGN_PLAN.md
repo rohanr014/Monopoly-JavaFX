@@ -1,4 +1,4 @@
-### Introduction
+# Introduction
 **Primary design goals of the project (i.e., where is it most flexible)**
 The primary design goal of our project is to be able to implement a basic game of Monopoly in such a way that we can
 easily expand, build upon, or modify any of the aspects in our game that a player would want to change. For instance,
@@ -16,6 +16,9 @@ like trading and auctioning, as we would need added functionality to handle thos
 classes or to make new classes that take care of those new features, we will have to change certain classes that manage
 the interactions between certain pairs of entities in order to accommodate those new features.
 
+---
+
+# Introduction (cont)
 **Discuss the design at a high-level (i.e., without referencing specific classes, data structures, or code).**
 To start our design out, we plan to implement just about everything abstractly, which will give us a good sense on what should
 be able to be customized/changed for different games, and what will remain constant. Doing so will also allow us to organize
@@ -29,8 +32,9 @@ variations of the game. The view will be built on top of the abstractions define
 as flexible as possible and so that the use of new instances that extend our abstract classes will not require changes to
 the view in order to change our game.
 
+---
 
-### Overview
+# Overview
 **Map of your design for other programmers to gain a general understanding of how and why the program was divided up, and 
 how the individual parts work together to provide the desired functionality.**
 The biggest/main class of our model is the Board class, which will contain the players playing the game (including the
@@ -65,8 +69,9 @@ function to call a set of actions on that player which will change from space to
 owned by another player, onLand will call that player's giveMoneyTo(double m, Agent a) function to give money to the owner
 of that property. Each card that can get picked up will also invoke an action on the player that picks it up. 
 
+---
 
-### User Interface
+# User Interface
 **This section describes what components the user will interact with in your program (keep it simple to start) and how a game 
 is represented to the designer and what support is provided to make it easy to create a game.**
 
@@ -77,7 +82,9 @@ standard components and how they can be flexibly exchanged within the GUI itself
 
 **Describe any erroneous situations that are reported to the user (i.e., bad input data, empty data, etc.).**
 
-### Design Details 
+---
+
+# Design Details 
 **This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed 
 but are not significant to include in a high-level description of the program)**
 
@@ -89,8 +96,9 @@ specification or discussed by your team). Note, each sub-team should have its ow
 
 **Finally, justify the decision to create each module with respect to the design's key goals, principles, and abstractions.**
 
+---
 
-### Example games
+# Example games
 **Describe three example games in detail that differ significantly. Clearly identify how the functional differences in these 
 games is supported by your design. Use these examples to help clarify the abstractions in your design.**
 Each game mode will differ from others in two primary ways: the rules ResourceBundle used for the game and the theme of that
@@ -107,8 +115,9 @@ or having your set robbed while you went to the bathroom. If this game were play
 interactions between different elements in the model would practically be exactly the same as in the first example in this
 response, but cosmetically, the game would look very different.
 
+---
 
-### Design Considerations 
+# Design Considerations 
 **This section describes any issues which need to be addressed or resolved before attempting to devise a complete design 
 solution.**
 
