@@ -1,4 +1,4 @@
-### Responsibilities
+# Responsibilities
 **Jacob**  
 Primary: Game engine  
 Secondary: View
@@ -24,8 +24,9 @@ Secondary: View
 Primary: View  
 Secondary: Game engine
 
+---
 
-### Sprint Goals
+# Sprint Goals
 
 Make everything flexible!
 
@@ -42,6 +43,10 @@ Make everything flexible!
 - Game pieces assigned to each player, shown on board
 - Screen to show player wallet/assets
 
+---
+
+# Sprint Goals (cont)
+
 **Sprint 2:**  
 - Screen to choose rules for current game on startup, generate and load in according properties file (included limited bank)
 - "Short version" - properties pre-dealt
@@ -56,6 +61,9 @@ Make everything flexible!
 - Building on properties, appropriately adjusting rent prices
 - Luxury/super tax functionality implemented
 
+---
+
+# Sprint Goals (cont)
 **Final sprint:**  
 - Choosing different types of games with cosmetic differences (ie, generate the other properties files)
 - Trading properties
