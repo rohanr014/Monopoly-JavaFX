@@ -16,6 +16,8 @@ like trading and auctioning, as we would need added functionality to handle thos
 classes or to make new classes that take care of those new features, we will have to change certain classes that manage
 the interactions between certain pairs of entities in order to accommodate those new features.
 
+---
+
 # Introduction (cont)
 **Discuss the design at a high-level (i.e., without referencing specific classes, data structures, or code).**
 To start our design out, we plan to implement just about everything abstractly, which will give us a good sense on what should
@@ -29,6 +31,8 @@ components that will advance the game as well as the ones that will be responsib
 variations of the game. The view will be built on top of the abstractions defined by these classes to make sure it is
 as flexible as possible and so that the use of new instances that extend our abstract classes will not require changes to
 the view in order to change our game.
+
+---
 
 # Overview
 **Map of your design for other programmers to gain a general understanding of how and why the program was divided up, and 
@@ -65,6 +69,7 @@ function to call a set of actions on that player which will change from space to
 owned by another player, onLand will call that player's giveMoneyTo(double m, Agent a) function to give money to the owner
 of that property. Each card that can get picked up will also invoke an action on the player that picks it up. 
 
+---
 
 # User Interface
 **This section describes what components the user will interact with in your program (keep it simple to start) and how a game 
@@ -100,6 +105,8 @@ the data file is incorrectly written for the game type or if a saved properties 
 we have instituted boolean return types instead of error-checking, which will function in similar ways (if the player
 tries to buy something but doesn't have enough money, the buy method will fail and return false)
 
+---
+
 # Design Details 
 **This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed 
 but are not significant to include in a high-level description of the program)**
@@ -118,6 +125,10 @@ Space - (Abstract) Superclass for all spaces on board
 
 CommonSpace - Spaces like Chance/CommunityChest/Jail/FreeParking, etc that are not properties
 
+---
+
+# Design Details (cont.)
+
 Property - Superclass for all types of properties
 
 SetProperty - Class for Utilities and Railroads, properties who's rent is a function of how many of the set the player owns
@@ -130,6 +141,9 @@ Bank - Essentially a player with a wallet who never acts
 
 Player - Player of game with full functionality to play (buy/sell, mortgage, build, everything)
 
+---
+
+# Design Details (cont.)
 
 **Describe how each module handles specific features given in the assignment specification, what resources it might use, how 
 it collaborates with other modules, and how each could be extended to include additional requirements (from the assignment 
@@ -144,6 +158,8 @@ Data - Hierarchy of resources files: Master file -> Rules, Properties, TokenType
 
 Currently it's only divided into the most basic modules of View, Controller, and Model. This is sufficient for us right
 now but may change.
+
+---
 
 # Example games
 **Describe three example games in detail that differ significantly. Clearly identify how the functional differences in these 
@@ -161,6 +177,8 @@ golf courses and the chance/community chest cards are based on the game of golf,
 or having your set robbed while you went to the bathroom. If this game were played with vanilla rules, the game play and
 interactions between different elements in the model would practically be exactly the same as in the first example in this
 response, but cosmetically, the game would look very different.
+
+---
 
 # Design Considerations 
 **This section describes any issues which need to be addressed or resolved before attempting to devise a complete design 
