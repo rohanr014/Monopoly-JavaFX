@@ -58,7 +58,7 @@ the specific rules policies and will be fed into the game on startup.
 
 **Include a picture of how the modules are related (these pictures can be hand drawn and scanned in, created with a standard 
 drawing program, or screen shots from a UML design program).**
-![](file:///var/folders/gk/mc5vrlqd189dkzb24s49mvj00000gn/T/com.apple.iChat/Messages/Transfers/IMG_0760.jpeg)
+https://drive.google.com/file/d/1oFcJ97zcJgBx959OACngZ-PsGC_90v-J/view?usp=sharing
  
 **Discuss specific classes, methods, and data structures, but not individual lines of code.**
 As was said before, the board class will be responsible or moving the player and handling the changing of turns between
