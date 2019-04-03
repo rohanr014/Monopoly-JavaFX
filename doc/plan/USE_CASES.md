@@ -1,4 +1,4 @@
-# Use Cases
+## Use Cases
 1. How to handle end game (will we have a give up/drop out button and how to detect that. All but one player is bankrupt)
 2. A player has rolled doubles 3 times in a row (what happens (how are we keeping track of the rolls)
 3. A player lands on a property and can’t afford the forced fees so he sells properties to the bank.

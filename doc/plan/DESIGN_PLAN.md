@@ -115,3 +115,6 @@ solution.**
 
 **Include any design decisions that each sub-team discussed at length (include pros and cons from all sides of the discussion) 
 as well as any ambiguities, assumptions, or dependencies regarding the program that impact the overall design.**
+
+
+NOTE: Sample data files in data folder
