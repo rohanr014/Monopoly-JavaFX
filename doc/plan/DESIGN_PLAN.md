@@ -16,8 +16,6 @@ like trading and auctioning, as we would need added functionality to handle thos
 classes or to make new classes that take care of those new features, we will have to change certain classes that manage
 the interactions between certain pairs of entities in order to accommodate those new features.
 
----
-
 # Introduction (cont)
 **Discuss the design at a high-level (i.e., without referencing specific classes, data structures, or code).**
 To start our design out, we plan to implement just about everything abstractly, which will give us a good sense on what should
@@ -31,8 +29,6 @@ components that will advance the game as well as the ones that will be responsib
 variations of the game. The view will be built on top of the abstractions defined by these classes to make sure it is
 as flexible as possible and so that the use of new instances that extend our abstract classes will not require changes to
 the view in order to change our game.
-
----
 
 # Overview
 **Map of your design for other programmers to gain a general understanding of how and why the program was divided up, and 
@@ -69,24 +65,70 @@ function to call a set of actions on that player which will change from space to
 owned by another player, onLand will call that player's giveMoneyTo(double m, Agent a) function to give money to the owner
 of that property. Each card that can get picked up will also invoke an action on the player that picks it up. 
 
----
 
 # User Interface
 **This section describes what components the user will interact with in your program (keep it simple to start) and how a game 
 is represented to the designer and what support is provided to make it easy to create a game.**
 
+Initially, user will be able to:
+* Roll Dice
+* Mortgage/Unmortgage property
+* Buy/sell assets to/from the bank
+* Build on property
+* End Turn
+
+The game is primarily interacted with through the Board class, which has instances of every object in the 
+game as state variables.
+
+It should be relatively easy on the View end to support creating a game because the view elements should largely stay the same beyond
+possibly additional buttons for the user to interact with. On the model end, we've taken pains to make everything quite modular, so if, say
+there's a new type of Space that has different functions it's very easy to slot in a new class in the hierarchy.
+
  
 **Include design goals for the implementation of the UI that shows the kind of abstractions you plan to build on top of OpenJFX's 
 standard components and how they can be flexibly exchanged within the GUI itself**
 
+We plan to use the composite and observer/observable patterns which will allow a lot of GUI flexibility. The leaves of the
+composite will be the various elements view (buttons/map/info panels/etc), which will allow us flexibility in manipulting
+both some and all of the elements. The observer (view) and observable (model) cleanly delineates roles and gives us a
+framework to implement a view of the game engine.
 
 **Describe any erroneous situations that are reported to the user (i.e., bad input data, empty data, etc.).**
-
----
+There should be no situations in which there is bad input data or empty data, as the resource files will be pre-written 
+for each particular game type--the user will not be able to make errors. Certainly though, there will be checks for if
+the data file is incorrectly written for the game type or if a saved properties file is created incorrectly. In model, 
+we have instituted boolean return types instead of error-checking, which will function in similar ways (if the player
+tries to buy something but doesn't have enough money, the buy method will fail and return false)
 
 # Design Details 
 **This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed 
 but are not significant to include in a high-level description of the program)**
+
+Board - contains the players playing the game (including bank, which we are treating as a player since they too are an 
+entity that is simply dishing out money to others) as well as the game's dice, the Space and Card objects. The board
+is primarily responsible for moving players, holding their positions, and regulating turn order.
+
+Card - (abstract) Card that invokes an action                
+
+ImmediateCard - Invokes an action immediately when drawn
+
+HoldableCard - can be stored and used later
+
+Space - (Abstract) Superclass for all spaces on board 
+
+CommonSpace - Spaces like Chance/CommunityChest/Jail/FreeParking, etc that are not properties
+
+Property - Superclass for all types of properties
+
+SetProperty - Class for Utilities and Railroads, properties who's rent is a function of how many of the set the player owns
+
+ColorProperty - Subclass of SetProperty, consists of the colored properties that can be built on once a monopoly is reached
+
+Agent - abstract class for all game agents. May eventually include CPUs
+
+Bank - Essentially a player with a wallet who never acts
+
+Player - Player of game with full functionality to play (buy/sell, mortgage, build, everything)
 
 
 **Describe how each module handles specific features given in the assignment specification, what resources it might use, how 
@@ -94,9 +136,14 @@ it collaborates with other modules, and how each could be extended to include ad
 specification or discussed by your team). Note, each sub-team should have its own API(s).**
 
 
+Funds - Handled in Agent classes, accessible only through agents
+Dice - Handled in Board, extendable through Boards' interpretations of RNG
+Data - Hierarchy of resources files: Master file -> Rules, Properties, TokenTypes
+
 **Finally, justify the decision to create each module with respect to the design's key goals, principles, and abstractions.**
 
----
+Currently it's only divided into the most basic modules of View, Controller, and Model. This is sufficient for us right
+now but may change.
 
 # Example games
 **Describe three example games in detail that differ significantly. Clearly identify how the functional differences in these 
@@ -115,15 +162,21 @@ or having your set robbed while you went to the bathroom. If this game were play
 interactions between different elements in the model would practically be exactly the same as in the first example in this
 response, but cosmetically, the game would look very different.
 
----
-
 # Design Considerations 
 **This section describes any issues which need to be addressed or resolved before attempting to devise a complete design 
 solution.**
 
+None that we can think of. More work needs to go into View for sure, but there are no particular issues other than general
+planning that is needed.
 
 **Include any design decisions that each sub-team discussed at length (include pros and cons from all sides of the discussion) 
 as well as any ambiguities, assumptions, or dependencies regarding the program that impact the overall design.**
 
+We decided not to have Agents' wallets be a separate class because the encapsulation benefits weren't enough to justify
+certain design headaches regarding the Player's access to and knowledge of their own money.
+
+In View, we decided to put all game configuration on the game screen (Save, Load, Sound on, etc) into a seperate popup
+menu, so that everything the user interacts with on the Game Screen has a direct impact on the play of the game. Seemed 
+cleaner.
 
 NOTE: Sample data files in data folder
