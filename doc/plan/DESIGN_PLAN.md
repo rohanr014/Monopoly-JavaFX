@@ -1,4 +1,4 @@
-### Introduction
+# Introduction
 **Primary design goals of the project (i.e., where is it most flexible)**
 The primary design goal of our project is to be able to implement a basic game of Monopoly in such a way that we can
 easily expand, build upon, or modify any of the aspects in our game that a player would want to change. For instance,
@@ -16,6 +16,7 @@ like trading and auctioning, as we would need added functionality to handle thos
 classes or to make new classes that take care of those new features, we will have to change certain classes that manage
 the interactions between certain pairs of entities in order to accommodate those new features.
 
+# Introduction (cont)
 **Discuss the design at a high-level (i.e., without referencing specific classes, data structures, or code).**
 To start our design out, we plan to implement just about everything abstractly, which will give us a good sense on what should
 be able to be customized/changed for different games, and what will remain constant. Doing so will also allow us to organize
@@ -29,8 +30,7 @@ variations of the game. The view will be built on top of the abstractions define
 as flexible as possible and so that the use of new instances that extend our abstract classes will not require changes to
 the view in order to change our game.
 
-
-### Overview
+# Overview
 **Map of your design for other programmers to gain a general understanding of how and why the program was divided up, and 
 how the individual parts work together to provide the desired functionality.**
 The biggest/main class of our model is the Board class, which will contain the players playing the game (including the
@@ -54,7 +54,7 @@ the specific rules policies and will be fed into the game on startup.
 
 **Include a picture of how the modules are related (these pictures can be hand drawn and scanned in, created with a standard 
 drawing program, or screen shots from a UML design program).**
-![](file:///var/folders/gk/mc5vrlqd189dkzb24s49mvj00000gn/T/com.apple.iChat/Messages/Transfers/IMG_0760.jpeg)
+https://drive.google.com/file/d/1oFcJ97zcJgBx959OACngZ-PsGC_90v-J/view?usp=sharing
  
 **Discuss specific classes, methods, and data structures, but not individual lines of code.**
 As was said before, the board class will be responsible or moving the player and handling the changing of turns between
@@ -66,7 +66,7 @@ owned by another player, onLand will call that player's giveMoneyTo(double m, Ag
 of that property. Each card that can get picked up will also invoke an action on the player that picks it up. 
 
 
-### User Interface
+# User Interface
 **This section describes what components the user will interact with in your program (keep it simple to start) and how a game 
 is represented to the designer and what support is provided to make it easy to create a game.**
 
@@ -94,27 +94,15 @@ both some and all of the elements. The observer (view) and observable (model) cl
 framework to implement a view of the game engine.
 
 **Describe any erroneous situations that are reported to the user (i.e., bad input data, empty data, etc.).**
-
 There should be no situations in which there is bad input data or empty data, as the resource files will be pre-written 
 for each particular game type--the user will not be able to make errors. Certainly though, there will be checks for if
 the data file is incorrectly written for the game type or if a saved properties file is created incorrectly. In model, 
 we have instituted boolean return types instead of error-checking, which will function in similar ways (if the player
 tries to buy something but doesn't have enough money, the buy method will fail and return false)
 
-### Design Details 
+# Design Details 
 **This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed 
 but are not significant to include in a high-level description of the program)**
-The biggest/main class of our model is the Board class, which will contain the players playing the game (including the         
- bank, which we are treating as a player since they too are an entity that is simply dishing out money to others), the Space    
- objects, and the Card objects. The board will be responsible for moving the different players and holding their positions.     
- Each player will possess a wallet variable to keep track of their money and handle monetary transactions, as well as a set of  
- assets that will store the properties they own and any other holdable cards they may possess, like get out of jail free.       
- There will be two kinds of spaces - properties, and common spaces. Properties can either                                       
- be SetProps (like Railroads and Utilities, which can't be built upon and the rent that is charged to them depends heavily      
- upon how many are owned), and ColorProps (all the other properties in the game that can be built upon). The other kind         
- of Space is CommonSpace, which will represent all the un-ownable spaces on the board, like Chance, Community Chest,            
- Super Tax, and Go.                                                                                                             
-
 
 Board - contains the players playing the game (including bank, which we are treating as a player since they too are an 
 entity that is simply dishing out money to others) as well as the game's dice, the Space and Card objects. The board
@@ -157,8 +145,7 @@ Data - Hierarchy of resources files: Master file -> Rules, Properties, TokenType
 Currently it's only divided into the most basic modules of View, Controller, and Model. This is sufficient for us right
 now but may change.
 
-
-### Example games
+# Example games
 **Describe three example games in detail that differ significantly. Clearly identify how the functional differences in these 
 games is supported by your design. Use these examples to help clarify the abstractions in your design.**
 Each game mode will differ from others in two primary ways: the rules ResourceBundle used for the game and the theme of that
@@ -175,8 +162,7 @@ or having your set robbed while you went to the bathroom. If this game were play
 interactions between different elements in the model would practically be exactly the same as in the first example in this
 response, but cosmetically, the game would look very different.
 
-
-### Design Considerations 
+# Design Considerations 
 **This section describes any issues which need to be addressed or resolved before attempting to devise a complete design 
 solution.**
 
@@ -192,3 +178,5 @@ certain design headaches regarding the Player's access to and knowledge of their
 In View, we decided to put all game configuration on the game screen (Save, Load, Sound on, etc) into a seperate popup
 menu, so that everything the user interacts with on the Game Screen has a direct impact on the play of the game. Seemed 
 cleaner.
+
+NOTE: Sample data files in data folder
