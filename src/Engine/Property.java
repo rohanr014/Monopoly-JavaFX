@@ -1,4 +1,6 @@
-public interface Property{
+package Engine;
+
+public class Property extends Space implements Asset{
 
     /**
      * Function to check if property bought by a player
@@ -6,7 +8,9 @@ public interface Property{
      * @param p player being checked
      * @return true if Engine.Player p owns it, false otherwise
      */
-    public boolean boughtBy(Player p);
+    public boolean boughtBy(Player p){
+        return false;
+    }
 
 
     /**
@@ -14,7 +18,9 @@ public interface Property{
      *
      * @return true if successful, false otherwise
      */
-    public boolean mortgage();
+    public boolean mortgage(){
+        return false;
+    }
 
 
     /**
@@ -22,7 +28,18 @@ public interface Property{
      *
      * @return true if succesful, false otherwise
      */
-    public boolean sellToBank();
+    public boolean sellToBank(){
+        return false;
+    }
 
 
+    protected boolean ownershipChanged(Agent a){
+        return false;
+    }
+
+
+    @Override
+    public boolean onLand(Player p) {
+        return false;
+    }
 }

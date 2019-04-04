@@ -10,8 +10,8 @@ flexible, so that we can implement as many different kinds of games as possible.
 **Primary architecture of the design (i.e., what is closed and what is open)**
 The fundamental parts of the game that are common to all Monopoly games will most likely remain closed throughout our
 development process (like Wallet and Dice), as will the many abstract classes that we will build to make variations 
-of the game that we write early on (like Property and Space). Along those same lines, the only open components will be
-the larger classes that will be responsible for managing newer features like Board and Player, as we start to add interactions
+of the game that we write early on (like Engine.Property and Engine.Space). Along those same lines, the only open components will be
+the larger classes that will be responsible for managing newer features like Engine.Board and Engine.Player, as we start to add interactions
 like trading and auctioning, as we would need added functionality to handle those. Whether we decide to add that to existing
 classes or to make new classes that take care of those new features, we will have to change certain classes that manage
 the interactions between certain pairs of entities in order to accommodate those new features.
@@ -37,15 +37,15 @@ the view in order to change our game.
 # Overview
 **Map of your design for other programmers to gain a general understanding of how and why the program was divided up, and 
 how the individual parts work together to provide the desired functionality.**
-The biggest/main class of our model is the Board class, which will contain the players playing the game (including the
-bank, which we are treating as a player since they too are an entity that is simply dishing out money to others), the Space
-objects, and the Card objects. The board will be responsible for moving the different players and holding their positions.
+The biggest/main class of our model is the Engine.Board class, which will contain the players playing the game (including the
+bank, which we are treating as a player since they too are an entity that is simply dishing out money to others), the Engine.Space
+objects, and the Engine.Card objects. The board will be responsible for moving the different players and holding their positions.
 Each player will possess a wallet variable to keep track of their money and handle monetary transactions, as well as a set of
 assets that will store the properties they own and any other holdable cards they may possess, like get out of jail free.
 There will be two kinds of spaces - properties, and common spaces. Properties can either
 be SetProps (like Railroads and Utilities, which can't be built upon and the rent that is charged to them depends heavily
 upon how many are owned), and ColorProps (all the other properties in the game that can be built upon). The other kind
-of Space is CommonSpace, which will represent all the un-ownable spaces on the board, like Chance, Community Chest,
+of Engine.Space is Engine.CommonSpace, which will represent all the un-ownable spaces on the board, like Chance, Community Chest,
 Super Tax, and Go. 
 
 In order to create different game variations, we will also use various Properties files to easily customize the readable
@@ -62,11 +62,11 @@ https://drive.google.com/file/d/1oFcJ97zcJgBx959OACngZ-PsGC_90v-J/view?usp=shari
  
 **Discuss specific classes, methods, and data structures, but not individual lines of code.**
 As was said before, the board class will be responsible or moving the player and handling the changing of turns between
-players. It will have a callNextPlayer() function to change whoever's turn it is, a move(Player p, Space s) function to
-move a player to a specific state, and a move(Player p, int steps) function to move a player a specified number of spaces
-to be used after the player rolls their dice. When a player lands on a space, the Space object will call an onLand(Player p)
+players. It will have a callNextPlayer() function to change whoever's turn it is, a move(Engine.Player p, Engine.Space s) function to
+move a player to a specific state, and a move(Engine.Player p, int steps) function to move a player a specified number of spaces
+to be used after the player rolls their dice. When a player lands on a space, the Engine.Space object will call an onLand(Engine.Player p)
 function to call a set of actions on that player which will change from space to space. For instance, if it is a property
-owned by another player, onLand will call that player's giveMoneyTo(double m, Agent a) function to give money to the owner
+owned by another player, onLand will call that player's giveMoneyTo(double m, Engine.Agent a) function to give money to the owner
 of that property. Each card that can get picked up will also invoke an action on the player that picks it up. 
 
 ---
@@ -82,12 +82,12 @@ Initially, user will be able to:
 * Build on property
 * End Turn
 
-The game is primarily interacted with through the Board class, which has instances of every object in the 
+The game is primarily interacted with through the Engine.Board class, which has instances of every object in the 
 game as state variables.
 
 It should be relatively easy on the View end to support creating a game because the view elements should largely stay the same beyond
 possibly additional buttons for the user to interact with. On the model end, we've taken pains to make everything quite modular, so if, say
-there's a new type of Space that has different functions it's very easy to slot in a new class in the hierarchy.
+there's a new type of Engine.Space that has different functions it's very easy to slot in a new class in the hierarchy.
 
  
 **Include design goals for the implementation of the UI that shows the kind of abstractions you plan to build on top of OpenJFX's 
@@ -111,35 +111,35 @@ tries to buy something but doesn't have enough money, the buy method will fail a
 **This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed 
 but are not significant to include in a high-level description of the program)**
 
-Board - contains the players playing the game (including bank, which we are treating as a player since they too are an 
-entity that is simply dishing out money to others) as well as the game's dice, the Space and Card objects. The board
+Engine.Board - contains the players playing the game (including bank, which we are treating as a player since they too are an 
+entity that is simply dishing out money to others) as well as the game's dice, the Engine.Space and Engine.Card objects. The board
 is primarily responsible for moving players, holding their positions, and regulating turn order.
 
-Card - (abstract) Card that invokes an action                
+Engine.Card - (abstract) Engine.Card that invokes an action                
 
-ImmediateCard - Invokes an action immediately when drawn
+Engine.ImmediateCard - Invokes an action immediately when drawn
 
-HoldableCard - can be stored and used later
+Engine.HoldableCard - can be stored and used later
 
-Space - (Abstract) Superclass for all spaces on board 
+Engine.Space - (Abstract) Superclass for all spaces on board 
 
-CommonSpace - Spaces like Chance/CommunityChest/Jail/FreeParking, etc that are not properties
+Engine.CommonSpace - Spaces like Chance/CommunityChest/Jail/FreeParking, etc that are not properties
 
 ---
 
 # Design Details (cont.)
 
-Property - Superclass for all types of properties
+Engine.Property - Superclass for all types of properties
 
-SetProperty - Class for Utilities and Railroads, properties who's rent is a function of how many of the set the player owns
+Engine.SetProperty - Class for Utilities and Railroads, properties who's rent is a function of how many of the set the player owns
 
-ColorProperty - Subclass of SetProperty, consists of the colored properties that can be built on once a monopoly is reached
+Engine.ColorProperty - Subclass of Engine.SetProperty, consists of the colored properties that can be built on once a monopoly is reached
 
-Agent - abstract class for all game agents. May eventually include CPUs
+Engine.Agent - abstract class for all game agents. May eventually include CPUs
 
-Bank - Essentially a player with a wallet who never acts
+Engine.Bank - Essentially a player with a wallet who never acts
 
-Player - Player of game with full functionality to play (buy/sell, mortgage, build, everything)
+Engine.Player - Engine.Player of game with full functionality to play (buy/sell, mortgage, build, everything)
 
 ---
 
@@ -150,8 +150,8 @@ it collaborates with other modules, and how each could be extended to include ad
 specification or discussed by your team). Note, each sub-team should have its own API(s).**
 
 
-Funds - Handled in Agent classes, accessible only through agents
-Dice - Handled in Board, extendable through Boards' interpretations of RNG
+Funds - Handled in Engine.Agent classes, accessible only through agents
+Dice - Handled in Engine.Board, extendable through Boards' interpretations of RNG
 Data - Hierarchy of resources files: Master file -> Rules, Properties, TokenTypes
 
 **Finally, justify the decision to create each module with respect to the design's key goals, principles, and abstractions.**
@@ -191,7 +191,7 @@ planning that is needed.
 as well as any ambiguities, assumptions, or dependencies regarding the program that impact the overall design.**
 
 We decided not to have Agents' wallets be a separate class because the encapsulation benefits weren't enough to justify
-certain design headaches regarding the Player's access to and knowledge of their own money.
+certain design headaches regarding the Engine.Player's access to and knowledge of their own money.
 
 In View, we decided to put all game configuration on the game screen (Save, Load, Sound on, etc) into a seperate popup
 menu, so that everything the user interacts with on the Game Screen has a direct impact on the play of the game. Seemed 
