@@ -8,16 +8,13 @@ import app.engine.agent.Player;
 import app.engine.card.Card;
 import app.engine.space.Space;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Board implements IBoardObservable{
     private Collection<Card> communityChest;
     private Collection<Card> chanceCards;
     private Space[] spaces;
-    private Collection<Player> players;
+    private Queue<Player> players;
     private Bank bank;
     private Collection<Dice> dice;
 
@@ -34,11 +31,12 @@ public class Board implements IBoardObservable{
         bank = setup.getBank();
     }
 
-    /**
-     * Function to give the next player their turn
-     */
+    public void startTurn(){
+        Player p = players.poll();
 
-    public void callNextPlayer(){
+//        do stuff
+
+        players.add(p);
 
     }
 
@@ -105,5 +103,6 @@ public class Board implements IBoardObservable{
     }
 
     public double getSellPrice(double purchaseCost) {
+
     }
 }

@@ -1,5 +1,7 @@
 package app.engine;
 
+import java.util.Random;
+
 public class Dice {
     private int[] rolls;
     private int[] sidesPerDie;
@@ -9,14 +11,16 @@ public class Dice {
         rolls = new int[sides.length];
     }
 
-    public int rollDie(int dieNumber) {
-        return random number from 1 to sidesPerDie[dieNumber]
+    private int rollDie(int dieNumber) {
+        Random r = new Random();
+        return r.nextInt(sidesPerDie[dieNumber]) + 1;
     }
 
-    public int rollDice() {
-        loop: rolls[i] = rollDie(sidesPerDie[i]) from i=0 to i=rolls.size
-        return the sum of the elements in rolls
+    public int[] rollAllDice() {
+        for (int i = 0; i < sidesPerDie.length; i++) {
+            rolls[i] = rollDie(i);
+        }
+        return rolls;
     }
 
-    public int[] getIndividualRolls() {return rolls;}
 }
