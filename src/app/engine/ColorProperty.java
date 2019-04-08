@@ -1,4 +1,4 @@
-package Engine;
+package app.engine;
 
 //subclass for Color Properties
 public class ColorProperty extends SetProperty{

@@ -1,4 +1,4 @@
-package Engine;
+package app.engine;
 
 public class Player extends Agent{
 

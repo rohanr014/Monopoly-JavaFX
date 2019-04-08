@@ -7,4 +7,9 @@ module monopoly_team01 {
     requires javafx.web;
     requires org.junit.jupiter.api;
     requires org.junit.jupiter.params;
+
+    exports app.controller;
+    exports app.engine;
+    exports app.views;
+
 }

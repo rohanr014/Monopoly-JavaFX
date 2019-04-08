@@ -31,11 +31,11 @@ Secondary: Game engine
 Make everything flexible!
 
 **Sprint 1:**  
-- Splash screen to start the game VIEW
-- Ability to start game with certain number of players VIEW
-- Players start out with certain amount of money (can have limitless bank) DATA/ENGINE
+- Splash screen to app.controller.Start the game VIEW
+- Ability to app.controller.Start game with certain number of players VIEW
+- Players app.controller.Start out with certain amount of money (can have limitless bank) DATA/ENGINE
 - Players have turns - Engin
-- Engine.Player movement according to two six-sided die
+- app.controller.Engine.Player movement according to two six-sided die
 - Collecting $200 on passing 
 - Vanilla set of properties loaded in from .properties file, both ColorProps and SetProps, appear on board DATA/ENGINE
 - Ownership of/option to buy properties and transfer of funds from one player to another upon landing on a property
@@ -53,9 +53,9 @@ Make everything flexible!
 - Landing on Go gives double
 - Other die variants implemented
 - Jail
-- Engine.Player goes again on doubles
+- app.controller.Engine.Player goes again on doubles
 - Going to jail after three doubles
-- Engine.Player loses after going bankrupt/presented with screen where forced to give up or mortgage/sell assets
+- app.controller.Engine.Player loses after going bankrupt/presented with screen where forced to give up or mortgage/sell assets
 - Mortgaging/selling assets
 - Chance/community chest cards, corresponding actions for each card coded in, holdables
 - Building on properties, appropriately adjusting rent prices
