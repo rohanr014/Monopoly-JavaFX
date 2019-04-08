@@ -33,17 +33,17 @@ public class Board implements IBoardObservable{
 
     //functions required for observer pattern
     @Override
-    public void addObserver(IBoardObserver o) {
+    public void addBoardObserver(IBoardObserver o) {
 
     }
 
     @Override
-    public void removeObserver(IBoardObserver o) {
+    public void removeBoardObserver(IBoardObserver o) {
 
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyBoardObservers() {
 
     }
 }
