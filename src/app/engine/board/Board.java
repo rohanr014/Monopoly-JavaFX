@@ -1,9 +1,27 @@
-package app.engine;
+package app.engine.board;
+
+import app.engine.agent.Agent;
+import app.engine.agent.Bank;
+import app.engine.agent.Player;
+import app.engine.card.Card;
+import app.engine.space.Space;
+
+import java.util.Collection;
 
 public class Board implements IBoardObservable{
+    private Bank bank;
+    private Collection<Card> communityChest;
+    private Collection<Card> chanceCards;
+    private Collection<Space> spaces;
+    private Collection<Player> players;
+    //dice types?
 
     public Board(){
 
+    }
+
+    public Bank getBank() {
+        return bank;
     }
 
     /**
@@ -45,5 +63,8 @@ public class Board implements IBoardObservable{
     @Override
     public void notifyObservers() {
 
+    }
+
+    public boolean contains(Agent a) {
     }
 }
