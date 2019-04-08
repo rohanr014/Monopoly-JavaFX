@@ -1,13 +1,23 @@
 package app.engine.agent;
 
+import app.engine.Asset;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
 
+import java.util.Collection;
+
 public class Player extends Agent{
+    private String name;
+    private String pieceFile;
+    private double wallet;
+    private Collection< implements Asset>
 
-    public Player(){
 
+    public Player(String n, String file, double initBalance){
+        name = n;
+        pieceFile = file;
+        wallet = initBalance;
     }
 
 

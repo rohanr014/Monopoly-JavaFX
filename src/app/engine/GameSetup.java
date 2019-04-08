@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
+import java.util.Queue;
 
 public class GameSetup {
 
@@ -30,7 +31,7 @@ public class GameSetup {
     public Collection<Card> getChanceCards() {
     }
 
-    public Collection<Player> getPlayers() {
+    public Queue<Player> getPlayers() {
     }
 
     public Space[] getSpaces() {
