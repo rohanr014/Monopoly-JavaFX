@@ -5,6 +5,8 @@ import app.engine.Asset;
 import app.engine.board.Board;
 import app.engine.agent.Player;
 
+import java.util.Collection;
+
 //subclass for Color Properties
 public class ColorProperty extends SetProperty{
     private boolean monopoly;
@@ -21,7 +23,7 @@ public class ColorProperty extends SetProperty{
 
         @Override
         public void calculateRent() {
-            if this.shared.size() == completeSet.size - 1
+            if (getSharedSet().size() == getCompleteSet().size() - 1)
             monopoly = true;
             setRent(rent * 2) // 2x rent is vanilla monopoly rule
         }

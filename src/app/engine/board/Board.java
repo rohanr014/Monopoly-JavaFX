@@ -6,22 +6,27 @@ import app.engine.agent.Player;
 import app.engine.card.Card;
 import app.engine.space.Space;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Stack;
 
 public class Board implements IBoardObservable{
-    private Bank bank;
     private Collection<Card> communityChest;
     private Collection<Card> chanceCards;
-    private Collection<Space> spaces;
+    private Space[] spaces;
     private Collection<Player> players;
+    private Bank bank;
+    private int[] dice;
+
     //dice types?
 
-    public Board(){
-
-    }
-
-    public Bank getBank() {
-        return bank;
+    public Board(int numSpaces, int[] dice, Bank bank){
+        communityChest = new Stack<>();
+        chanceCards = new Stack<>();
+        players = new ArrayList<>();
+        spaces = new Space[numSpaces];
+        this.dice = dice;
+        this.bank = bank;
     }
 
     /**
@@ -49,6 +54,30 @@ public class Board implements IBoardObservable{
 
     }
 
+    public Bank getBank() {
+        return bank;
+    }
+
+    public boolean contains(Agent a) {
+        if (a.equals(bank)) {
+            return true;
+        }
+        for (Player p: players){
+            if (a.equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addPlayer(Player p){
+        return players.add(p);
+    }
+
+    public boolean removePlayer(Player p){
+        return players.remove(p);
+    }
+
     //functions required for observer pattern
     @Override
     public void addObserver(IBoardObserver o) {
@@ -65,6 +94,11 @@ public class Board implements IBoardObservable{
 
     }
 
-    public boolean contains(Agent a) {
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public double getSellPrice(double purchaseCost) {
     }
 }
