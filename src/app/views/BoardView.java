@@ -1,6 +1,6 @@
 package app.views;
 
-import app.engine.IBoardObserver;
+import app.engine.board.IBoardObserver;
 
 public class BoardView implements IBoardObserver {
     @Override

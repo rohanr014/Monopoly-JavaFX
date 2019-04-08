@@ -1,4 +1,8 @@
-package app.engine;
+package app.engine.agent;
+
+import app.engine.card.HoldableCard;
+import app.engine.space.ColorProperty;
+import app.engine.space.Property;
 
 public class Player extends Agent{
 

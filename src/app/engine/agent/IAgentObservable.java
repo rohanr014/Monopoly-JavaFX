@@ -1,4 +1,4 @@
-package app.engine;
+package app.engine.agent;
 
 public interface IAgentObservable {
     public abstract void addObserver(IAgentObserver o);
