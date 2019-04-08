@@ -1,6 +1,6 @@
-package Engine;
+package app.engine;
 
-public class Board{
+public class Board implements IBoardObservable{
 
     public Board(){
 
@@ -31,5 +31,19 @@ public class Board{
 
     }
 
+    //functions required for observer pattern
+    @Override
+    public void addObserver(IBoardObserver o) {
 
+    }
+
+    @Override
+    public void removeObserver(IBoardObserver o) {
+
+    }
+
+    @Override
+    public void notifyObservers() {
+
+    }
 }

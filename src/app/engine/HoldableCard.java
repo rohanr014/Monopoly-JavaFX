@@ -1,8 +1,8 @@
-package Engine;
+package app.engine;
 
-public class ImmediateCard extends Card {
+public class HoldableCard extends Card implements Asset{
 
-    public ImmediateCard(){
+    public HoldableCard(){
 
     }
 

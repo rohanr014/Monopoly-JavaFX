@@ -1,4 +1,4 @@
-package Engine;
+package app.engine;
 
 public class Property extends Space implements Asset{
 
@@ -6,7 +6,7 @@ public class Property extends Space implements Asset{
      * Function to check if property bought by a player
      *
      * @param p player being checked
-     * @return true if Engine.Player p owns it, false otherwise
+     * @return true if app.controller.Engine.Player p owns it, false otherwise
      */
     public boolean boughtBy(Player p){
         return false;

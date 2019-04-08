@@ -4,7 +4,7 @@ public interface Property{
      * Function to check if property bought by a player
      *
      * @param p player being checked
-     * @return true if Engine.Player p owns it, false otherwise
+     * @return true if app.controller.Engine.Player p owns it, false otherwise
      */
     public boolean boughtBy(Player p);
 

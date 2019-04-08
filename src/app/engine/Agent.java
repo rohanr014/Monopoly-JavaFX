@@ -1,6 +1,6 @@
-package Engine;
+package app.engine;
 
-public abstract class Agent{
+public abstract class Agent implements IAgentObservable{
 
 
     public Agent(){
@@ -27,6 +27,22 @@ public abstract class Agent{
      */
     public boolean giveMoneyTo(double m, Agent a){
         return false;
+    }
+
+    //methods required for observer pattern
+    @Override
+    public void addObserver(IAgentObserver o) {
+
+    }
+
+    @Override
+    public void removeObserver(IAgentObserver o) {
+
+    }
+
+    @Override
+    public void notifyObservers() {
+
     }
 
 }

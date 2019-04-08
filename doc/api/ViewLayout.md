@@ -1,7 +1,7 @@
 ### View Layout
 - Main Menu
   - Instructions  
-  - Start game
+  - app.controller.Start game
     - Game config
     - Map/Game type
   - Load Game
