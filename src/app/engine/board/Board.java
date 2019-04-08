@@ -1,5 +1,7 @@
 package app.engine.board;
 
+import app.engine.Dice;
+import app.engine.GameSetup;
 import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
@@ -8,6 +10,7 @@ import app.engine.space.Space;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Stack;
 
 public class Board implements IBoardObservable{
@@ -16,17 +19,19 @@ public class Board implements IBoardObservable{
     private Space[] spaces;
     private Collection<Player> players;
     private Bank bank;
-    private int[] dice;
+    private Collection<Dice> dice;
 
     //dice types?
 
-    public Board(int numSpaces, int[] dice, Bank bank){
-        communityChest = new Stack<>();
-        chanceCards = new Stack<>();
-        players = new ArrayList<>();
-        spaces = new Space[numSpaces];
-        this.dice = dice;
-        this.bank = bank;
+    public Board(String propfile){
+        GameSetup setup = new GameSetup(propfile);
+
+        communityChest = setup.getCommunityChest();
+        chanceCards = setup.getChanceCards();
+        players = setup.getPlayers();
+        spaces = setup.getSpaces();
+        dice = setup.getDice();
+        bank = setup.getBank();
     }
 
     /**
