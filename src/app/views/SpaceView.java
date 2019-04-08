@@ -1,4 +1,6 @@
 package app.views;
 
-abstract class SpaceView {
+import app.engine.ISpaceObserver;
+
+abstract class SpaceView implements ISpaceObserver {
 }

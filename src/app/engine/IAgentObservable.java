@@ -1,7 +1,7 @@
 package app.engine;
 
 public interface IAgentObservable {
-    public abstract void addObserver(IAgentObserver o);
-    public abstract void removeObserver(IAgentObserver o);
-    public abstract void notifyObservers();
+    void addAgentObserver(IAgentObserver o);
+    void removeAgentObserver(IAgentObserver o);
+    void notifyAgentObservers();
 }
