@@ -2,6 +2,7 @@ package app.engine.space;
 
 import app.engine.agent.Agent;
 import app.engine.Asset;
+import app.engine.agent.Bank;
 import app.engine.board.Board;
 import app.engine.agent.Player;
 
@@ -11,18 +12,19 @@ public class Property extends Space implements Asset {
     private double mortgageValue;
     private Agent owner;
     private Board board;
-    private boolean privateProperty;
+    private boolean ownedByPlayer;
     private boolean mortgaged;
 
 
+    //mostly for utilities
     public Property(double purchaseCost, double mortgageValue, Board board) {
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
         this.board = board;
-        owner = Board.getBank();
+        this.owner = Board.getBank();
     }
 
-
+    //for every other property
     public Property(double purchaseCost, double mortgageValue, double rent, Board board) {
         this(purchaseCost, mortgageValue, board);
         this.rent = rent;
@@ -35,8 +37,11 @@ public class Property extends Space implements Asset {
      * @return true if app.controller.Engine.Player p owns it, false otherwise
      */
     public boolean boughtBy(Player p) {
+
+        //should properties handle money transactions?
         p.giveMoney(owner, purchaseCost);
-        privateProperty = true;
+
+        ownedByPlayer = true;
         return ownershipSwitchedTo(p);
     }
 
@@ -65,7 +70,9 @@ public class Property extends Space implements Asset {
      * @return true if succesful, false otherwise
      */
     public boolean sellToBank(){
-        return false;
+        Bank bank = board.getBank();
+        bank.giveMoney(owner, board.getSellPrice(purchaseCost));
+        return ownershipSwitchedTo(bank);
     }
 
 
@@ -77,33 +84,38 @@ public class Property extends Space implements Asset {
         return false;
     }
 
-
     @Override
-    public boolean onLand(Player p) {
-        if (privateProperty && !p.equals(owner)){
-            return chargeRent(p);
+    protected void invokeAction(Player p) {
+        if (!ownedByPlayer){
+            //trigger prompt for player to buy
+        }
+        else if (ownedByPlayer && !p.equals(owner)){
+            chargeRent(p);
         }
     }
 
-    public boolean isMortgaged(){
-        return mortgaged;
-    }
-
-
-
-
-    private double calculateRent() {
+    private double getRent() {
+        return rent;
     }
 
     public boolean chargeRent(Player p) {
-        return p.giveMoney(owner, rent);
+        return p.giveMoney(owner, getRent());
     }
 
     protected boolean setRent(double newRent){
+        if (newRent<0){
+            return false;
+        }
 
+        rent = newRent;
+        return true;
     }
 
     public Agent getOwner() {
         return owner;
+    }
+
+    public boolean isMortgaged(){
+        return mortgaged;
     }
 }
