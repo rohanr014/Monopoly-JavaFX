@@ -1,22 +1,16 @@
 package app.engine.agent;
 
+import app.engine.board.Board;
 import app.engine.space.Property;
 
 public abstract class Agent implements IAgentObservable{
+ private double wallet;
+    private Board board;
 
 
-    public Agent(){
-
-    }
-
-    /**
-     * Function for agent/player to acquire a property
-     *
-     * @param p property to be bought
-     * @return true if succesful, false otherwise
-     */
-    public boolean buy(Property p){
-        return false;
+    public Agent(double initBalance, Board b) {
+        wallet = initBalance;
+        board = b;
     }
 
 
@@ -27,9 +21,23 @@ public abstract class Agent implements IAgentObservable{
      * @param a agent to be transferred to
      * @return true if successful, false otherwise
      */
-    public boolean giveMoney(Agent a, double m){
-        return false;
+    public abstract boolean giveMoney(Agent a, double m);
+
+    protected void addToWallet(double m) {
+        wallet+=m;
     }
+
+    public void setWallet(double m){
+        wallet=m;
+    }
+    public double getWallet() {
+        return wallet;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
 
     //methods required for observer pattern
     @Override
