@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -12,10 +11,6 @@ import javafx.scene.layout.Pane;
 
 
 import javafx.event.EventHandler;
-
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SplashView implements IView {
     private static final int SPLASH_WIDTH = 800;
@@ -45,7 +40,7 @@ public class SplashView implements IView {
 
     private void setIcon(){
         myIconContainer = new HBox();
-        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
+        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Vanilla/Monopoly_logo.png")));
         myIconContainer.getChildren().add(myIcon);
         myIconContainer.setAlignment(Pos.CENTER);
         myRoot.getChildren().add(myIconContainer);
