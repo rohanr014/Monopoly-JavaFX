@@ -1,6 +1,6 @@
 package app.engine.GameSetup;
 
-import app.engine.Dice;
+import app.Dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
