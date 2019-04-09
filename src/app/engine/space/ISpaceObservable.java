@@ -1,4 +1,4 @@
-package app.engine;
+package app.engine.space;
 
 public interface ISpaceObservable {
     void addSpaceObserver(ISpaceObserver o);

@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 
 public class AssetView implements IView {
     @Override
-    public Scene getMyScene() {
+    public Pane getMyRoot() {
         return null;
     }
 }

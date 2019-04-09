@@ -1,33 +1,39 @@
 package app.views;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 
 import javafx.event.EventHandler;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SplashView implements IView {
-    public static final int SPLASH_WIDTH = 800;
-    public static final int SPLASH_HEIGHT = 800;
+    private static final int SPLASH_WIDTH = 800;
+    private static final int SPLASH_HEIGHT = 800;
 
     Pane myRoot;
     Scene myScene;
     HBox myButtons;
-    //VanillaController myVanillaController;
+    HBox myIconContainer;
+    ImageView myIcon;
+    VanillaController myVanillaController;
 
 
 
     public SplashView(){
         //myVanillaController = vanilla_controller;
         myRoot = new Pane();
-        myButtons = new HBox();
+        setIcon();
         setScene();
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
 
@@ -37,22 +43,38 @@ public class SplashView implements IView {
         setButtons("placeholder");
     }
 
+    private void setIcon(){
+        myIconContainer = new HBox();
+        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
+        myIconContainer.getChildren().add(myIcon);
+        myIconContainer.setAlignment(Pos.CENTER);
+        myRoot.getChildren().add(myIconContainer);
+    }
+
+    private Button b;
+
     private void setButtons(String property){//later to be done with property
-        myButtons.getChildren().add(makeButton("start game", e-> startGame()));
+        myButtons = new HBox();
+        b = makeButton("start game");
+        myButtons.getChildren().add();
         myButtons.getChildren().add(makeButton("Load Game", e-> loadGame()));
         myButtons.getChildren().add(makeButton("Make Game", e-> makeGame()));
         myRoot.getChildren().add(myButtons);
     }
 
-
+    public void setOnStartGamePressed(EventHandler<ActionEvent> handler) { b.setOnAction(handler); }
 
     private void startGame(){
+        new GameSettingView();
+        System.out.println("start game pressed");
     }
 
     private void loadGame(){
+        System.out.println("load game pressed");
 
     }
     private void makeGame(){
+        System.out.println("make game pressed");
 
     }
 

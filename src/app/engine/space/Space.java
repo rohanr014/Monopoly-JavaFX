@@ -1,7 +1,5 @@
 package app.engine.space;
 
-import app.engine.ISpaceObservable;
-import app.engine.ISpaceObserver;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 
