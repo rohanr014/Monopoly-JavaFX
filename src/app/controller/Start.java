@@ -14,7 +14,8 @@ public class Start extends Application {
 
     @Override
     public void start(Stage stage) throws RuntimeException{
-        IView splash = new SplashView();
+        SplashView splash = new SplashView();
+
 
         stage.setTitle("monopoly_tobe_replaced");
         stage.setResizable(false);

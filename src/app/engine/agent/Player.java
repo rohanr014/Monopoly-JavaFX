@@ -1,13 +1,11 @@
 package app.engine.agent;
 
-import app.engine.Asset;
 import app.engine.board.Board;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Player extends Bank{
@@ -18,52 +16,53 @@ public class Player extends Bank{
     private int currentSpace;
 
 
-    public Player(String n, String file, double initBalance, Board b){
-        super(initBalance, b);
-        name = n;
+    public Player(String playerName, String file, double initBalance, Board board){
+        super(initBalance, board);
+        name = playerName;
         pieceFile = file;
         properties = new ArrayList<>();
         cards = new ArrayList<>();
+        currentSpace = 0;
     }
 
     //player mortgages p, returns false if method fails
-    public boolean mortgage(Property p){
-        return p.mortgage();
+    public boolean mortgage(Property property){
+        return property.mortgage();
     }
 
     //player unmortgages p, returns false if method fails
-    public boolean unmortgage(Property p){
-        return p.unmortgage();
+    public boolean unmortgage(Property property){
+        return property.unmortgage();
     }
 
-//    //player builds house on cp, returns false if method fails
-//    boolean buildHouse(ColorProperty cp){
-//        return false;
-//    }
-//
-//    //player builds hotel on cp, returns false if method fails
-//    boolean buildHotel(ColorProperty cp){
-//        return false;
-//    }
-//
-//    //player sells house on cp, returns false if method fails
-//    boolean sellHouse(ColorProperty cp){
-//        return false;
-//    }
-//
-//    //player sells hotel on cp, returns false if method fails
-//    boolean sellHotel(ColorProperty cp){
-//        return false;
-//    }
+    //player builds house on cp, returns false if method fails
+    boolean buildHouse(ColorProperty colorProp){
+        return false;
+    }
+
+    //player builds hotel on cp, returns false if method fails
+    boolean buildHotel(ColorProperty colorProp){
+        return false;
+    }
+
+    //player sells house on cp, returns false if method fails
+    boolean sellHouse(ColorProperty colorProp){
+        return false;
+    }
+
+    //player sells hotel on cp, returns false if method fails
+    boolean sellHotel(ColorProperty colorProp){
+        return false;
+    }
 
     //player sells p to bank, returns false if method fails
-    boolean sell(Property p){
-        return p.sellToBank();
+    boolean sell(Property property){
+        return property.sellToBank();
     }
 
     //player sells hc to bank, returns false if method fails
-    boolean sell(HoldableCard hc){
-        return hc.sellToBank();
+    boolean sell(HoldableCard holdableCard){
+        return holdableCard.sellToBank();
     }
 
 
@@ -73,5 +72,21 @@ public class Player extends Bank{
 
     public void setCurrentSpace(int newSpace){
         currentSpace = newSpace;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public List<HoldableCard> getCards() {
+        return cards;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPieceFile() {
+        return pieceFile;
     }
 }
