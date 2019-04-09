@@ -11,5 +11,4 @@ module monopoly_team01 {
     exports app.controller;
     exports app.engine;
     exports app.views;
-
 }

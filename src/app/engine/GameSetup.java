@@ -148,6 +148,7 @@ public class GameSetup {
     }
 
     public Queue<Player> getPlayers() {
+
         return players;
     }
 

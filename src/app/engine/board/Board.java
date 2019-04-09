@@ -116,21 +116,6 @@ public class Board implements IBoardObservable{
         return players.remove(p);
     }
 
-    //functions required for observer pattern
-    @Override
-    public void addObserver(IBoardObserver o) {
-
-    }
-
-    @Override
-    public void removeObserver(IBoardObserver o) {
-
-    }
-
-    @Override
-    public void notifyObservers() {
-
-    }
 
     public double getSellPrice(double purchaseCost) {
         return purchaseCost / getSellToBankModifier();
@@ -155,5 +140,20 @@ public class Board implements IBoardObservable{
             sum += x;
         }
         return sum;
+    }
+
+    @Override
+    public void addBoardObserver(IBoardObserver o) {
+
+    }
+
+    @Override
+    public void removeBoardObserver(IBoardObserver o) {
+
+    }
+
+    @Override
+    public void notifyBoardObservers() {
+
     }
 }

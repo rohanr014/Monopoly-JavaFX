@@ -41,17 +41,17 @@ public abstract class Agent implements IAgentObservable{
 
     //methods required for observer pattern
     @Override
-    public void addObserver(IAgentObserver o) {
+    public void addAgentObserver(IAgentObserver o) {
 
     }
 
     @Override
-    public void removeObserver(IAgentObserver o) {
+    public void removeAgentObserver(IAgentObserver o) {
 
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyAgentObservers() {
 
     }
 
