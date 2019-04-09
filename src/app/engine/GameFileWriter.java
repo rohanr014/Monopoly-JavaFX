@@ -35,8 +35,7 @@ public class GameFileWriter {
             var output = new BufferedWriter(new FileWriter(file));
 
             for(int i=0; i<playerNames.length; i++){
-                String currentPlayerString = "player" + i + "=" + playerNames[i];
-                String currentPlayerPiece = "piece" + i + "=" + gamePieces[i];
+                String currentPlayerString = "player" + i + "=" + playerNames[i] + "," + gamePieces[i];
                 output.write(currentPlayerString + "\n");
             }
 
