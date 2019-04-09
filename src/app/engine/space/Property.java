@@ -40,7 +40,6 @@ public class Property extends Space implements Asset {
      * @return true if app.controller.Engine.Player p owns it, false otherwise
      */
     public boolean boughtBy(Player p) {
-
         //should properties handle money transactions?
         p.giveMoney(owner, purchaseCost);
 
