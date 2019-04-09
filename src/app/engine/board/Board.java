@@ -51,11 +51,7 @@ public class Board implements IBoardObservable{
     }
 
     public void endTurn(){
-
-
         doublesCounter = 0;
-
-
 
         startTurn();
     }
@@ -142,6 +138,7 @@ public class Board implements IBoardObservable{
     }
 
     private int getGoIndex() {
+//        gets Index of go in spaces from properties file (default is 0)
         return -1;
     }
 

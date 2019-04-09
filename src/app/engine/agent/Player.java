@@ -27,12 +27,12 @@ public class Player extends Bank{
     }
 
     //player mortgages p, returns false if method fails
-    boolean mortgage(Property p){
+    public boolean mortgage(Property p){
         return p.mortgage();
     }
 
     //player unmortgages p, returns false if method fails
-    boolean unmortgage(Property p){
+    public boolean unmortgage(Property p){
         return p.unmortgage();
     }
 
