@@ -9,7 +9,7 @@ public class CommonSpace extends Space{
     }
 
     @Override
-    public void onLand(Player p) {
-        return false;
+    protected void invokeAction(Player p) {
+
     }
 }
