@@ -1,5 +1,6 @@
 package app.views;
 
+import app.views.popups.GameSettingView;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,12 +17,16 @@ public class SplashView implements IView {
     private static final int SPLASH_WIDTH = 800;
     private static final int SPLASH_HEIGHT = 800;
 
-    Pane myRoot;
-    Scene myScene;
-    HBox myButtons;
-    HBox myIconContainer;
-    ImageView myIcon;
-    VanillaController myVanillaController;
+    private Pane myRoot;
+    private Scene myScene;
+    private HBox myButtons;
+    private HBox myIconContainer;
+    private ImageView myIcon;
+
+    private Button myStartGame;
+    private Button myLoadGame;
+    private Button myMakeGame;
+
 
 
 
@@ -46,18 +51,20 @@ public class SplashView implements IView {
         myRoot.getChildren().add(myIconContainer);
     }
 
-    private Button b;
 
     private void setButtons(String property){//later to be done with property
         myButtons = new HBox();
-        b = makeButton("start game");
-        myButtons.getChildren().add();
-        myButtons.getChildren().add(makeButton("Load Game", e-> loadGame()));
-        myButtons.getChildren().add(makeButton("Make Game", e-> makeGame()));
+        myStartGame = makeButton("start game");
+        myLoadGame = makeButton("load game");
+        myMakeGame = makeButton("make game");
+
+        myButtons.getChildren().addAll(myStartGame, myLoadGame, myMakeGame);
         myRoot.getChildren().add(myButtons);
     }
 
-    public void setOnStartGamePressed(EventHandler<ActionEvent> handler) { b.setOnAction(handler); }
+    public void setOnStartGamePressed(EventHandler<ActionEvent> handler) { myStartGame.setOnAction(handler); }
+    public void setOnLoadGamePressed(EventHandler<ActionEvent> handler){myLoadGame.setOnAction(handler);}
+    public void setOnMakeGamePressed(EventHandler<ActionEvent> handler){myMakeGame.setOnAction(handler);}
 
     private void startGame(){
         new GameSettingView();
@@ -82,9 +89,16 @@ public class SplashView implements IView {
         return result;
     }
 
-
-    public Scene getMyScene(){
-        return myScene;
+    private Button makeButton(String property){
+        var result = new Button(property);
+        return result;
     }
+
+
+    public Pane getMyRoot(){
+        return myRoot;
+    }
+
+    public Scene getMyScene(){return myScene;}
 
 }

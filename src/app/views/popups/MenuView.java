@@ -1,5 +1,6 @@
-package app.views;
+package app.views.popups;
 
+import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 
 public class MenuView extends PopUpView {

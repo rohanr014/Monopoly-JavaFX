@@ -1,4 +1,4 @@
-package app.engine;
+package app.Dice;
 
 import org.junit.jupiter.api.Test;
 
