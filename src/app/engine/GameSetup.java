@@ -1,6 +1,7 @@
 package app.engine;
 
 import app.engine.agent.Bank;
+import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.card.Card;
@@ -169,7 +170,16 @@ public class GameSetup {
     }
 
     public Bank getBank () {
-        return null;
+        String bankString = myBundle.getString("bankBalance");
+
+        if(bankString.equals("infinite")){
+            return new InfiniteBank(myBoard);
+        }
+
+        else{
+            return new Bank(Double.parseDouble(bankString), myBoard);
+        }
+
     }
 
 }
