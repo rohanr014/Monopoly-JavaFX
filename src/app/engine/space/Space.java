@@ -1,12 +1,14 @@
 package app.engine.space;
 
+import app.engine.ISpaceObservable;
+import app.engine.ISpaceObserver;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Space{
+public abstract class Space implements ISpaceObservable {
     private List<Player> currentOccupants;
     private Board board;
 
@@ -37,6 +39,15 @@ public abstract class Space{
     public void removeFromCurrentOccupants(Player p){
         currentOccupants.remove(p);
     }
+
+    @Override
+    public void addSpaceObserver(ISpaceObserver o){}
+
+    @Override
+    public void removeSpaceObserver(ISpaceObserver o){}
+
+    @Override
+    public void notifySpaceObservers(){};
 
 
 }

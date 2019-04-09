@@ -14,20 +14,26 @@ public class GameSetup {
     }
 
     public Collection<Card> getCommunityChest() {
+        return null;
     }
 
     public Collection<Card> getChanceCards() {
+        return null;
     }
 
     public Queue<Player> getPlayers() {
+        return null;
     }
 
     public List<Space> getSpaces() {
+        return null;
     }
 
     public List<Dice> getDice() {
+        return null;
     }
 
     public Bank getBank() {
+        return null;
     }
 }
