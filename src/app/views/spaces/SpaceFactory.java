@@ -6,6 +6,7 @@ import javax.swing.text.html.ImageView;
 
 
 
+
 //public class SpaceFactory {
 //    private ImageView piece1;
 //    public SpaceFactory() {
@@ -33,3 +34,4 @@ import javax.swing.text.html.ImageView;
 //        };
 //    }
 //}
+

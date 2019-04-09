@@ -1,5 +1,6 @@
-package app.engine;
+package app.engine.GameSetup;
 
+import app.Dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
@@ -88,6 +89,7 @@ public class GameSetup {
     private Space makeCP(String propFile){
         ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
 
+        String name = cpBundle.getString("name");
         double purchaseCost = Double.parseDouble(cpBundle.getString("salePrice"));
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
@@ -95,21 +97,22 @@ public class GameSetup {
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
 
-        return new ColorProperty(purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
+        String name = currentBundle.getString("name");
         double purchaseCost = Double.parseDouble(currentBundle.getString("salePrice"));
         double mortgageValue = Double.parseDouble(currentBundle.getString("mortgage"));
         String[] rentStrings = currentBundle.getString("rents").split(",");
 
         if(isRailroad) {
-            return new Railroad(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
         else{
-            return new Utility(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
     }
 
@@ -158,7 +161,7 @@ public class GameSetup {
 
     }
 
-    public Dice getDice () {
+    public List<Dice> getDice () {
         String[] diceString = rulesBundle.getString("dice").split(",");
 
         int[] diceNumbers = new int[diceString.length];
@@ -167,7 +170,13 @@ public class GameSetup {
             diceNumbers[i] = Integer.parseInt(diceString[i]);
         }
 
-        return new Dice(diceNumbers);
+//        TEMP FIX
+        var d = new Dice(diceNumbers);
+        var list = new ArrayList<Dice>();
+        list.add(d);
+//        TEMP FIX
+
+        return list;
     }
 
     public Bank getBank () {
