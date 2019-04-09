@@ -3,19 +3,20 @@ package app.engine.space;
 import app.engine.board.Board;
 
 public class Railroad extends SetProperty {
-    public Railroad(double purchaseCost, double mortgageValue, Board board) {
-        super(purchaseCost, mortgageValue, board);
+    public Railroad(double purchaseCost, double mortgageValue) {
+        super(purchaseCost, mortgageValue);
     }
 
-    public Railroad(double purchaseCost, double mortgageValue, Board board, double[] allRents) {
-        super(purchaseCost, mortgageValue, board, allRents);
+    public Railroad(double purchaseCost, double mortgageValue, double[] allRents) {
+        super(purchaseCost, mortgageValue, allRents);
     }
 
     @Override
-    public boolean calculateRent() {
+    public double calculateRent() {
         int numSharedProperties = sharedSet.size();
         double updatedRent = possibleRents[numSharedProperties];
-        return setRent(updatedRent);
+        setRent(updatedRent);
+        return updatedRent;
     }
 
 

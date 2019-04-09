@@ -13,38 +13,68 @@ import java.util.*;
 public class Board implements IBoardObservable{
     private Collection<Card> communityChest;
     private Collection<Card> chanceCards;
-    private Space[] spaces;
+    private List<Space> spaces;
     private Queue<Player> players;
     private Bank bank;
-    private Collection<Dice> dice;
+    private List<Dice> gameDice;
+    private int doublesCounter;
+    private int[] lastRoll;
 
     //dice types?
 
     public Board(String propfile){
-        GameSetup setup = new GameSetup(propfile);
+        GameSetup setup = new GameSetup(propfile, this);
 
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
-        spaces = setup.getSpaces();
-        dice = setup.getDice();
+        spaces = Collections.unmodifiableList(setup.getSpaces());
+        initializeSpaces();
+        gameDice = setup.getDice();
         bank = setup.getBank();
+    }
+
+    private void initializeSpaces() {
+        for (Space s: spaces){
+            s.initializeSpace(this);
+        }
     }
 
     public void startTurn(){
         Player p = players.poll();
 
-//        do stuff
+        lastRoll = gameDice.get(0).rollAllDice();
+        move(p, getLastRollSum());
 
         players.add(p);
 
     }
+
+    public void endTurn(){
+
+
+        doublesCounter = 0;
+
+
+
+        startTurn();
+    }
+
 
     /**
      * Function to move player to specific space
      */
 
     public void move(Player p, Space s){
+        var start = p.getCurrentSpace();
+        int spacePosition = spaces.indexOf(s);
+        p.setCurrentSpace(spacePosition);
+        spaces.get(start).removeFromCurrentOccupants(p);
+        if (checkForGo(start, spacePosition)){
+//            MAGIC VALUE
+            bank.giveMoney(p, 200);
+        }
+        s.onLand(p);
 
     }
 
@@ -54,7 +84,16 @@ public class Board implements IBoardObservable{
      */
 
     public void move(Player p, int steps){
+        var end = p.getCurrentSpace() + steps;
+        move(p, spaces.get(end));
+    }
 
+    private boolean checkForGo(int start, int spacePosition) {
+        return checkIfPass(start, spacePosition, getGoIndex());
+    }
+
+    private boolean checkIfPass(int start, int end, int targetSpaceIndex) {
+        return ((targetSpaceIndex <= end && targetSpaceIndex > start) || (start > end));
     }
 
     public Bank getBank() {
@@ -71,10 +110,6 @@ public class Board implements IBoardObservable{
             }
         }
         return false;
-    }
-
-    public boolean addPlayer(Player p){
-        return players.add(p);
     }
 
     public boolean removePlayer(Player p){
@@ -97,12 +132,28 @@ public class Board implements IBoardObservable{
 
     }
 
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
+    public double getSellPrice(double purchaseCost) {
+        return purchaseCost / getSellToBankModifier();
     }
 
-    public double getSellPrice(double purchaseCost) {
+    private double getSellToBankModifier() {
+        //GETS BANK MODIFIER FROM Properties file
+        return -1;
+    }
 
+    private int getGoIndex() {
+        return -1;
+    }
+
+    public int[] getLastRollArray() {
+        return lastRoll;
+    }
+
+    public int getLastRollSum() {
+        int sum = 0;
+        for (int x: lastRoll){
+            sum += x;
+        }
+        return sum;
     }
 }
