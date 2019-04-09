@@ -1,4 +1,4 @@
-package app.engine;
+package app.engine.board;
 
 public interface IBoardObservable {
     void addBoardObserver(IBoardObserver o);

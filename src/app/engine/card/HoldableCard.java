@@ -1,6 +1,9 @@
-package app.engine;
+package app.engine.card;
 
-public class HoldableCard extends Card implements Asset{
+import app.engine.Asset;
+import app.engine.agent.Player;
+
+public class HoldableCard extends Card implements Asset {
 
     public HoldableCard(){
 

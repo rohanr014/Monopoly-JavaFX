@@ -1,4 +1,6 @@
-package app.engine;
+package app.engine.agent;
+
+import app.engine.space.Property;
 
 public abstract class Agent implements IAgentObservable{
 
@@ -25,7 +27,7 @@ public abstract class Agent implements IAgentObservable{
      * @param a agent to be transferred to
      * @return true if successful, false otherwise
      */
-    public boolean giveMoneyTo(double m, Agent a){
+    public boolean giveMoney(Agent a, double m){
         return false;
     }
 

@@ -1,4 +1,6 @@
-package app.engine;
+package app.engine.card;
+
+import app.engine.agent.Player;
 
 public class ImmediateCard extends Card {
 

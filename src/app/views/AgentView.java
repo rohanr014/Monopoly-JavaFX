@@ -1,6 +1,6 @@
 package app.views;
 
-import app.engine.IAgentObserver;
+import app.engine.agent.IAgentObserver;
 
 public class AgentView implements IAgentObserver {
 

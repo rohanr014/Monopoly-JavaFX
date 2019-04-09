@@ -1,4 +1,6 @@
-package app.engine;
+package app.engine.space;
+
+import app.engine.agent.Player;
 
 public class CommonSpace extends Space{
 
@@ -7,7 +9,7 @@ public class CommonSpace extends Space{
     }
 
     @Override
-    public boolean onLand(Player p) {
+    public void onLand(Player p) {
         return false;
     }
 }
