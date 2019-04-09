@@ -72,7 +72,7 @@ public class GameSetup {
 
     }
 
-    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE
+    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE, WRITE BANK AND DICE(?)
 
     private double[] stringsToDoubles(String[] strings){
         double[] toReturn = new double[strings.length];
@@ -156,8 +156,16 @@ public class GameSetup {
 
     }
 
-    public List<Dice> getDice () {
-        return null;
+    public Dice getDice () {
+        String[] diceString = rulesBundle.getString("dice").split(",");
+
+        int[] diceNumbers = new int[diceString.length];
+
+        for(int i=0; i<diceString.length; i++){
+            diceNumbers[i] = Integer.parseInt(diceString[i]);
+        }
+
+        return new Dice(diceNumbers);
     }
 
     public Bank getBank () {
