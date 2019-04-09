@@ -19,4 +19,7 @@ public class HoldableCard extends Card implements Asset {
 
     }
 
+    public boolean sellToBank() {
+        return false;
+    }
 }

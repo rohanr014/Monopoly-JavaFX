@@ -4,23 +4,20 @@ import app.engine.agent.Player;
 import app.engine.board.Board;
 
 public class Utility extends SetProperty {
-    public Utility(double purchaseCost, double mortgageValue, Board board) {
-        super(purchaseCost, mortgageValue, board);
+    public Utility(double purchaseCost, double mortgageValue) {
+        super(purchaseCost, mortgageValue);
     }
 
-    public Utility(double purchaseCost, double mortgageValue, Board board, double[] allRents) {
-        super(purchaseCost, mortgageValue, board, allRents);
-    }
-
-    @Override
-    public boolean calculateRent() {
-
-
-        return setRent(updatedRent);
+    public Utility(double purchaseCost, double mortgageValue, double[] allRentMultipliers) {
+        super(purchaseCost, mortgageValue, allRentMultipliers);
     }
 
     @Override
-    public double getRent(){
-
+    public double calculateRent() {
+        var roll = getBoard().getLastRollSum();
+        var mult = getPossibleRents()[getSharedSetSize()];
+        var newRent = roll*mult;
+        setRent(newRent);
+        return newRent;
     }
 }

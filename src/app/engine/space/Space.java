@@ -1,12 +1,14 @@
 package app.engine.space;
 
 import app.engine.agent.Player;
+import app.engine.board.Board;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Space{
     private List<Player> currentOccupants;
+    private Board board;
 
     public Space(){
         currentOccupants = new ArrayList<>();
@@ -20,6 +22,10 @@ public abstract class Space{
     public void onLand(Player p){
         addToCurrentOccupants(p);
         invokeAction(p);
+    }
+
+    public void initializeSpace(Board b){
+        board = b;
     }
 
     protected abstract void invokeAction(Player p);

@@ -17,19 +17,22 @@ public class Property extends Space implements Asset {
 
 
     //mostly for utilities
-    public Property(double purchaseCost, double mortgageValue, Board board) {
+    public Property(double purchaseCost, double mortgageValue) {
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
-        this.board = board;
-        this.owner = Board.getBank();
     }
 
     //for every other property
-    public Property(double purchaseCost, double mortgageValue, double rent, Board board) {
-        this(purchaseCost, mortgageValue, board);
+    public Property(double purchaseCost, double mortgageValue, double rent) {
+        this(purchaseCost, mortgageValue);
         this.rent = rent;
     }
 
+    @Override
+    public void initializeSpace(Board b){
+        super.initializeSpace(b);
+        owner = b.getBank();
+    }
     /**
      * Function to check if property bought by a player
      *
@@ -54,13 +57,18 @@ public class Property extends Space implements Asset {
     public boolean mortgage() {
         mortgaged = true;
         rent = 0;
-        return ownershipSwitchedTo(Board.getBank());
+        return board.getBank().giveMoney(owner, mortgageValue);
     }
 
     public boolean unmortgage() {
         mortgaged = false;
         rent = calculateRent();
-        return ownershipSwitchedTo(Board.getBank());
+
+        return ownershipSwitchedTo(board.getBank());
+    }
+
+    protected double calculateRent() {
+        return getRent();
     }
 
 
@@ -71,8 +79,7 @@ public class Property extends Space implements Asset {
      */
     public boolean sellToBank(){
         Bank bank = board.getBank();
-        bank.giveMoney(owner, board.getSellPrice(purchaseCost));
-        return ownershipSwitchedTo(bank);
+        return bank.giveMoney(owner, board.getSellPrice(purchaseCost)) && ownershipSwitchedTo(bank);
     }
 
 
@@ -94,7 +101,7 @@ public class Property extends Space implements Asset {
         }
     }
 
-    private double getRent() {
+    protected double getRent() {
         return rent;
     }
 
@@ -117,5 +124,9 @@ public class Property extends Space implements Asset {
 
     public boolean isMortgaged(){
         return mortgaged;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
