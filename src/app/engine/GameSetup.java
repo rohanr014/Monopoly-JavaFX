@@ -88,6 +88,7 @@ public class GameSetup {
     private Space makeCP(String propFile){
         ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
 
+        String name = cpBundle.getString("name");
         double purchaseCost = Double.parseDouble(cpBundle.getString("salePrice"));
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
@@ -95,21 +96,22 @@ public class GameSetup {
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
 
-        return new ColorProperty(purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
+        String name = currentBundle.getString("name");
         double purchaseCost = Double.parseDouble(currentBundle.getString("salePrice"));
         double mortgageValue = Double.parseDouble(currentBundle.getString("mortgage"));
         String[] rentStrings = currentBundle.getString("rents").split(",");
 
         if(isRailroad) {
-            return new Railroad(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
         else{
-            return new Utility(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
     }
 
