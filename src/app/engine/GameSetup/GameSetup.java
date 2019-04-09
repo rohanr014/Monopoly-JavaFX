@@ -1,5 +1,6 @@
-package app.engine;
+package app.engine.GameSetup;
 
+import app.engine.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
@@ -160,7 +161,7 @@ public class GameSetup {
 
     }
 
-    public Dice getDice () {
+    public List<Dice> getDice () {
         String[] diceString = rulesBundle.getString("dice").split(",");
 
         int[] diceNumbers = new int[diceString.length];
@@ -169,7 +170,13 @@ public class GameSetup {
             diceNumbers[i] = Integer.parseInt(diceString[i]);
         }
 
-        return new Dice(diceNumbers);
+//        TEMP FIX
+        var d = new Dice(diceNumbers);
+        var list = new ArrayList<Dice>();
+        list.add(d);
+//        TEMP FIX
+
+        return list;
     }
 
     public Bank getBank () {

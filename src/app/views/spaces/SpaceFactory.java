@@ -22,7 +22,7 @@ public class SpaceFactory {
         return new SpaceView() {
             @Override
             public Pane initialize() {
-                piece1.view()
+                piece1.view();
                 return null;
             }
 
