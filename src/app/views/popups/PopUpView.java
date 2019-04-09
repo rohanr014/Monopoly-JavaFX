@@ -1,4 +1,4 @@
-package app.views;
+package app.views.popups;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
