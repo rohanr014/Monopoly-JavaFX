@@ -7,6 +7,7 @@ import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.card.Card;
 import app.engine.space.*;
+import org.w3c.dom.ls.LSResourceResolver;
 
 import java.util.*;
 
@@ -74,8 +75,6 @@ public class GameSetup {
         }
 
     }
-
-    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE, WRITE BANK AND DICE(?)
 
     private double[] stringsToDoubles(String[] strings){
         double[] toReturn = new double[strings.length];
@@ -191,6 +190,10 @@ public class GameSetup {
             return new Bank(Double.parseDouble(bankString), myBoard);
         }
 
+    }
+
+    public static void main(String[] args){
+        ResourceBundle mySample = ResourceBundle.getBundle("sampleGameSetup");
     }
 
 }
