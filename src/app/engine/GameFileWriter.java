@@ -8,18 +8,20 @@ import java.util.Properties;
 
 public class GameFileWriter {
 
+    private String filename;
     private String[] playerNames;
     private String[] gamePieces;
     private String propFile;
     private String rulesFile;
 
 
-    public GameFileWriter(String[] playerNames, String[] playerPieces, String propFile, String rulesFile){
+    public GameFileWriter(String filename, String[] playerNames, String[] playerPieces, String propFile, String rulesFile){
+        this.filename = filename;
         this.playerNames = playerNames;
         this.gamePieces = playerPieces;
         this.propFile = propFile;
 
-        this.rulesFile = "vanillaRules.properties";
+        this.rulesFile = "vanillaRules";
         // eventually - this.rulesFile = rulesFile;
 
         writePropertiesFile();
@@ -27,14 +29,13 @@ public class GameFileWriter {
 
     private void writePropertiesFile(){
         try {
-            File file = new File("data/" + propFile);
+            File file = new File("data/" + filename + ".properties");
             file.createNewFile();
 
             var output = new BufferedWriter(new FileWriter(file));
 
             for(int i=0; i<playerNames.length; i++){
-                String currentPlayerString = "player" + i + "=" + playerNames[i];
-                String currentPlayerPiece = "piece" + i + "=" + gamePieces[i];
+                String currentPlayerString = "player" + i + "=" + playerNames[i] + "," + gamePieces[i];
                 output.write(currentPlayerString + "\n");
             }
 

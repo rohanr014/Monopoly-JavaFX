@@ -23,7 +23,7 @@ public class Board implements IBoardObservable{
     //dice types?
 
     public Board(String propfile){
-        GameSetup setup = new GameSetup(propfile);
+        GameSetup setup = new GameSetup(propfile, this);
 
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
