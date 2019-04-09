@@ -1,0 +1,11 @@
+### View Layout
+- Main Menu
+  - Instructions  
+  - app.controller.Start game
+    - Game config
+    - Map/Game type
+  - Load Game
+  - Options
+    - Modify game settings
+    - Modify rules for games
+      - Rest rules to default
