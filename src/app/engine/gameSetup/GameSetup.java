@@ -191,11 +191,5 @@ public class GameSetup {
         }
 
     }
-
-    public static void main(String[] args){
-        ResourceBundle mySample = ResourceBundle.getBundle("sampleGameSetup");
-        ResourceBundle vanilla = ResourceBundle.getBundle(mySample.getString("prop_file"));
-    }
-
 }
 
