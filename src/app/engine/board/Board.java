@@ -1,7 +1,7 @@
 package app.engine.board;
 
-import app.Dice.Dice;
-import app.engine.GameSetup.GameSetup;
+import app.engine.dice.Dice;
+import app.engine.gameSetup.GameSetup;
 import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
@@ -139,6 +139,9 @@ public class Board implements IBoardObservable{
         return sum;
     }
 
+
+
+
     @Override
     public void addBoardObserver(IBoardObserver o) {
 
@@ -152,5 +155,29 @@ public class Board implements IBoardObservable{
     @Override
     public void notifyBoardObservers() {
 
+    }
+
+    public Queue<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
+    }
+
+    public Collection<Card> getChanceCards() {
+        return chanceCards;
+    }
+
+    public Collection<Card> getCommunityChest() {
+        return communityChest;
+    }
+
+    public List<Dice> getGameDice() {
+        return gameDice;
+    }
+
+    public int getDoublesCounter() {
+        return doublesCounter;
     }
 }
