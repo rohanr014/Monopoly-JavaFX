@@ -47,7 +47,11 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
-//    public boolean buildHouse() {
+    public String getName() {
+        return name;
+    }
+
+    //    public boolean buildHouse() {
 //        //check if house can be built, increment houses, rent = houseRents[houses], charge owner houseCost
 //    }
 //
