@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class Agent implements IAgentObservable{
     private double wallet;
-    private Board board;
     private List<IAgentObserver> myObserverList;
 
 
@@ -53,7 +52,7 @@ public abstract class Agent implements IAgentObservable{
     @Override
     public void notifyAgentObservers() {
         for(IAgentObserver o : myObserverList){
-            o.agentUpdate(wallet, board);
+            o.agentUpdate(wallet);
         }
     }
 
