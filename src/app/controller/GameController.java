@@ -1,6 +1,17 @@
 package app.controller;
 
+import app.views.SplashView;
+import app.views.popups.GameSettingView;
+
 public class GameController {
+
+
+
+    public GameController(){
+
+
+
+    }
 
 //    private MainView myMainView;
 //
@@ -9,10 +20,20 @@ public class GameController {
 //        myMainView = main_view;
 //    }
 
-    public void startGame(){}
+    public void startGame(){
+        System.out.println("pressed");
+        GameSettingView gameSettingView = new GameSettingView();
 
-    public void loadGame(){}
 
-    public void makeGame(){}
+
+    }
+
+    public void loadGame(){
+
+    }
+
+    public void makeGame(){
+
+    }
 
 }

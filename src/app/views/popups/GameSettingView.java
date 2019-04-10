@@ -11,6 +11,7 @@ public class GameSettingView extends PopUpView {
 
     public GameSettingView(){
         super("game setting");
+        System.out.println("game setting called");
 
     }
 

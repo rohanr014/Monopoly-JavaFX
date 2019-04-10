@@ -54,17 +54,13 @@ public class SplashView implements IView {
 
     private void setButtons(String property){//later to be done with property
         myButtons = new HBox();
-        myStartGame = makeButton("start game");
-        myLoadGame = makeButton("load game");
-        myMakeGame = makeButton("make game");
-
+        myStartGame = makeButton("start game", e->this.startGame());
+        myLoadGame = makeButton("load game", e->this.loadGame());
+        myMakeGame = makeButton("make game", e->this.makeGame());
         myButtons.getChildren().addAll(myStartGame, myLoadGame, myMakeGame);
         myRoot.getChildren().add(myButtons);
     }
 
-    public void setOnStartGamePressed(EventHandler<ActionEvent> handler) { myStartGame.setOnAction(handler); }
-    public void setOnLoadGamePressed(EventHandler<ActionEvent> handler){myLoadGame.setOnAction(handler);}
-    public void setOnMakeGamePressed(EventHandler<ActionEvent> handler){myMakeGame.setOnAction(handler);}
 
     private void startGame(){
         new GameSettingView();
