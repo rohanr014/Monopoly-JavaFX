@@ -1,9 +1,7 @@
 package app.controller;
 
 import app.engine.board.Board;
-import app.views.MainView;
-import app.views.SplashView;
-import app.views.popups.GameSettingView;
+import app.views.IViews.MainView;
 
 public class GameController {
     private Board myBoard;

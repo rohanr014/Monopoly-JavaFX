@@ -1,7 +1,9 @@
-package app.views;
+package app.views.IViews;
 
 
+import app.engine.board.Board;
 import app.engine.dice.IDiceObserver;
+import app.views.utility.ButtonMaker;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -11,25 +13,26 @@ import java.util.ResourceBundle;
 
 public class ControlView implements IView, IDiceObserver {
     private Pane myRoot;
-    private ButtonMaker myButtonMaker;
+    private Board myBoard;
+
     private ResourceBundle myResources;
 
     private int diceValue;
 
-    public ControlView(){
+    public ControlView(Board board){
+        myBoard = board;
         myRoot = new Pane();
-        myButtonMaker = new ButtonMaker();
         diceValue = 0;
         setRoot();
     }
 
     private void setRoot(){
         var tempPane = new HBox();
-        tempPane.getChildren().add(myButtonMaker.makeButton("Sell", e->pressedSell()));
-        tempPane.getChildren().add(myButtonMaker.makeButton("Buy", e->pressedBuy()));
-        tempPane.getChildren().add(myButtonMaker.makeButton("Mortgage", e->pressedMortgage()));
-        tempPane.getChildren().add(myButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage()));
-        tempPane.getChildren().add(myButtonMaker.makeButton("Roll Dice", e-> rollDice()));
+        tempPane.getChildren().add(ButtonMaker.makeButton("Sell", e->pressedSell()));
+        tempPane.getChildren().add(ButtonMaker.makeButton("Buy", e->pressedBuy()));
+        tempPane.getChildren().add(ButtonMaker.makeButton("Mortgage", e->pressedMortgage()));
+        tempPane.getChildren().add(ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage()));
+        tempPane.getChildren().add(ButtonMaker.makeButton("Roll Dice", e-> rollDice()));
         tempPane.getChildren().add(new Text(Integer.toString(diceValue)));
         myRoot.getChildren().add(tempPane);
     }
