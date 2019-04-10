@@ -45,7 +45,7 @@ public class SplashView implements IView {
 
     private void setIcon(){
         myIconContainer = new HBox();
-        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Vanilla/Monopoly_logo.png")));
+        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
         myIconContainer.getChildren().add(myIcon);
         myIconContainer.setAlignment(Pos.CENTER);
         myRoot.getChildren().add(myIconContainer);
