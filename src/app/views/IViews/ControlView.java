@@ -1,6 +1,7 @@
 package app.views.IViews;
 
 
+import app.engine.board.Board;
 import app.engine.dice.IDiceObserver;
 import app.views.utility.ButtonMaker;
 import javafx.scene.layout.HBox;
@@ -12,12 +13,14 @@ import java.util.ResourceBundle;
 
 public class ControlView implements IView, IDiceObserver {
     private Pane myRoot;
+    private Board myBoard;
     private ButtonMaker myButtonMaker;
     private ResourceBundle myResources;
 
     private int diceValue;
 
-    public ControlView(){
+    public ControlView(Board board){
+        myBoard = board;
         myRoot = new Pane();
         myButtonMaker = new ButtonMaker();
         diceValue = 0;

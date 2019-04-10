@@ -49,6 +49,10 @@ public class MainController {
         myMainView = new MainView(myBoard);
         myGameController = new GameController(myBoard, myMainView);
         myGameController.initialize();
+        myStage.close();
+        myStage.setTitle("Game_screen_replaced");
+        myStage.setScene(myMainView.getMyScene());
+        myStage.show();
     }
 
     public SplashView splashView() { return mySplashView; }
