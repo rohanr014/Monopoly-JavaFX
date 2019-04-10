@@ -24,5 +24,7 @@ public class Railroad extends SetProperty {
         return updatedRent;
     }
 
-
+    public String getName() {
+        return name;
+    }
 }

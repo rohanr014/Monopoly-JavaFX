@@ -25,4 +25,8 @@ public class Utility extends SetProperty {
         setRent(newRent);
         return newRent;
     }
+
+    public String getName() {
+        return name;
+    }
 }
