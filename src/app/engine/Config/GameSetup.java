@@ -1,4 +1,4 @@
-package app.engine.gameSetup;
+package app.engine.Config;
 
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
@@ -7,7 +7,6 @@ import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.card.Card;
 import app.engine.space.*;
-import org.w3c.dom.ls.LSResourceResolver;
 
 import java.util.*;
 

@@ -1,7 +1,6 @@
 package app.views;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -13,10 +12,13 @@ public class AssetView implements IView {
         setRoot();
     }
 
-    private void setRoot(){
+    private void setRoot(){//need to be automated later but hardcoded for now
         var tempPane = new VBox();
         tempPane.setAlignment(Pos.CENTER);
-        tempPane.getChildren().add(new AgentView().getMyRoot());
+        tempPane.getChildren().add(new AgentView("player one").getMyRoot());
+        tempPane.getChildren().add(new AgentView("player two").getMyRoot());
+        tempPane.getChildren().add(new AgentView("player three").getMyRoot());
+        tempPane.getChildren().add(new AgentView("player four").getMyRoot());
         myRoot.getChildren().add(tempPane);
     }
 

@@ -1,4 +1,4 @@
-package app.engine.gameSetup;
+package app.engine.Config;
 
 import java.io.BufferedWriter;
 import java.io.File;

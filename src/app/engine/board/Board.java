@@ -1,7 +1,7 @@
 package app.engine.board;
 
 import app.engine.dice.Dice;
-import app.engine.gameSetup.GameSetup;
+import app.engine.Config.GameSetup;
 import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
