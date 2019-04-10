@@ -54,6 +54,7 @@ class GameSetupTest {
         String[] expected = {player1, player2, player3, player4, player5, player6};
 
         assertArrayEquals(playerNames, expected);
+        assertEquals(1500.0, playersArray[0].getWallet());
     }
 
     @Test
