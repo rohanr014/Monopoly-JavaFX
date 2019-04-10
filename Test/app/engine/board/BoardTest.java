@@ -14,9 +14,9 @@ class BoardTest {
         var s = "sampleGameSetup.properties";
     }
 
-
     @Test
     void startTurn() {
+
     }
 
     @Test
