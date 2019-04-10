@@ -1,6 +1,7 @@
-package app.views;
+package app.views.popups;
 
 
+import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 
 public class CardView extends PopUpView {
@@ -11,6 +12,6 @@ public class CardView extends PopUpView {
 
     @Override
     protected Scene myScene() {
-
+        return null;
     }
 }
