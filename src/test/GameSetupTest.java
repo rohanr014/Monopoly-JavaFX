@@ -3,12 +3,13 @@ package test;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.dice.Dice;
-import app.engine.gameSetup.GameSetup;
+import app.engine.Config.GameSetup;
 import app.engine.space.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -23,10 +24,10 @@ class GameSetupTest {
     GameSetup test;
 
     @BeforeEach
-    private void init() {
+    private void init() throws IOException {
         String setupFile = "sampleGameSetup";
-        myBoard = new Board(setupFile);
-        test = new GameSetup(setupFile, myBoard);
+        myBoard = new Board("test", setupFile);
+        test = new GameSetup("test", setupFile, myBoard);
     }
 
 

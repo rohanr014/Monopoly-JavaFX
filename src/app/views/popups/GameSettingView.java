@@ -1,5 +1,6 @@
 package app.views.popups;
 
+import app.controller.MainController;
 import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import java.util.ResourceBundle;
 
 
 public class GameSettingView extends PopUpView {
+    private final static int WIDTH = 200;
+    private final static int HEIGHT = 300;
 
     private ResourceBundle myProperties;
     private VBox myRoot;
@@ -20,15 +23,17 @@ public class GameSettingView extends PopUpView {
     private Button mySubmitButton;
     private Scene myScene;
 
+    private MainController myMainController;
+
     private final String[] PieceList = {"Vanilla/Pieces/car.png", "Vanilla/Pieces/dog.png", "Vanilla/Pieces/hat.png", "Vanilla/Pieces/iron.png", "Vanilla/Pieces/ship.png", "Vanilla/Pieces/shoe.png", "Vanilla/Pieces/thimble.png", "Vanilla/Pieces/wheelbarrow.png"};
 
 
-    public GameSettingView(){
+    public GameSettingView(MainController main_controller){
         super("game setting");
-        System.out.println("game setting called");
+        myMainController = main_controller;
+
+//        System.out.println("game setting called");
 //        myProperties = ResourceBundle.getBundle("gamemodes");
-
-
 
     }
 
@@ -41,7 +46,7 @@ public class GameSettingView extends PopUpView {
 
     private void setGameTypes() {
         myGameOptions = new ComboBox();
-        myGameOptions.getItems().addAll("Vanilla");
+        myGameOptions.getItems().addAll("vanilla");
         myGameOptions.setPromptText("Choose a game mode");
         myRoot.getChildren().add(myGameOptions);
 
@@ -55,8 +60,10 @@ public class GameSettingView extends PopUpView {
     }
 
     private void handleSubmit(){
-        System.out.println("hit submit");
-        new PlayerView();
+        myMainController.setGameName(myGameOptions.getItems().get(0));
+        System.out.println(myGameOptions.getItems().get(0));
+        new PlayerView(myMainController);
+        super.getMyStage().close();
     }
 
 
@@ -65,7 +72,7 @@ public class GameSettingView extends PopUpView {
         myRoot = new VBox();
         setGameTypes();
         setSubmitButton();
-        myScene = new Scene(myRoot);
+        myScene = new Scene(myRoot, WIDTH, HEIGHT);
         return myScene;
     }
 }

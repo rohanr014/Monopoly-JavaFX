@@ -1,5 +1,6 @@
 package app.engine.board;
 
+import app.engine.Config.GameFileHandler;
 import app.engine.dice.Dice;
 import app.engine.Config.GameSetup;
 import app.engine.agent.Agent;
@@ -8,6 +9,7 @@ import app.engine.agent.Player;
 import app.engine.card.Card;
 import app.engine.space.Space;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Board implements IBoardObservable{
@@ -23,9 +25,12 @@ public class Board implements IBoardObservable{
     private List<IBoardObserver> myObserverList;
     //dice types?
 
-    public Board(String propfile){
-        GameSetup setup = new GameSetup(propfile, this);
+    public Board(String directory, String filename) throws IOException {
+        this(GameFileHandler.getGamedata(directory, filename));
+    }
 
+    public Board(ResourceBundle propertyFile){
+        GameSetup setup = new GameSetup(propertyFile, this);
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
