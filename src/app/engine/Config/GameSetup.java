@@ -1,4 +1,4 @@
-package app.engine.gameSetup;
+package app.engine.Config;
 
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
@@ -8,42 +8,60 @@ import app.engine.board.Board;
 import app.engine.card.Card;
 import app.engine.space.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import java.util.Enumeration;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.Queue;
+import java.io.IOException;
+import java.util.*;
 
 public class GameSetup {
 
+    private ResourceBundle highBundle;
     private ResourceBundle myBundle;
     private ResourceBundle rulesBundle;
 
     private Queue<Player> players;
-    private ArrayList<Space> spaces;
+    private List<Space> spaces;
 
     private String gamePropFile;
     private String rulesPropFile;
 
     private Board myBoard;
 
-    public GameSetup(String propFile, Board b) {
-        myBundle = ResourceBundle.getBundle(propFile);
-        rulesBundle = ResourceBundle.getBundle(myBundle.getString("rules_file"));
-        myBoard = b;
-        createPlayers();
-
+    public GameSetup(String directory, String filename, Board board) throws IOException {
+        this(GameFileHandler.getGamedata(directory, filename), board);
     }
+
+    public GameSetup(ResourceBundle bundle, Board b) {
+        highBundle = bundle;
+        myBundle = ResourceBundle.getBundle(highBundle.getString("prop_file"));
+        rulesBundle = ResourceBundle.getBundle(highBundle.getString("rules_file"));
+        myBoard = b;
+
+        players = new LinkedList<Player>();
+        spaces = new ArrayList<Space>();
+
+        createPlayers();
+        createSpaces();
+    }
+
+    private String[] getSpaceKeys(ResourceBundle spacesBundle){
+        int size = spacesBundle.keySet().size();
+
+        String[] inOrder = new String[size];
+
+        for(int i=0; i<size; i++){
+            String currentString = "space" + i;
+            inOrder[i] = currentString;
+        }
+
+        return inOrder;
+    }
+
 
     private void createSpaces(){
         String spacesFile = myBundle.getString("spacesFile");
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
-        Enumeration<String> spaces = spacesBundle.getKeys();
+        String[] spacesKeys = getSpaceKeys(spacesBundle);
 
-        while(spaces.hasMoreElements()){
-            String currentKey = spaces.nextElement();
+        for(String currentKey: spacesKeys){
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -57,24 +75,24 @@ public class GameSetup {
             else if(currentValue[1].equalsIgnoreCase("U")){
                 currentSpace = makeRR(currentValue[2], false);
             }
-            else if(currentValue[1].equalsIgnoreCase("CH")){
-                currentSpace = makeMoney(currentValue[2]);
-            }
-            else if(currentValue[1].equalsIgnoreCase("CC")){
-                currentSpace = makeMoney(currentValue[2]);
-            }
-            else if(currentValue[1].equalsIgnoreCase("MOV")){
-                currentSpace = makeMoney(currentValue[2]);
-            }
+//            else if(currentValue[1].equalsIgnoreCase("CH")){
+//                do stuff
+//            }
+//            else if(currentValue[1].equalsIgnoreCase("CC")){
+//                do stuff
+//            }
+//            else if(currentValue[1].equalsIgnoreCase("MOV")){
+//                move!
+//            }
             else{
-                currentSpace = makeMoney(currentValue[2]);
+                currentSpace = new CommonSpace();
             }
+
+            spaces.add(currentSpace);
 
         }
 
     }
-
-    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE, WRITE BANK AND DICE(?)
 
     private double[] stringsToDoubles(String[] strings){
         double[] toReturn = new double[strings.length];
@@ -89,6 +107,8 @@ public class GameSetup {
     private Space makeCP(String propFile){
         ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
 
+        String name = cpBundle.getString("name");
+
         double purchaseCost = Double.parseDouble(cpBundle.getString("salePrice"));
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
@@ -96,21 +116,22 @@ public class GameSetup {
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
 
-        return new ColorProperty(purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
+        String name = currentBundle.getString("name");
         double purchaseCost = Double.parseDouble(currentBundle.getString("salePrice"));
         double mortgageValue = Double.parseDouble(currentBundle.getString("mortgage"));
         String[] rentStrings = currentBundle.getString("rents").split(",");
 
         if(isRailroad) {
-            return new Railroad(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
         else{
-            return new Utility(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
     }
 
@@ -125,12 +146,12 @@ public class GameSetup {
     private void createPlayers () {
         double startingBalance = Double.parseDouble(rulesBundle.getString("startingBalance"));
 
-        Enumeration<String> keys = myBundle.getKeys();
+        Enumeration<String> keys = highBundle.getKeys();
 
         while (keys.hasMoreElements()) {
             String nextElement = keys.nextElement();
             if (nextElement.startsWith("player")) {
-                String value = myBundle.getString(nextElement);
+                String value = highBundle.getString(nextElement);
 
                 // create new player, associate piece with that player
                 Player currentPlayer = new Player(value.split(",")[0], value.split(",")[1], startingBalance, myBoard);
@@ -149,7 +170,6 @@ public class GameSetup {
     }
 
     public Queue<Player> getPlayers() {
-
         return players;
     }
 
@@ -178,7 +198,7 @@ public class GameSetup {
     }
 
     public Bank getBank () {
-        String bankString = myBundle.getString("bankBalance");
+        String bankString = rulesBundle.getString("bankBalance");
 
         if(bankString.equals("infinite")){
             return new InfiniteBank(myBoard);
@@ -187,8 +207,5 @@ public class GameSetup {
         else{
             return new Bank(Double.parseDouble(bankString), myBoard);
         }
-
     }
-
 }
-

@@ -1,11 +1,11 @@
 package app.controller;
 
-import app.views.SplashView;
-import app.views.IView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Start extends Application {
+    private MainController myMainController;
+
 
 
     public static void main(String[] args){
@@ -14,14 +14,7 @@ public class Start extends Application {
 
     @Override
     public void start(Stage stage) throws RuntimeException{
-        IView splash = new SplashView();
-
-        stage.setTitle("monopoly_tobe_replaced");
-        stage.setResizable(false);
-        stage.setScene(splash.getMyScene());
-        stage.show();
-
-
+        myMainController = new MainController(stage);
     }
 
 }

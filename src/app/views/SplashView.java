@@ -1,38 +1,40 @@
 package app.views;
 
-import javafx.event.ActionEvent;
+import app.controller.MainController;
+import app.views.popups.GameSettingView;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 
-import javafx.event.EventHandler;
-
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SplashView implements IView {
     private static final int SPLASH_WIDTH = 800;
     private static final int SPLASH_HEIGHT = 800;
 
-    Pane myRoot;
-    Scene myScene;
-    HBox myButtons;
-    HBox myIconContainer;
-    ImageView myIcon;
-    VanillaController myVanillaController;
+    private ButtonMaker myButtonMaker;
 
+    private Pane myRoot;
+    private Scene myScene;
+    private HBox myButtons;
+    private HBox myIconContainer;
+    private ImageView myIcon;
 
+    private Button myStartGame;
+    private Button myLoadGame;
+    private Button myMakeGame;
 
-    public SplashView(){
-        //myVanillaController = vanilla_controller;
+    private MainController myMainController;
+
+    public SplashView(MainController mainController){
+        myMainController = mainController;
         myRoot = new Pane();
+        myButtonMaker = new ButtonMaker();
         setIcon();
         setScene();
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
@@ -51,21 +53,19 @@ public class SplashView implements IView {
         myRoot.getChildren().add(myIconContainer);
     }
 
-    private Button b;
 
     private void setButtons(String property){//later to be done with property
         myButtons = new HBox();
-        b = makeButton("start game");
-        myButtons.getChildren().add();
-        myButtons.getChildren().add(makeButton("Load Game", e-> loadGame()));
-        myButtons.getChildren().add(makeButton("Make Game", e-> makeGame()));
+        myStartGame = myButtonMaker.makeButton("start game", e->this.startGame());
+        myLoadGame = myButtonMaker.makeButton("load game", e->this.loadGame());
+        myMakeGame = myButtonMaker.makeButton("make game", e->this.makeGame());
+        myButtons.getChildren().addAll(myStartGame, myLoadGame, myMakeGame);
         myRoot.getChildren().add(myButtons);
     }
 
-    public void setOnStartGamePressed(EventHandler<ActionEvent> handler) { b.setOnAction(handler); }
 
     private void startGame(){
-        new GameSettingView();
+        new GameSettingView(myMainController);
         System.out.println("start game pressed");
     }
 
@@ -78,18 +78,12 @@ public class SplashView implements IView {
 
     }
 
-    //hard coded for now
-    private Button makeButton(String property, EventHandler<ActionEvent> handler) {
-        var result = new Button();
-        var label = property;
-        result.setText(label);
-        result.setOnAction(handler);
-        return result;
-    }
 
 
-    public Scene getMyScene(){
-        return myScene;
+    public Pane getMyRoot(){
+        return myRoot;
     }
+
+    public Scene getMyScene(){return myScene;}
 
 }

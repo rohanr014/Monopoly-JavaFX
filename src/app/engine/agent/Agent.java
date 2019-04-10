@@ -4,8 +4,14 @@ import app.engine.board.Board;
 
 import java.util.Objects;
 
+import java.util.List;
+
 public abstract class Agent implements IAgentObservable{
- private double wallet;
+    private double wallet;
+    private Board board;
+    private List<IAgentObserver> myObserverList;
+
+
 
     public Agent(double initBalance) {
         wallet = initBalance;
@@ -28,6 +34,7 @@ public abstract class Agent implements IAgentObservable{
     public void setWallet(double m){
         wallet=m;
     }
+
     public double getWallet() {
         return wallet;
     }
@@ -35,17 +42,19 @@ public abstract class Agent implements IAgentObservable{
     //methods required for observer pattern
     @Override
     public void addAgentObserver(IAgentObserver o) {
-
+        myObserverList.add(o);
     }
 
     @Override
     public void removeAgentObserver(IAgentObserver o) {
-
+        myObserverList.add(o);
     }
 
     @Override
     public void notifyAgentObservers() {
-
+        for(IAgentObserver o : myObserverList){
+            o.agentUpdate(wallet, board);
+        }
     }
 
     @Override

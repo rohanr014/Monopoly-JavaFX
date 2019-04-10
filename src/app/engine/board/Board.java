@@ -1,13 +1,15 @@
 package app.engine.board;
 
+import app.engine.Config.GameFileHandler;
 import app.engine.dice.Dice;
-import app.engine.gameSetup.GameSetup;
+import app.engine.Config.GameSetup;
 import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
 import app.engine.card.Card;
 import app.engine.space.Space;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Board implements IBoardObservable{
@@ -20,11 +22,15 @@ public class Board implements IBoardObservable{
     private int doublesCounter;
     private int[] lastRoll;
 
+    private List<IBoardObserver> myObserverList;
     //dice types?
 
-    public Board(String propfile){
-        GameSetup setup = new GameSetup(propfile, this);
+    public Board(String directory, String filename) throws IOException {
+        this(GameFileHandler.getGamedata(directory, filename));
+    }
 
+    public Board(ResourceBundle propertyFile){
+        GameSetup setup = new GameSetup(propertyFile, this);
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
@@ -35,24 +41,23 @@ public class Board implements IBoardObservable{
     }
 
     private void initializeSpaces() {
-        for (Space s: spaces){
-            s.initializeSpace(this);
+        for (Space space: spaces){
+            space.initializeSpace(this);
         }
     }
 
-    public void startTurn(){
-        Player p = players.poll();
+    public void startTurn() {
+        Player player = players.poll();
 
         lastRoll = gameDice.get(0).rollAllDice();
-        move(p, getLastRollSum());
+        move(player, getLastRollSum());
 
-        players.add(p);
+        players.add(player);
 
     }
 
-    public void endTurn(){
+    public void endTurn() {
         doublesCounter = 0;
-
         startTurn();
     }
 
@@ -61,17 +66,16 @@ public class Board implements IBoardObservable{
      * Function to move player to specific space
      */
 
-    public void move(Player p, Space s){
-        var start = p.getCurrentSpace();
-        int spacePosition = spaces.indexOf(s);
-        p.setCurrentSpace(spacePosition);
-        spaces.get(start).removeFromCurrentOccupants(p);
+    public void move(Player player, Space destination) {
+        var start = player.getCurrentSpace();
+        int spacePosition = spaces.indexOf(destination);
+        player.setCurrentSpace(spacePosition);
+        spaces.get(start).removeFromCurrentOccupants(player);
         if (checkForGo(start, spacePosition)){
 //            MAGIC VALUE
-            bank.giveMoney(p, 200);
+            bank.giveMoney(player, 200);
         }
-        s.onLand(p);
-
+        destination.onLand(player);
     }
 
     /**
@@ -79,9 +83,9 @@ public class Board implements IBoardObservable{
      * steps
      */
 
-    public void move(Player p, int steps){
-        var end = p.getCurrentSpace() + steps;
-        move(p, spaces.get(end));
+    public void move(Player player, int steps){
+        var end = player.getCurrentSpace() + steps;
+        move(player, spaces.get(end));
     }
 
     private boolean checkForGo(int start, int spacePosition) {
@@ -96,20 +100,20 @@ public class Board implements IBoardObservable{
         return bank;
     }
 
-    public boolean contains(Agent a) {
-        if (a.equals(bank)) {
+    public boolean contains(Agent agent) {
+        if (agent.equals(bank)) {
             return true;
         }
-        for (Player p: players){
-            if (a.equals(p)){
+        for (Player player: players){
+            if (agent.equals(player)){
                 return true;
             }
         }
         return false;
     }
 
-    public boolean removePlayer(Player p){
-        return players.remove(p);
+    public boolean removePlayer(Player player){
+        return players.remove(player);
     }
 
 
@@ -144,16 +148,21 @@ public class Board implements IBoardObservable{
 
     @Override
     public void addBoardObserver(IBoardObserver o) {
+        myObserverList.add(o);
 
     }
 
     @Override
     public void removeBoardObserver(IBoardObserver o) {
+        myObserverList.remove(o);
 
     }
 
     @Override
     public void notifyBoardObservers() {
+        for(IBoardObserver o : myObserverList){
+            o.boardUpdate();
+        }
 
     }
 
