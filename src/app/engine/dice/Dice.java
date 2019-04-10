@@ -1,8 +1,12 @@
 package app.engine.dice;
 
+import app.engine.board.IBoardObserver;
+
+import java.util.List;
 import java.util.Random;
 
-public class Dice {
+public class Dice  {
+    private List<IDiceObserver> myObserverList;
     private int[] rolls;
     private int[] sidesPerDie;
 
@@ -23,4 +27,23 @@ public class Dice {
         return rolls;
     }
 
+
+    public void addDicedObserver(IDiceObserver o) {
+        myObserverList.add(o);
+
+    }
+
+
+    public void removeDiceObserver(IDiceObserver o) {
+        myObserverList.remove(o);
+
+    }
+
+
+    public void notifyDiceObservers() {
+        for(IDiceObserver observer : myObserverList){
+            observer.diceUpdate(rolls);
+        }
+
+    }
 }

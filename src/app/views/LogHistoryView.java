@@ -1,17 +1,12 @@
 package app.views;
 
-import app.engine.agent.IAgentObserver;
 import javafx.scene.layout.Pane;
 
-public class AgentView implements IAgentObserver, IView {
+public class LogHistoryView implements IView {//to be completed in sprint 2
     private Pane myRoot;
 
-    public AgentView(){
+    public LogHistoryView(){
         myRoot = new Pane();
-    }
-
-    @Override
-    public void agentUpdate() {
 
     }
 

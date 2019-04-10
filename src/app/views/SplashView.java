@@ -17,6 +17,8 @@ public class SplashView implements IView {
     private static final int SPLASH_WIDTH = 800;
     private static final int SPLASH_HEIGHT = 800;
 
+    private ButtonMaker myButtonMaker;
+
     private Pane myRoot;
     private Scene myScene;
     private HBox myButtons;
@@ -33,6 +35,7 @@ public class SplashView implements IView {
     public SplashView(){
         //myVanillaController = vanilla_controller;
         myRoot = new Pane();
+        myButtonMaker = new ButtonMaker();
         setIcon();
         setScene();
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
@@ -45,7 +48,7 @@ public class SplashView implements IView {
 
     private void setIcon(){
         myIconContainer = new HBox();
-        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Vanilla/Monopoly_logo.png")));
+        myIcon = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
         myIconContainer.getChildren().add(myIcon);
         myIconContainer.setAlignment(Pos.CENTER);
         myRoot.getChildren().add(myIconContainer);
@@ -54,9 +57,9 @@ public class SplashView implements IView {
 
     private void setButtons(String property){//later to be done with property
         myButtons = new HBox();
-        myStartGame = makeButton("start game", e->this.startGame());
-        myLoadGame = makeButton("load game", e->this.loadGame());
-        myMakeGame = makeButton("make game", e->this.makeGame());
+        myStartGame = myButtonMaker.makeButton("start game", e->this.startGame());
+        myLoadGame = myButtonMaker.makeButton("load game", e->this.loadGame());
+        myMakeGame = myButtonMaker.makeButton("make game", e->this.makeGame());
         myButtons.getChildren().addAll(myStartGame, myLoadGame, myMakeGame);
         myRoot.getChildren().add(myButtons);
     }
@@ -76,19 +79,6 @@ public class SplashView implements IView {
 
     }
 
-    //hard coded for now
-    private Button makeButton(String property, EventHandler<ActionEvent> handler) {
-        var result = new Button();
-        var label = property;
-        result.setText(label);
-        result.setOnAction(handler);
-        return result;
-    }
-
-    private Button makeButton(String property){
-        var result = new Button(property);
-        return result;
-    }
 
 
     public Pane getMyRoot(){

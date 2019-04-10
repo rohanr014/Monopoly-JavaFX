@@ -20,6 +20,7 @@ public class Board implements IBoardObservable{
     private int doublesCounter;
     private int[] lastRoll;
 
+    private List<IBoardObserver> myObserverList;
     //dice types?
 
     public Board(String propfile){
@@ -142,16 +143,21 @@ public class Board implements IBoardObservable{
 
     @Override
     public void addBoardObserver(IBoardObserver o) {
+        myObserverList.add(o);
 
     }
 
     @Override
     public void removeBoardObserver(IBoardObserver o) {
+        myObserverList.remove(o);
 
     }
 
     @Override
     public void notifyBoardObservers() {
+        for(IBoardObserver o : myObserverList){
+            o.boardUpdate();
+        }
 
     }
 
