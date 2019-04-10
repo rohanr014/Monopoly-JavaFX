@@ -1,20 +1,15 @@
-package app.engine.GameSetup;
+package app.engine.gameSetup;
 
-import app.Dice.Dice;
+import app.engine.dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.card.Card;
 import app.engine.space.*;
+import org.w3c.dom.ls.LSResourceResolver;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import java.util.Enumeration;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class GameSetup {
 
@@ -22,7 +17,7 @@ public class GameSetup {
     private ResourceBundle rulesBundle;
 
     private Queue<Player> players;
-    private ArrayList<Space> spaces;
+    private List<Space> spaces;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -30,20 +25,26 @@ public class GameSetup {
     private Board myBoard;
 
     public GameSetup(String propFile, Board b) {
-        myBundle = ResourceBundle.getBundle(propFile);
+        ResourceBundle highBundle = ResourceBundle.getBundle(propFile);
+        myBundle = ResourceBundle.getBundle(highBundle.getString("prop_file"));
         rulesBundle = ResourceBundle.getBundle(myBundle.getString("rules_file"));
         myBoard = b;
+
+        players = new LinkedList<Player>();
+        spaces = new ArrayList<Space>();
+
         createPlayers();
+        createSpaces();
 
     }
 
     private void createSpaces(){
         String spacesFile = myBundle.getString("spacesFile");
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
-        Enumeration<String> spaces = spacesBundle.getKeys();
+        Enumeration<String> spacesList = spacesBundle.getKeys();
 
-        while(spaces.hasMoreElements()){
-            String currentKey = spaces.nextElement();
+        while(spacesList.hasMoreElements()){
+            String currentKey = spacesList.nextElement();
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -69,12 +70,11 @@ public class GameSetup {
             else{
                 currentSpace = makeMoney(currentValue[2]);
             }
+            spaces.add(currentSpace);
 
         }
 
     }
-
-    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE, WRITE BANK AND DICE(?)
 
     private double[] stringsToDoubles(String[] strings){
         double[] toReturn = new double[strings.length];
@@ -191,6 +191,5 @@ public class GameSetup {
         }
 
     }
-
 }
 
