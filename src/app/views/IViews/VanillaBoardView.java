@@ -28,21 +28,38 @@ public class VanillaBoardView extends BoardView {
 
     private void initialize(){
         mySpaces = myBoard.getSpaces();
-        int i = 0;
+
         for(Space space : mySpaces){
             var list = space.getClass().toString().split(" ");//bad code
             var list2 = list[1].split("space.");
             var className = list2[1];
             mySpaceViews.add(new ColorPropertyView(className));
         }
-
+        int i =0;
         for(ColorPropertyView sv : mySpaceViews){
-            System.out.println(i);
+
+            setLocation(i, sv.initialize());
+
             myRoot.getChildren().add(sv.initialize());
-            i++;
+
         }
     }
 
+    private void setLocation(int index, Pane pane){
+        if(index<10) {
+
+            
+        }
+        else if(index>=10&&index<20){
+
+        }
+        else if(index>=20 && index<30){
+
+        }
+        else{
+
+        }
+    }
     private void createSpaceViews(){
 
     }
