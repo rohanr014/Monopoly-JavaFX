@@ -154,7 +154,7 @@ public class GameSetup {
                 String value = highBundle.getString(nextElement);
 
                 // create new player, associate piece with that player
-                Player currentPlayer = new Player(value.split(",")[0], value.split(",")[1], startingBalance, myBoard);
+                Player currentPlayer = new Player(value.split(",")[0], value.split(",")[1], startingBalance);
                 players.add(currentPlayer);
 
             }
