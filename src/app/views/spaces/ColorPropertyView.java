@@ -39,6 +39,8 @@ public class ColorPropertyView extends SpaceView{
 
     }
 
+    public Pane getMyRoot(){return myRoot;}
+
     @Override
     public void spaceUpdate() {
 
