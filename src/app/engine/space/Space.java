@@ -38,6 +38,10 @@ public abstract class Space implements ISpaceObservable {
         currentOccupants.remove(occupant);
     }
 
+    public boolean containsPlayer(Player player) {
+        return (currentOccupants.contains(player));
+    }
+
     @Override
     public void addSpaceObserver(ISpaceObserver o){}
 
