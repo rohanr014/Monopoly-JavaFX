@@ -15,9 +15,9 @@ class BoardTest {
         b = new Board(s);
     }
 
-
     @Test
     void startTurn() {
+
     }
 
     @Test
