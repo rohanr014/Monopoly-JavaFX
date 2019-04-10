@@ -1,6 +1,7 @@
-package app.views;
+package app.views.popups;
 
 
+import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 
 public class LogView extends PopUpView {
@@ -10,7 +11,7 @@ public class LogView extends PopUpView {
     }
     @Override
     protected Scene myScene(){
-
+        return null;
     }
 
 

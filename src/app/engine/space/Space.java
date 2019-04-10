@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Space implements ISpaceObservable {
     private List<Player> currentOccupants;
-    private Board board;
+    private Board gameBoard;
 
     public Space(){
         currentOccupants = new ArrayList<>();
@@ -24,18 +24,18 @@ public abstract class Space implements ISpaceObservable {
         invokeAction(p);
     }
 
-    public void initializeSpace(Board b){
-        board = b;
+    public void initializeSpace(Board board){
+        gameBoard = board;
     }
 
-    protected abstract void invokeAction(Player p);
+    protected abstract void invokeAction(Player occupant);
 
-    private void addToCurrentOccupants(Player p) {
-        currentOccupants.add(p);
+    private void addToCurrentOccupants(Player occupant) {
+        currentOccupants.add(occupant);
     }
 
-    public void removeFromCurrentOccupants(Player p){
-        currentOccupants.remove(p);
+    public void removeFromCurrentOccupants(Player occupant){
+        currentOccupants.remove(occupant);
     }
 
     @Override

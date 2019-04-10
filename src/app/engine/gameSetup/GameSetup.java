@@ -1,19 +1,15 @@
-package app.engine;
+package app.engine.gameSetup;
 
+import app.engine.dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.card.Card;
 import app.engine.space.*;
+import org.w3c.dom.ls.LSResourceResolver;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import java.util.Enumeration;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class GameSetup {
 
@@ -21,7 +17,7 @@ public class GameSetup {
     private ResourceBundle rulesBundle;
 
     private Queue<Player> players;
-    private ArrayList<Space> spaces;
+    private List<Space> spaces;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -29,20 +25,26 @@ public class GameSetup {
     private Board myBoard;
 
     public GameSetup(String propFile, Board b) {
-        myBundle = ResourceBundle.getBundle(propFile);
+        ResourceBundle highBundle = ResourceBundle.getBundle(propFile);
+        myBundle = ResourceBundle.getBundle(highBundle.getString("prop_file"));
         rulesBundle = ResourceBundle.getBundle(myBundle.getString("rules_file"));
         myBoard = b;
+
+        players = new LinkedList<Player>();
+        spaces = new ArrayList<Space>();
+
         createPlayers();
+        createSpaces();
 
     }
 
     private void createSpaces(){
         String spacesFile = myBundle.getString("spacesFile");
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
-        Enumeration<String> spaces = spacesBundle.getKeys();
+        Enumeration<String> spacesList = spacesBundle.getKeys();
 
-        while(spaces.hasMoreElements()){
-            String currentKey = spaces.nextElement();
+        while(spacesList.hasMoreElements()){
+            String currentKey = spacesList.nextElement();
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -68,12 +70,11 @@ public class GameSetup {
             else{
                 currentSpace = makeMoney(currentValue[2]);
             }
+            spaces.add(currentSpace);
 
         }
 
     }
-
-    // TODO: ADD NAMES TO CONSTRUCTORS, FINISH WRITING PROPERTIES FILES FOR EACH SPACE, WRITE BANK AND DICE(?)
 
     private double[] stringsToDoubles(String[] strings){
         double[] toReturn = new double[strings.length];
@@ -88,6 +89,7 @@ public class GameSetup {
     private Space makeCP(String propFile){
         ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
 
+        String name = cpBundle.getString("name");
         double purchaseCost = Double.parseDouble(cpBundle.getString("salePrice"));
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
@@ -95,21 +97,22 @@ public class GameSetup {
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
 
-        return new ColorProperty(purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
+        String name = currentBundle.getString("name");
         double purchaseCost = Double.parseDouble(currentBundle.getString("salePrice"));
         double mortgageValue = Double.parseDouble(currentBundle.getString("mortgage"));
         String[] rentStrings = currentBundle.getString("rents").split(",");
 
         if(isRailroad) {
-            return new Railroad(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
         else{
-            return new Utility(purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
         }
     }
 
@@ -158,7 +161,7 @@ public class GameSetup {
 
     }
 
-    public Dice getDice () {
+    public List<Dice> getDice () {
         String[] diceString = rulesBundle.getString("dice").split(",");
 
         int[] diceNumbers = new int[diceString.length];
@@ -167,7 +170,13 @@ public class GameSetup {
             diceNumbers[i] = Integer.parseInt(diceString[i]);
         }
 
-        return new Dice(diceNumbers);
+//        TEMP FIX
+        var d = new Dice(diceNumbers);
+        var list = new ArrayList<Dice>();
+        list.add(d);
+//        TEMP FIX
+
+        return list;
     }
 
     public Bank getBank () {
@@ -182,6 +191,5 @@ public class GameSetup {
         }
 
     }
-
 }
 

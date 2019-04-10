@@ -1,4 +1,4 @@
-package app.engine;
+package app.engine.dice;
 
 import java.util.Random;
 
