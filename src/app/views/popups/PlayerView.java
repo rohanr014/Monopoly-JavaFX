@@ -1,5 +1,6 @@
 package app.views.popups;
 
+import app.controller.MainController;
 import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ import java.util.ResourceBundle;
 
 
 public class PlayerView extends PopUpView {
+    private final static int WIDTH = 400;
+    private final static int HEIGHT = 600;
     private VBox myRoot;
     private Scene myScene;
     private Button mySubmitButton;
@@ -24,9 +27,11 @@ public class PlayerView extends PopUpView {
     private int myNumberPlayers;
     ResourceBundle myBundle;
     private ComboBox<String> myGameOptions;
+    private MainController myMainController;
 
-    public PlayerView(){
+    public PlayerView(MainController main_controller){
         super("player setting");
+        myMainController = main_controller;
         System.out.println("Player setting called");
     }
 
@@ -43,14 +48,11 @@ public class PlayerView extends PopUpView {
 
     private TextField setPlayerEditable(){
         myName = new TextField();
-        myName.setOnAction(e->submit());
         myRoot.getChildren().add(myName);
         return myName;
 
     }
-    private void submit(){
 
-    }
 
     private ComboBox<String> setGamePieceOptions(){
         myGameOptions = new ComboBox<>();
@@ -78,10 +80,6 @@ public class PlayerView extends PopUpView {
     }
 
 
-
-
-
-
     private void setSubmitButton() {
         mySubmitButton = new Button("Submit");
         mySubmitButton.setOnAction(e->handleSubmit());
@@ -89,13 +87,17 @@ public class PlayerView extends PopUpView {
     }
 
     private void handleSubmit(){
+        ArrayList<String> tempNames = new ArrayList<>();
+        ArrayList<String> tempPiece = new ArrayList<>();
         for (TextField player: myNames){
-            System.out.println(player.getCharacters().toString());
+            tempNames.add(player.getCharacters().toString());
         }
         for (ComboBox<String> choice: myGamePieceChoices){
-            System.out.println(choice.getValue());
+            tempPiece.add(choice.getValue());
         }
 
+        super.getMyStage().close();
+        myMainController.setPlayerInfo(tempNames, tempPiece);
 
     }
 
@@ -105,7 +107,7 @@ public class PlayerView extends PopUpView {
         myRoot = new VBox();
         setPlayerTypes();
         setSubmitButton();
-        myScene = new Scene(myRoot);
+        myScene = new Scene(myRoot, WIDTH, HEIGHT);
         return myScene;
     }
 
