@@ -40,7 +40,7 @@ public class AgentView implements IAgentObserver, IView {
 
 
     @Override
-    public void agentUpdate(double wallet, Board board) {//why does this need board as an input?
+    public void agentUpdate(double wallet) {//why does this need board as an input?
 
     }
 

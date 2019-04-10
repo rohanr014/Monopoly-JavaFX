@@ -16,8 +16,8 @@ public class Player extends Bank{
     private int currentSpace;
 
 
-    public Player(String playerName, String file, double initBalance, Board board){
-        super(initBalance, board);
+    public Player(String playerName, String file, double initBalance){
+        super(initBalance);
         name = playerName;
         pieceFile = file;
         properties = new ArrayList<>();

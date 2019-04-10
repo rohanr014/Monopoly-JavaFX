@@ -1,10 +1,8 @@
 package app.engine.agent;
 
-import app.engine.board.Board;
-
 public class InfiniteBank extends Bank {
-    public InfiniteBank(Board b) {
-        super(0, b);
+    public InfiniteBank() {
+        super(0);
     }
 
     @Override

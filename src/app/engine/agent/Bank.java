@@ -4,8 +4,8 @@ import app.engine.board.Board;
 
 public class Bank extends Agent{
 
-    public Bank(double initBalance, Board b) {
-        super(initBalance, b);
+    public Bank(double initBalance) {
+        super(initBalance);
     }
 
     @Override

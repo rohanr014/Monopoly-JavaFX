@@ -154,7 +154,7 @@ public class GameSetup {
                 String value = highBundle.getString(nextElement);
 
                 // create new player, associate piece with that player
-                Player currentPlayer = new Player(value.split(",")[0], value.split(",")[1], startingBalance, myBoard);
+                Player currentPlayer = new Player(value.split(",")[0], value.split(",")[1], startingBalance);
                 players.add(currentPlayer);
 
             }
@@ -201,11 +201,11 @@ public class GameSetup {
         String bankString = rulesBundle.getString("bankBalance");
 
         if(bankString.equals("infinite")){
-            return new InfiniteBank(myBoard);
+            return new InfiniteBank();
         }
 
         else{
-            return new Bank(Double.parseDouble(bankString), myBoard);
+            return new Bank(Double.parseDouble(bankString));
         }
     }
 }
