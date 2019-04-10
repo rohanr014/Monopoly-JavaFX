@@ -2,8 +2,8 @@ package app.controller;
 
 import app.engine.Config.GameFileHandler;
 import app.engine.board.Board;
-import app.views.MainView;
-import app.views.SplashView;
+import app.views.IViews.MainView;
+import app.views.IViews.SplashView;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;

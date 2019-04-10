@@ -1,6 +1,7 @@
-package app.views;
+package app.views.IViews;
 
 import app.controller.MainController;
+import app.views.utility.ButtonMaker;
 import app.views.popups.GameSettingView;
 
 import javafx.geometry.Pos;

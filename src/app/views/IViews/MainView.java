@@ -1,7 +1,11 @@
-package app.views;
+package app.views.IViews;
 
 
 import app.engine.board.Board;
+import app.views.IViews.AssetView;
+import app.views.IViews.ControlView;
+import app.views.IViews.LogHistoryView;
+import app.views.IViews.VanillaBoardView;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
@@ -22,7 +26,7 @@ public class MainView{
 
     private void setComponents(){
         myRoot.setCenter(new VanillaBoardView(myBoard).getMyRoot());
-        myRoot.setRight(new AssetView().getMyRoot());
+        myRoot.setRight(new AssetView(myBoard).getMyRoot());
         myRoot.setTop(new ControlView().getMyRoot());
         myRoot.setBottom(new LogHistoryView().getMyRoot());
     }

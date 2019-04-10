@@ -1,14 +1,19 @@
-package app.views;
+package app.views.IViews;
 
+import app.engine.board.Board;
+import app.views.IViews.AgentView;
+import app.views.IViews.IView;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class AssetView implements IView {
     private Pane myRoot;
+    private Board myBoard;
 
-    public AssetView(){
+    public AssetView(Board board){
         myRoot = new Pane();
+        myBoard = board;
         setRoot();
     }
 

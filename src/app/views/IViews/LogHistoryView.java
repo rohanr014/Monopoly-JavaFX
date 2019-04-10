@@ -1,5 +1,6 @@
-package app.views;
+package app.views.IViews;
 
+import app.views.IViews.IView;
 import javafx.scene.layout.Pane;
 
 public class LogHistoryView implements IView {//to be completed in sprint 2

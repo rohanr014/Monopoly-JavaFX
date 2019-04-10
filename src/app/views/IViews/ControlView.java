@@ -1,7 +1,8 @@
-package app.views;
+package app.views.IViews;
 
 
 import app.engine.dice.IDiceObserver;
+import app.views.utility.ButtonMaker;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
