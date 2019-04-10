@@ -35,11 +35,7 @@ public class Board implements IBoardObservable{
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
         spaces = Collections.unmodifiableList(setup.getSpaces());
-        int i = 0;
-        for (Space space : spaces){
-            System.out.println(i);
-            i++;
-        }
+
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();

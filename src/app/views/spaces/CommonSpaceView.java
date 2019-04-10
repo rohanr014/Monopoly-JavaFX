@@ -2,14 +2,15 @@ package app.views.spaces;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
-public class CommonSpaceView extends SpaceView{
+abstract class CommonSpaceView extends SpaceView{
 
     private Pane myRoot;
 
     @Override
     public Pane initialize(){
-        myRoot = new GridPane();
+        myRoot = new VBox();
         myRoot.setStyle("-fx-background-color: beige;");
 
        return myRoot;
