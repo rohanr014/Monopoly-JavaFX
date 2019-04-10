@@ -1,10 +1,20 @@
 package app.engine.board;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+
+    Board b;
+
+    @BeforeAll
+    void setup(){
+        var s = "sampleGameSetup.properties";
+        b = new Board(s);
+    }
+
 
     @Test
     void startTurn() {
