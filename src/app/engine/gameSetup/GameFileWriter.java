@@ -20,7 +20,7 @@ public class GameFileWriter {
         this.gamePieces = playerPieces;
         this.propFile = propFile;
 
-        this.rulesFile = "vanillaRules";
+        this.rulesFile = "Vanilla/vanillaRules";
         // eventually - this.rulesFile = rulesFile;
 
         writePropertiesFile();
@@ -28,7 +28,7 @@ public class GameFileWriter {
 
     private void writePropertiesFile(){
         try {
-            File file = new File("data/" + filename + ".properties");
+            File file = new File("data/Vanilla/" + filename + ".properties");
             file.createNewFile();
 
             var output = new BufferedWriter(new FileWriter(file));
