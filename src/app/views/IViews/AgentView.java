@@ -1,7 +1,8 @@
-package app.views;
+package app.views.IViews;
 
 import app.engine.agent.IAgentObserver;
 import app.engine.board.Board;
+
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
