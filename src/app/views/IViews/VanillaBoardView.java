@@ -2,10 +2,8 @@ package app.views.IViews;
 
 
 import app.engine.board.Board;
-
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
 
 public class VanillaBoardView extends BoardView {
     private Pane myRoot;
@@ -16,6 +14,8 @@ public class VanillaBoardView extends BoardView {
         myRoot.setStyle("-fx-background-color: green;");
         myBoard = board;
     }
+
+
 
 
     @Override

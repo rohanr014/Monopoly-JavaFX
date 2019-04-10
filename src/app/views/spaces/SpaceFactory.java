@@ -1,14 +1,19 @@
 package app.views.spaces;
 
 
+import javafx.scene.image.ImageView;
 
-//public class SpaceFactory {
-//    private ImageView piece1;
+import java.util.List;
+
+public class SpaceFactory {
+
+//    private List<ImageView> myImageViewList;
+//
 //    public SpaceFactory() {
 //
 //    }
 //
-//    public SpaceView gen(Model model) {
+//    public SpaceView createSpace(Board board) {
 //        if(model.qwef) {
 //            return makeCorner();
 //        }
@@ -28,5 +33,5 @@ package app.views.spaces;
 //            }
 //        };
 //    }
-//}
+}
 

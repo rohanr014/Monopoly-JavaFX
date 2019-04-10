@@ -18,7 +18,6 @@ public class SplashView implements IView {
     private static final int SPLASH_WIDTH = 800;
     private static final int SPLASH_HEIGHT = 800;
 
-    private ButtonMaker myButtonMaker;
 
     private Pane myRoot;
     private Scene myScene;
@@ -35,7 +34,7 @@ public class SplashView implements IView {
     public SplashView(MainController mainController){
         myMainController = mainController;
         myRoot = new Pane();
-        myButtonMaker = new ButtonMaker();
+
         setIcon();
         setScene();
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
@@ -57,9 +56,9 @@ public class SplashView implements IView {
 
     private void setButtons(String property){//later to be done with property
         myButtons = new HBox();
-        myStartGame = myButtonMaker.makeButton("start game", e->this.startGame());
-        myLoadGame = myButtonMaker.makeButton("load game", e->this.loadGame());
-        myMakeGame = myButtonMaker.makeButton("make game", e->this.makeGame());
+        myStartGame = ButtonMaker.makeButton("start game", e->this.startGame());
+        myLoadGame = ButtonMaker.makeButton("load game", e->this.loadGame());
+        myMakeGame = ButtonMaker.makeButton("make game", e->this.makeGame());
         myButtons.getChildren().addAll(myStartGame, myLoadGame, myMakeGame);
         myRoot.getChildren().add(myButtons);
     }

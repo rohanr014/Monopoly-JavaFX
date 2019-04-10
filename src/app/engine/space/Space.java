@@ -45,7 +45,7 @@ public abstract class Space implements ISpaceObservable {
     public void removeSpaceObserver(ISpaceObserver o){}
 
     @Override
-    public void notifySpaceObservers(){};
+    public void notifySpaceObservers(){}
 
 
 }

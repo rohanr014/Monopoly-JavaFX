@@ -6,10 +6,7 @@ import javafx.scene.control.Button;
 
 public class ButtonMaker {
 
-    public ButtonMaker(){
-    }
-
-    public Button makeButton(String property, EventHandler<ActionEvent> handler) {
+    public static Button makeButton(String property, EventHandler<ActionEvent> handler) {
         var result = new Button();
         var label = property;
         result.setText(label);

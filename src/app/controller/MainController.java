@@ -4,8 +4,10 @@ import app.engine.Config.GameFileHandler;
 import app.engine.board.Board;
 import app.views.IViews.MainView;
 import app.views.IViews.SplashView;
+import app.views.spaces.CommonSpaceView;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -24,10 +26,11 @@ public class MainController {
 
     public MainController(Stage stage){
         mySplashView = new SplashView(this);
+        CommonSpaceView csp = new CommonSpaceView();
         myStage = stage;
         myStage.setTitle("monopoly_tobe_replaced");
         myStage.setResizable(false);
-        myStage.setScene(mySplashView.getMyScene());
+        myStage.setScene(new Scene(csp.initialize(), 300, 450, Color.CYAN));
         myStage.show();
     }
 
