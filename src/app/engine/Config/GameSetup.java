@@ -201,11 +201,11 @@ public class GameSetup {
         String bankString = rulesBundle.getString("bankBalance");
 
         if(bankString.equals("infinite")){
-            return new InfiniteBank(myBoard);
+            return new InfiniteBank();
         }
 
         else{
-            return new Bank(Double.parseDouble(bankString), myBoard);
+            return new Bank(Double.parseDouble(bankString));
         }
     }
 }
