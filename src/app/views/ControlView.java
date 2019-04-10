@@ -20,10 +20,10 @@ public class ControlView implements IView, IDiceObserver {
         myRoot = new Pane();
         myButtonMaker = new ButtonMaker();
         diceValue = 0;
-        setButtons();
+        setRoot();
     }
 
-    private void setButtons(){
+    private void setRoot(){
         var tempPane = new HBox();
         tempPane.getChildren().add(myButtonMaker.makeButton("Sell", e->pressedSell()));
         tempPane.getChildren().add(myButtonMaker.makeButton("Buy", e->pressedBuy()));

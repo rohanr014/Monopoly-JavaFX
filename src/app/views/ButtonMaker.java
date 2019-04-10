@@ -5,8 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class ButtonMaker {
-    public ButtonMaker(){
 
+    public ButtonMaker(){
     }
 
     public Button makeButton(String property, EventHandler<ActionEvent> handler) {

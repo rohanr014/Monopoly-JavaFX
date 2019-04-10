@@ -18,7 +18,7 @@ public class MainView{
 
     private void setComponents(){
         myRoot.setCenter(new VanillaBoardView().getMyRoot());
-        myRoot.setRight(new AgentView().getMyRoot());
+        myRoot.setRight(new AssetView().getMyRoot());
         myRoot.setTop(new ControlView().getMyRoot());
         myRoot.setBottom(new LogHistoryView().getMyRoot());
     }

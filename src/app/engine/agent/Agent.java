@@ -34,6 +34,7 @@ public abstract class Agent implements IAgentObservable{
     public void setWallet(double m){
         wallet=m;
     }
+
     public double getWallet() {
         return wallet;
     }
@@ -57,7 +58,7 @@ public abstract class Agent implements IAgentObservable{
     @Override
     public void notifyAgentObservers() {
         for(IAgentObserver o : myObserverList){
-            o.agentUpdate();
+            o.agentUpdate(wallet, board);
         }
     }
 
