@@ -19,9 +19,9 @@ public abstract class Space implements ISpaceObservable {
      * lands on it
      * @param p player to perform the action upon
      */
-    public void onLand(Player p){
-        addToCurrentOccupants(p);
-        invokeAction(p);
+    public void onLand(Player occupant){
+        addToCurrentOccupants(occupant);
+        invokeAction(occupant);
     }
 
     public void initializeSpace(Board board){

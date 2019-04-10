@@ -45,9 +45,7 @@ public class Board implements IBoardObservable{
 
         lastRoll = gameDice.get(0).rollAllDice();
         move(player, getLastRollSum());
-
         players.add(player);
-
     }
 
     public void endTurn() {

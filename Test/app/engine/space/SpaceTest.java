@@ -6,8 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceTest {
 
+    @beforeAll
+    Board testBoard = new Board("sampleGameSetup");
+
     @Test
     void onLand() {
+        testBoard.get
     }
 
     @Test
