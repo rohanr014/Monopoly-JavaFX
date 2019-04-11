@@ -51,21 +51,53 @@ public class Board implements IBoardObservable{
         Player player = players.poll();
 
         if (player.isInJail()){
+            handleJail(player);
+        }
+
+        rollDice(player);
+        players.add(player);
+    }
+
+    private void handleJail(Player player) {
 //            Prompt player to pay JAIL_FEE, use Get Out Of Jail Free Card, or Roll for doubles
 //            if they fail to roll doubles and player.getNumTurnsInJail()<MAX_JAIL_TURNS (i.e. 3)
 //            then they stay in jail. If player.getNumTurnsInJail()>=MAX_JAIL_TURNS, then they leave jail
 //            and are forced to pay the JAIL_FEE
-        }
+    }
 
-        players.add(player);
+    public void endTurn(Player player) {
+        doublesCounter = 0;
+        handleBankruptcy(player);
+        checkWin();
+        startTurn();
+    }
+
+    private boolean handleBankruptcy(Player player) {
+        if (player.getWallet()<0){
+            removePlayer(player);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkWin() {
+        if (players.size()==1){
+            System.out.println(players.poll().getName() + " wins!");
+            return true;
+        }
+        return false;
     }
 
 
     public int[] rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
+
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
+            if (isDoubles(lastRoll)){
+                doublesCounter++;
+            }
             move(player, getLastRollSum());
         }
         return lastRoll;
@@ -87,10 +119,7 @@ public class Board implements IBoardObservable{
         return true;
     }
 
-    public void endTurn() {
-        doublesCounter = 0;
-        startTurn();
-    }
+
 
 
     /**
@@ -144,6 +173,7 @@ public class Board implements IBoardObservable{
     }
 
 
+    //prob could be refactored into Property
     public double getSellPrice(double purchaseCost) {
         return purchaseCost / getSellToBankModifier();
     }
@@ -156,6 +186,7 @@ public class Board implements IBoardObservable{
         return spaces.indexOf(space);
     }
 
+//    /seems like maybe should be in a dice class? Maybe a static dice helper class?
     public int getLastRollSum() {
         int sum = 0;
         for (int x: lastRoll){
