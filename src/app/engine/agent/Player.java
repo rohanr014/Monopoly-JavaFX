@@ -1,6 +1,5 @@
 package app.engine.agent;
 
-import app.engine.board.Board;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
@@ -13,7 +12,9 @@ public class Player extends Bank{
     private String pieceFile;
     private List<Property> properties;
     private List<HoldableCard> cards;
-    private int currentSpace;
+    private int currentSpace = 0;
+    private boolean inJail = false;
+    private int numTurnsInJail = 0;
 
 
     public Player(String playerName, String file, double initBalance){
@@ -22,7 +23,6 @@ public class Player extends Bank{
         pieceFile = file;
         properties = new ArrayList<>();
         cards = new ArrayList<>();
-        currentSpace = 0;
     }
 
     //player mortgages p, returns false if method fails
@@ -88,5 +88,22 @@ public class Player extends Bank{
 
     public String getPieceFile() {
         return pieceFile;
+    }
+
+    public boolean isInJail() {
+        return inJail;
+    }
+
+    public void setIsInJail(boolean b) {
+        inJail = b;
+        numTurnsInJail = 0;
+    }
+
+    public void addToTurnsInJail(){
+        numTurnsInJail++;
+    }
+
+    public int getNumTurnsInJail() {
+        return numTurnsInJail;
     }
 }

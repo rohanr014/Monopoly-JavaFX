@@ -48,4 +48,7 @@ public abstract class Space implements ISpaceObservable {
     public void notifySpaceObservers(){}
 
 
+    public Board getBoard() {
+        return gameBoard;
+    }
 }

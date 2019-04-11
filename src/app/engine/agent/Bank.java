@@ -9,10 +9,10 @@ public class Bank extends Agent{
     }
 
     @Override
-    public boolean giveMoney(Agent a, double m){
+    public boolean giveMoney(Agent agent, double m){
         if (getWallet()<m)
             return false;
-        a.addToWallet(m);
+        agent.addToWallet(m);
         setWallet(getWallet()-m);
         return true;
 //        MORE LOGIC FOR BANKRUPTING
