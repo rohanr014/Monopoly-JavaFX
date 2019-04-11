@@ -137,12 +137,6 @@ public class Property extends Space implements Asset {
         return board;
     }
 
-
-    @Override
-    public String getMyPropertyName(){
-        return null;
-    }
-
     public double getMortgageValue() {
         return mortgageValue;
     }

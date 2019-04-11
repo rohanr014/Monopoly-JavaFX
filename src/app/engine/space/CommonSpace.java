@@ -34,8 +34,4 @@ public class CommonSpace extends Space{
         return amountMoney;
     }
 
-    @Override
-    public String getMyPropertyName(){
-        return myName;
-    }
 }
