@@ -38,7 +38,7 @@ public class VanillaBoardView extends BoardView {
             var list = space.getClass().toString().split(" ");//bad code
             var list2 = list[1].split("space.");
             var className = list2[1];
-            mySpaceViews.add(mySpaceFactory.createSpace(className, space.getMyPropertyName()));
+            mySpaceViews.add(mySpaceFactory.createSpace(className, space.getName()));
         }
 
 
