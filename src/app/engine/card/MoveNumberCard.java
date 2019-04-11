@@ -1,17 +1,24 @@
 package app.engine.card;
 
 import app.engine.agent.Player;
+import app.engine.board.Board;
 
-public class MoveNumberCard extends ImmediateCard {
+import java.util.List;
+
+public class MoveNumberCard extends Card {
     private int spaces;
+    private Board b;
+    private String description;
 
-    public MoveNumberCard(int spaces){
+    public MoveNumberCard(String desc, Board b, int spaces){
+        super(desc, b);
         this.spaces = spaces;
     }
 
     @Override
     public void invokeAction(Player currentOccupant) {
-        // move spaces...?
+        Board board = getBoard();
+        board.move(currentOccupant, spaces);
     }
 
     @Override
