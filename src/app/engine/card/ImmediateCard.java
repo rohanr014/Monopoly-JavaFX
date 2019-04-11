@@ -2,20 +2,12 @@ package app.engine.card;
 
 import app.engine.agent.Player;
 
-public class ImmediateCard extends Card {
-
-    public ImmediateCard(){
-
-    }
+public abstract class ImmediateCard extends Card {
 
     @Override
-    public void invokeAction(Player currentOccupant) {
-
-    }
+    public abstract void invokeAction(Player currentOccupant);
 
     @Override
-    public void useCard(Player currentOccupant) {
-
-    }
+    public abstract void useCard(Player currentOccupant);
 
 }
