@@ -1,12 +1,11 @@
 package app.engine.Config;
 
-import app.engine.card.HoldableCard;
+import app.engine.card.*;
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
-import app.engine.card.Card;
 import app.engine.space.*;
 
 import java.io.IOException;
@@ -190,17 +189,23 @@ public class GameSetup {
             String[] valueSplit = chestBundle.getString(key).split(",");
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
-                // make new money card
+                String amount = valueSplit[2];
+                tempCard = new MoneyCard(Double.parseDouble(amount));
+                toBeReturned.add(tempCard);
             }
+
             else if(valueSplit[1].equalsIgnoreCase("MOV")){
-                // make new move card
+                tempCard = new MoveSpaceCard(valueSplit[2]);
             }
+
+            else if(valueSplit[1].equalsIgnoreCase("MOVN")){
+                tempCard = new MoveNumberCard(Integer.parseInt(valueSplit[2]));
+            }
+
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
                 tempCard = new HoldableCard();
                 toBeReturned.add(tempCard);
             }
-
-
         }
 
         return toBeReturned;
