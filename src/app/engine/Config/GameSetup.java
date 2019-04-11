@@ -19,6 +19,8 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
+    private List<Card> communityChest;
+    private List<Card> chance;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -37,9 +39,14 @@ public class GameSetup {
 
         players = new LinkedList<Player>();
         spaces = new ArrayList<Space>();
+        communityChest = new ArrayList<Card>();
+        chance = new ArrayList<Card>();
 
         createPlayers();
         createSpaces();
+
+        // use communityCards and chanceCards as arguments for makePerkCards
+
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -158,6 +165,29 @@ public class GameSetup {
                 players.add(currentPlayer);
 
             }
+        }
+    }
+
+    private void makePerkCards(String keyName){
+        ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
+
+        // order not really necessary here, so sticking with enumeration data structure and directly adding
+        // to ArrayList
+
+        for(String key:chestBundle.keySet()){
+            String[] valueSplit = chestBundle.getString(key).split(",");
+
+            if(valueSplit[1].equalsIgnoreCase("MON")){
+                // make new money card
+            }
+            else if(valueSplit[1].equalsIgnoreCase("MOV")){
+                // make new move card
+            }
+            else if(valueSplit[1].equalsIgnoreCase("HOLD")){
+                // make new holdable card
+            }
+
+
         }
     }
 

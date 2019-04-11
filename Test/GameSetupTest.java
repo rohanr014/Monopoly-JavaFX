@@ -1,5 +1,3 @@
-package test;
-
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.engine.dice.Dice;
