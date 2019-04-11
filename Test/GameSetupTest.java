@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-
 class GameSetupTest {
     ResourceBundle testBundle;
     Board myBoard;
@@ -67,9 +66,13 @@ class GameSetupTest {
         Railroad ShortLine = (Railroad) spaces.get(35);
         Utility WaterWorks = (Utility) spaces.get(28);
 
-        assertEquals("Virginia Avenue", VirginiaAvenue.getName());
         assertEquals("Short Line", ShortLine.getName());
         assertEquals("Water Works", WaterWorks.getName());
+
+        Color testColor = Color.getColor("pink");
+        assertEquals("Virginia Avenue", VirginiaAvenue.getName());
+        assertEquals("pink", VirginiaAvenue.getMyColor());
+
     }
 
     @Test
