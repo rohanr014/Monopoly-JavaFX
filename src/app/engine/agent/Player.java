@@ -99,11 +99,15 @@ public class Player extends Bank{
         numTurnsInJail = 0;
     }
 
-    public void addToTurnsInJail(){
+    public void addNumTurnsInJail(){
         numTurnsInJail++;
     }
 
     public int getNumTurnsInJail() {
         return numTurnsInJail;
+    }
+
+    public void goToJail() {
+        setIsInJail(true);
     }
 }

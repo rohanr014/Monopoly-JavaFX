@@ -10,8 +10,10 @@ public class Bank extends Agent{
 
     @Override
     public boolean giveMoney(Agent agent, double m){
-        if (getWallet()<m)
+        if (getWallet()<m) {
+//            prob should throw something here? better than boolean?
             return false;
+        }
         agent.addToWallet(m);
         setWallet(getWallet()-m);
         return true;
