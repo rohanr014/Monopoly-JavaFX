@@ -98,7 +98,8 @@ public class GameSetup {
 //                move!
 //            }
             else{
-                currentSpace = new CommonSpace();
+                // TEMPORARY FIX
+                currentSpace = new CommonSpace(currentValue[0]);
             }
 
             spaces.add(currentSpace);
@@ -150,9 +151,11 @@ public class GameSetup {
 
     private Space makeMoney(String propFile){
         ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
+
+        String name = moneyBundle.getString("name");
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
-        return new CommonSpace();
+        return new CommonSpace(name);
     }
 
 
@@ -189,6 +192,10 @@ public class GameSetup {
             String[] valueSplit = chestBundle.getString(key).split(",");
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
+
+                // DON'T FORGET TO ADD NAME/TEXT DESCRIPTIONS TO CARDS
+
+
                 String amount = valueSplit[2];
                 tempCard = new MoneyCard(Double.parseDouble(amount));
                 toBeReturned.add(tempCard);
@@ -196,6 +203,7 @@ public class GameSetup {
 
             else if(valueSplit[1].equalsIgnoreCase("MOV")){
                 tempCard = new MoveSpaceCard(valueSplit[2]);
+
             }
 
             else if(valueSplit[1].equalsIgnoreCase("MOVN")){
@@ -207,7 +215,6 @@ public class GameSetup {
                 toBeReturned.add(tempCard);
             }
         }
-
         return toBeReturned;
     }
 

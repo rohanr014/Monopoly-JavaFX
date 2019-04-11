@@ -4,8 +4,10 @@ import app.engine.agent.Player;
 
 public class CommonSpace extends Space{
 
-    public CommonSpace(){
+    String name;
 
+    public CommonSpace(String name){
+        this.name = name;
     }
 
     @Override
