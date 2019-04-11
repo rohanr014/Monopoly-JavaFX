@@ -85,7 +85,9 @@ public class GameSetup {
 //                move!
 //            }
             else{
-                currentSpace = new CommonSpace();
+                //        Here's the new syntax:
+                //        return new CommonSpace(Space destinationSpace, double amountMoney);
+                return new CommonSpace();
             }
 
             spaces.add(currentSpace);
@@ -139,7 +141,10 @@ public class GameSetup {
         ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
+        //        Here's the new syntax:
+        //        return new CommonSpace(Space destinationSpace, double amountMoney);
         return new CommonSpace();
+
     }
 
 

@@ -17,7 +17,7 @@ public class CommonSpace extends Space{
         if (destinationSpace!=null){
             getBoard().move(player, destinationSpace);
             if (getBoard().isJail(destinationSpace)){
-                player.putInJail();
+                player.goToJail();
             }
         }
         if (amountMoney!=0){
