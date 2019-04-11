@@ -6,8 +6,8 @@ public class InfiniteBank extends Bank {
     }
 
     @Override
-    public boolean giveMoney(Agent a, double m){
-        a.addToWallet(m);
+    public boolean giveMoney(Agent agent, double amount){
+        agent.addToWallet(amount);
         return true;
 
 //        MORE LOGIC FOR BANKRUPTING

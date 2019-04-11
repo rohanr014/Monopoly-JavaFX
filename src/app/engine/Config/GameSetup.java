@@ -99,8 +99,9 @@ public class GameSetup {
 //                move!
 //            }
             else{
-                // TEMPORARY FIX
+
                 currentSpace = new CommonSpace(currentValue[0]);
+
             }
 
             spaces.add(currentSpace);
@@ -157,7 +158,9 @@ public class GameSetup {
         String name = moneyBundle.getString("name");
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
+
         return new CommonSpace(name);
+
     }
 
 

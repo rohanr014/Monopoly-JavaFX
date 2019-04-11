@@ -52,4 +52,7 @@ public abstract class Space implements ISpaceObservable {
     protected abstract void invokeAction(Player occupant);
 
 
+    public Board getBoard() {
+        return gameBoard;
+    }
 }

@@ -26,7 +26,7 @@ class BankTest {
     @Test
     void testGiveMoneyFail() {
         b2.giveMoney(b1, 100);
-        var expected = 150;
+        var expected = 100;
         var actual = b1.getWallet();
         assertEquals(expected, actual);
 

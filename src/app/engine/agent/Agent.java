@@ -9,7 +9,8 @@ import java.util.List;
 public abstract class Agent implements IAgentObservable{
     private double wallet;
     private List<IAgentObserver> myObserverList;
-
+    private int numHousesOwned;
+    private int numHotelsOwned;
 
 
     public Agent(double initBalance) {
@@ -20,18 +21,18 @@ public abstract class Agent implements IAgentObservable{
     /**
      * Function for agent to transfer money from themselves to another one
      *
-     * @param m amount to be transferred
-     * @param a agent to be transferred to
+     * @param amount amount to be transferred
+     * @param agent agent to be transferred to
      * @return true if successful, false otherwise
      */
-    public abstract boolean giveMoney(Agent a, double m);
+    public abstract boolean giveMoney(Agent agent, double amount);
 
-    protected void addToWallet(double m) {
-        wallet+=m;
+    protected void addToWallet(double amount) {
+        wallet+=amount;
     }
 
-    public void setWallet(double m){
-        wallet=m;
+    public void setWallet(double amount){
+        wallet=amount;
     }
 
     public double getWallet() {
@@ -62,5 +63,9 @@ public abstract class Agent implements IAgentObservable{
         if (o == null || getClass() != o.getClass()) return false;
         Agent agent = (Agent) o;
         return Double.compare(agent.wallet, wallet) == 0;
+    }
+
+    public boolean hasBuildings() {
+        return (numHousesOwned>0||numHotelsOwned>0);
     }
 }
