@@ -128,4 +128,9 @@ public class Property extends Space implements Asset {
     public Board getBoard() {
         return board;
     }
+
+    @Override
+    public String getMyPropertyName(){
+        return null;
+    }
 }

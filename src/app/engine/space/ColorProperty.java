@@ -17,13 +17,13 @@ public class ColorProperty extends SetProperty{
     private double hotelCost;
     private double[] hotelRents;
 
-    private String name;
+    private String myName;
 
     public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
         super(purchaseCost, mortgageValue, allRents);
         //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
 
-        this.name = name;
+        this.myName = name;
     }
 
 
@@ -47,8 +47,10 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
-    public String getName() {
-        return name;
+
+    @Override
+    public String getMyPropertyName(){
+        return myName;
     }
 
     //    public boolean buildHouse() {

@@ -63,13 +63,13 @@ class GameSetupTest {
 
         System.out.println("Class is " + spaces.get(3).getClass());
         ColorProperty test = (ColorProperty) spaces.get(3);
-        System.out.println("Name is " + test.getName());
+        System.out.println("Name is " + test.getMyPropertyName());
 
         ColorProperty VirginiaAvenue = (ColorProperty) spaces.get(14);
         Railroad ShortLine = (Railroad) spaces.get(35);
         Utility WaterWorks = (Utility) spaces.get(28);
 
-        assertEquals("Virginia Avenue", VirginiaAvenue.getName());
+        assertEquals("Virginia Avenue", VirginiaAvenue.getMyPropertyName());
         assertEquals("Short Line", ShortLine.getName());
         assertEquals("Water Works", WaterWorks.getName());
     }

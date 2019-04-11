@@ -62,6 +62,7 @@ public class GameSetup {
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
         for(String currentKey: spacesKeys){
+            System.out.println(currentKey);
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -115,6 +116,7 @@ public class GameSetup {
         double mortgageValue = Double.parseDouble(cpBundle.getString("mortgage"));
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
+        //System.out.println(name);
 
         return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
     }

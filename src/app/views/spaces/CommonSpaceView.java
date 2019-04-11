@@ -4,7 +4,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-abstract class CommonSpaceView extends SpaceView{
+public class CommonSpaceView extends SpaceView{
 
     private Pane myRoot;
 

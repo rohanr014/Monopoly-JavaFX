@@ -12,4 +12,9 @@ public class CommonSpace extends Space{
     protected void invokeAction(Player p) {
 
     }
+
+    @Override
+    public String getMyPropertyName(){
+        return null;
+    }
 }

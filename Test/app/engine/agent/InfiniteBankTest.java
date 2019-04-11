@@ -11,8 +11,8 @@ class InfiniteBankTest {
 
     @BeforeEach
     void setup(){
-        b1 = new InfiniteBank(null);
-        b2 = new Bank(100, null);
+        b1 = new InfiniteBank();
+        b2 = new Bank(100);
     }
 
     @Test

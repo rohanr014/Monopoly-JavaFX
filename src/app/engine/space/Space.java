@@ -28,7 +28,7 @@ public abstract class Space implements ISpaceObservable {
         gameBoard = board;
     }
 
-    protected abstract void invokeAction(Player occupant);
+
 
     private void addToCurrentOccupants(Player occupant) {
         currentOccupants.add(occupant);
@@ -46,6 +46,10 @@ public abstract class Space implements ISpaceObservable {
 
     @Override
     public void notifySpaceObservers(){}
+
+    abstract String getMyPropertyName();
+
+    protected abstract void invokeAction(Player occupant);
 
 
 }
