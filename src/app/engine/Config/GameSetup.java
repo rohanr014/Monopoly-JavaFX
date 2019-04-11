@@ -99,7 +99,6 @@ public class GameSetup {
 //                move!
 //            }
             else{
-
                 currentSpace = new CommonSpace(currentValue[0]);
 
             }

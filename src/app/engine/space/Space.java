@@ -51,4 +51,8 @@ public abstract class Space implements ISpaceObservable {
     public String getName() {
         return name;
     }
+
+    public Board getBoard() {
+        return gameBoard;
+    }
 }
