@@ -20,10 +20,12 @@ public class SpaceFactory {
 
     public SpaceView createSpace(String className, String propertyName){
         try{
+            System.out.println(className);
+            System.out.println(propertyName);
             Class cls = Class.forName("app.views.spaces." + className + "View");
             Constructor cons = cls.getConstructor(String.class);
             SpaceView result = (SpaceView) cons.newInstance(propertyName);
-            System.out.println(result);
+            System.out.println(result.getClass().getName());
             return result;
         }catch (ClassNotFoundException | NoSuchMethodException
                 | IllegalAccessException | InvocationTargetException
@@ -31,31 +33,23 @@ public class SpaceFactory {
             e.printStackTrace();
         }
 
-        return null;
+        throw new RuntimeException();
     }
 
-    public SpaceView createSpace(Board board) {
-        List<Space> spaceList = board.getSpaces();
-        for(Space space : spaceList){
-            //if(space.)
-        }
-        return null;
 
-    }
-
-    private SpaceView makeCorner() {
-        return new SpaceView() {
-            @Override
-            public Pane initialize() {
-
-                return null;
-            }
-
-            @Override
-            public void spaceUpdate() {
-
-            }
-        };
-    }
+//    private SpaceView makeCorner() {
+//        return new SpaceView() {
+//            @Override
+//            public Pane initialize() {
+//
+//                return null;
+//            }
+//
+//            @Override
+//            public void spaceUpdate() {
+//
+//            }
+//        };
+//    }
 }
 
