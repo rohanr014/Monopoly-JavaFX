@@ -17,12 +17,14 @@ public class Board implements IBoardObservable{
     private Collection<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
+    private Player currentPlayer;
     private Bank bank;
     private List<Dice> gameDice;
     private int doublesCounter;
     private int[] lastRoll;
 
     private List<IBoardObserver> myObserverList;
+
     //dice types?
 
     public Board(String directory, String filename) throws IOException {
@@ -48,14 +50,14 @@ public class Board implements IBoardObservable{
     }
 
     public void startTurn() {
-        Player player = players.poll();
+        currentPlayer = players.poll();
 
-        if (player.isInJail()){
-            handleJail(player);
+        if (currentPlayer.isInJail()){
+            handleJail(currentPlayer);
         }
 
-        rollDice(player);
-        players.add(player);
+        rollDice(currentPlayer);
+        players.add(currentPlayer);
     }
 
     private void handleJail(Player player) {
@@ -65,9 +67,9 @@ public class Board implements IBoardObservable{
 //            and are forced to pay the JAIL_FEE
     }
 
-    public void endTurn(Player player) {
+    public void endTurn() {
         doublesCounter = 0;
-        handleBankruptcy(player);
+        handleBankruptcy(currentPlayer);
         checkWin();
         startTurn();
     }
@@ -279,7 +281,9 @@ public class Board implements IBoardObservable{
         return doublesCounter;
     }
 
-
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
 
 }
