@@ -7,6 +7,7 @@ import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
 import app.engine.card.Card;
+import app.engine.space.Property;
 import app.engine.space.Space;
 
 import java.io.IOException;
@@ -49,18 +50,13 @@ public class Board implements IBoardObservable{
         }
     }
 
-    public void startTurn() {
+    public Player startTurn() {
         currentPlayer = players.poll();
-
-        if (currentPlayer.isInJail()){
-            handleJail(currentPlayer);
-        }
-
-        rollDice(currentPlayer);
         players.add(currentPlayer);
+        return currentPlayer;
     }
 
-    private void handleJail(Player player) {
+    public void handleJail(Player player) {
 //            Prompt player to pay JAIL_FEE, use Get Out Of Jail Free Card, or Roll for doubles
 //            if they fail to roll doubles and player.getNumTurnsInJail()<MAX_JAIL_TURNS (i.e. 3)
 //            then they stay in jail. If player.getNumTurnsInJail()>=MAX_JAIL_TURNS, then they leave jail
@@ -69,6 +65,7 @@ public class Board implements IBoardObservable{
 
     public void endTurn() {
         doublesCounter = 0;
+        lastRoll = null;
         handleBankruptcy(currentPlayer);
         checkWin();
         startTurn();
@@ -118,6 +115,10 @@ public class Board implements IBoardObservable{
                 return false;
             }
         }
+//        MAGIC VALUE
+        if (doublesCounter==3){
+            currentPlayer.goToJail();
+        }
         return true;
     }
 
@@ -129,6 +130,9 @@ public class Board implements IBoardObservable{
      */
 
     public void move(Player player, Space destination) {
+        if (player.isInJail()){
+            return;
+        }
         var start = player.getCurrentSpace();
         int spacePosition = spaces.indexOf(destination);
         player.setCurrentSpace(spacePosition);
@@ -217,6 +221,10 @@ public class Board implements IBoardObservable{
         return -1;
     }
 
+    public double getUnmortgageMultiplier() {
+        return -1;
+    }
+
 
 
     /////////////////////
@@ -285,5 +293,46 @@ public class Board implements IBoardObservable{
         return currentPlayer;
     }
 
+
+//    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
+    public boolean canSell(Player player){
+        return (!player.getProperties().isEmpty() || !player.getCards().isEmpty() || player.hasBuildings());
+    }
+
+    public boolean canMortgage(Player player){
+        if (player.getProperties().isEmpty()){
+            return false;
+        }
+        for (Property prop: player.getProperties()){
+            if (!prop.isMortgaged()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canUnmortgage(Player player){
+        if (player.getProperties().isEmpty()){
+            return false;
+        }
+        for (Property prop: player.getProperties()){
+            if (prop.isMortgaged() && player.getWallet()>=prop.getUnmortgageValue()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canRoll(Player player){
+        if (lastRoll == null){
+            return true;
+        }
+//        MAGIC VALUE
+        return (doublesCounter>0 && doublesCounter < 3 && isDoubles(lastRoll));
+    }
+
+    public boolean canBuy(Player player, Property prop){
+        return (player.getWallet()>=prop.getPurchaseCost());
+    }
 
 }
