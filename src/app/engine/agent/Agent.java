@@ -9,7 +9,8 @@ import java.util.List;
 public abstract class Agent implements IAgentObservable{
     private double wallet;
     private List<IAgentObserver> myObserverList;
-
+    private int numHousesOwned;
+    private int numHotelsOwned;
 
 
     public Agent(double initBalance) {
@@ -62,5 +63,9 @@ public abstract class Agent implements IAgentObservable{
         if (o == null || getClass() != o.getClass()) return false;
         Agent agent = (Agent) o;
         return Double.compare(agent.wallet, wallet) == 0;
+    }
+
+    public boolean hasBuildings() {
+        return (numHousesOwned>0||numHotelsOwned>0);
     }
 }
