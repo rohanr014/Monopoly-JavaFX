@@ -44,18 +44,47 @@ public class Board implements IBoardObservable{
     private void initializeSpaces() {
         for (Space space: spaces){
             space.initializeSpace(this);
-
         }
     }
 
     public void startTurn() {
         Player player = players.poll();
 
-        lastRoll = gameDice.get(0).rollAllDice();
-        move(player, getLastRollSum());
+        if (player.isInJail()){
+//            Prompt player to pay JAIL_FEE, use Get Out Of Jail Free Card, or Roll for doubles
+//            if they fail to roll doubles and player.getNumTurnsInJail()<MAX_JAIL_TURNS (i.e. 3)
+//            then they stay in jail. If player.getNumTurnsInJail()>=MAX_JAIL_TURNS, then they leave jail
+//            and are forced to pay the JAIL_FEE
+        }
 
         players.add(player);
+    }
 
+
+    public int[] rollDice(Player player){
+        lastRoll = gameDice.get(0).rollAllDice();
+        if (player.isInJail()) {
+            handleJailRolls(player);
+        } else {
+            move(player, getLastRollSum());
+        }
+        return lastRoll;
+    }
+
+    private void handleJailRolls(Player player) {
+        if (isDoubles(lastRoll)) {
+            move(player, getLastRollSum());
+        }
+    }
+
+//    works for any number of die. Just checks if all die rolled are the same or not.
+    private boolean isDoubles(int[] lastRoll) {
+        for (int i = 0; i < lastRoll.length-1; i++){
+            if (lastRoll[i]!=lastRoll[i+1]){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void endTurn() {
@@ -98,10 +127,6 @@ public class Board implements IBoardObservable{
         return ((targetSpaceIndex <= end && targetSpaceIndex > start) || (start > end));
     }
 
-    public Bank getBank() {
-        return bank;
-    }
-
     public boolean contains(Agent agent) {
         if (agent.equals(bank)) {
             return true;
@@ -123,18 +148,12 @@ public class Board implements IBoardObservable{
         return purchaseCost / getSellToBankModifier();
     }
 
-    private double getSellToBankModifier() {
-        //GETS BANK MODIFIER FROM Properties file
-        return -1;
+    public boolean isJail(Space space) {
+        return getSpaceIndex(space)==getJailIndex();
     }
 
-    private int getGoIndex() {
-//        gets Index of go in spaces from properties file (default is 0)
-        return -1;
-    }
-
-    public int[] getLastRollArray() {
-        return lastRoll;
+    private int getSpaceIndex(Space space) {
+        return spaces.indexOf(space);
     }
 
     public int getLastRollSum() {
@@ -147,6 +166,29 @@ public class Board implements IBoardObservable{
 
 
 
+    /////////////////////
+    ///BELOW: METHODS THAT PULL FROM PROPERTIES FILE
+    /////////////////////
+
+    private double getSellToBankModifier() {
+        //GETS BANK MODIFIER FROM Properties file
+        return -1;
+    }
+
+    private int getGoIndex() {
+//        gets Index of go in spaces from properties file (default is 0)
+        return -1;
+    }
+
+    private int getJailIndex() {
+        return -1;
+    }
+
+
+
+    /////////////////////
+    ///BELOW: OBSERVER METHODS FOR VIEW
+    /////////////////////
 
     @Override
     public void addBoardObserver(IBoardObserver o) {
@@ -166,6 +208,20 @@ public class Board implements IBoardObservable{
             o.boardUpdate();
         }
 
+    }
+
+
+
+    /////////////////////
+    ///BELOW: BASIC GETTERS
+    /////////////////////
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public int[] getLastRollArray() {
+        return lastRoll;
     }
 
     public Queue<Player> getPlayers() {
@@ -191,4 +247,8 @@ public class Board implements IBoardObservable{
     public int getDoublesCounter() {
         return doublesCounter;
     }
+
+
+
+
 }
