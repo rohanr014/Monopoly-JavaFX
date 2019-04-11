@@ -12,6 +12,8 @@ public class Player extends Bank{
     private String pieceFile;
     private List<Property> properties;
     private List<HoldableCard> cards;
+
+//    MAGIC VALUES
     private int currentSpace = 0;
     private boolean inJail = false;
     private int numTurnsInJail = 0;
