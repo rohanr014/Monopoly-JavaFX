@@ -6,10 +6,11 @@ public class CommonSpace extends Space{
     private Space destinationSpace;
     private double amountMoney;
 
+    String myName;
 
-    public CommonSpace(Space space, double amount){
-        destinationSpace = space;
-        amountMoney = amount;
+    public CommonSpace(String name){
+
+        super(name);
     }
 
     @Override
@@ -31,5 +32,10 @@ public class CommonSpace extends Space{
 
     public double getAmountMoney() {
         return amountMoney;
+    }
+
+    @Override
+    public String getMyPropertyName(){
+        return myName;
     }
 }

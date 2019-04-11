@@ -45,7 +45,7 @@ public class Board implements IBoardObservable{
     }
 
     private void initializeSpaces() {
-        for (Space space: spaces){
+        for (Space space: spaces) {
             space.initializeSpace(this);
         }
     }

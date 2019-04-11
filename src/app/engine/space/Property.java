@@ -18,16 +18,17 @@ public class Property extends Space implements Asset {
 
 
     //mostly for utilities
-    public Property(double purchasePrice, double mortgageVal) {
-        purchaseCost = purchasePrice;
-        mortgageValue = mortgageVal;
-        unmortgageValue = mortgageValue*board.getUnmortgageMultiplier();
+
+    public Property(String name, double purchaseCost, double mortgageValue) {
+        super(name);
+        this.purchaseCost = purchaseCost;
+        this.mortgageValue = mortgageValue;
     }
 
     //for every other property
-    public Property(double purchaseCost, double mortgageValue, double propertyRent) {
-        this(purchaseCost, mortgageValue);
-        rent = propertyRent;
+    public Property(String name, double purchaseCost, double mortgageValue, double rent) {
+        this(name, purchaseCost, mortgageValue);
+        this.rent = rent;
     }
 
     @Override
@@ -134,6 +135,12 @@ public class Property extends Space implements Asset {
 
     public Board getBoard() {
         return board;
+    }
+
+
+    @Override
+    public String getMyPropertyName(){
+        return null;
     }
 
     public double getMortgageValue() {

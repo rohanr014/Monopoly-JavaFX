@@ -2,14 +2,10 @@ package app.controller;
 
 import app.engine.Config.GameFileHandler;
 import app.engine.board.Board;
-import app.engine.space.ColorProperty;
 import app.views.IViews.MainView;
 import app.views.IViews.SplashView;
 import app.views.spaces.ColorPropertyView;
-
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -28,7 +24,7 @@ public class MainController {
 
     public MainController(Stage stage){
         mySplashView = new SplashView(this);
-        //ColorPropertyView CPV = new ColorPropertyView("New York",20.00);
+        ColorPropertyView CPV = new ColorPropertyView("New York");
         myStage = stage;
         myStage.setTitle("monopoly_tobe_replaced");
         myStage.setResizable(false);
