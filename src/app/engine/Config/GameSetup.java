@@ -1,5 +1,6 @@
 package app.engine.Config;
 
+import app.engine.card.HoldableCard;
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
@@ -9,9 +10,15 @@ import app.engine.card.Card;
 import app.engine.space.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameSetup {
+
+    private static final String MODE_KEY = "prop_file";
+    private static final String RULES_KEY = "rules_file";
+    private static final String COMMUNITY_KEY = "communityCards";
+    private static final String CHANCE_KEY = "chanceCards";
 
     private ResourceBundle highBundle;
     private ResourceBundle myBundle;
@@ -33,14 +40,14 @@ public class GameSetup {
 
     public GameSetup(ResourceBundle bundle, Board b) {
         highBundle = bundle;
-        myBundle = ResourceBundle.getBundle(highBundle.getString("prop_file"));
-        rulesBundle = ResourceBundle.getBundle(highBundle.getString("rules_file"));
+        myBundle = ResourceBundle.getBundle(highBundle.getString(MODE_KEY));
+        rulesBundle = ResourceBundle.getBundle(highBundle.getString(RULES_KEY));
         myBoard = b;
 
         players = new LinkedList<Player>();
         spaces = new ArrayList<Space>();
-        communityChest = new ArrayList<Card>();
-        chance = new ArrayList<Card>();
+        communityChest = makePerkCards(COMMUNITY_KEY);
+        chance = makePerkCards(CHANCE_KEY);
 
         createPlayers();
         createSpaces();
@@ -168,13 +175,18 @@ public class GameSetup {
         }
     }
 
-    private void makePerkCards(String keyName){
+    private ArrayList<Card> makePerkCards(String keyName){
+        ArrayList<Card> toBeReturned = new ArrayList<Card>();
+
         ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
 
         // order not really necessary here, so sticking with enumeration data structure and directly adding
         // to ArrayList
 
         for(String key:chestBundle.keySet()){
+
+            Card tempCard;
+
             String[] valueSplit = chestBundle.getString(key).split(",");
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
@@ -184,11 +196,14 @@ public class GameSetup {
                 // make new move card
             }
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
-                // make new holdable card
+                tempCard = new HoldableCard();
+                toBeReturned.add(tempCard);
             }
 
 
         }
+
+        return toBeReturned;
     }
 
     public Collection<Card> getCommunityChest() {
