@@ -5,16 +5,16 @@ import app.engine.board.Board;
 
 
 public class Utility extends SetProperty {
-    private String name;
+    private String myName;
 
     public Utility(String name, double purchaseCost, double mortgageValue) {
         super(purchaseCost, mortgageValue);
-        this.name = name;
+        this.myName = name;
     }
 
     public Utility(String name, double purchaseCost, double mortgageValue, double[] allRentMultipliers) {
         super(purchaseCost, mortgageValue, allRentMultipliers);
-        this.name = name;
+        this.myName = name;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Utility extends SetProperty {
         return newRent;
     }
 
-    public String getName() {
-        return name;
+    public String getMyProtertyName() {
+        return myName;
     }
 }

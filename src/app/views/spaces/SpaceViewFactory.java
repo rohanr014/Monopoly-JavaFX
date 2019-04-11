@@ -1,20 +1,16 @@
 package app.views.spaces;
 
 
-import app.engine.board.Board;
-import app.engine.space.Space;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class SpaceFactory {
+public class SpaceViewFactory {
 
     private List<ImageView> myImageViewList;
 
-    public SpaceFactory() {
+    public SpaceViewFactory() {
 
     }
 

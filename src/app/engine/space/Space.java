@@ -47,7 +47,7 @@ public abstract class Space implements ISpaceObservable {
     @Override
     public void notifySpaceObservers(){}
 
-    abstract String getMyPropertyName();
+    public abstract String getMyPropertyName();
 
     protected abstract void invokeAction(Player occupant);
 

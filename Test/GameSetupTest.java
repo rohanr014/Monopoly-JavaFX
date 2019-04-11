@@ -68,8 +68,8 @@ class GameSetupTest {
         Utility WaterWorks = (Utility) spaces.get(28);
 
         assertEquals("Virginia Avenue", VirginiaAvenue.getMyPropertyName());
-        assertEquals("Short Line", ShortLine.getName());
-        assertEquals("Water Works", WaterWorks.getName());
+        assertEquals("Short Line", ShortLine.getMyPropertyName());
+        assertEquals("Water Works", WaterWorks.getMyProtertyName());
     }
 
     @Test

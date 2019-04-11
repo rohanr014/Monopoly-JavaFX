@@ -9,7 +9,6 @@ public class ColorPropertyView extends SpaceView{
 
     private ColorProperty myColorProperty;
     //private double myRent;
-    private String myName;
 
 
     private Pane myRoot;
@@ -18,8 +17,9 @@ public class ColorPropertyView extends SpaceView{
     public ColorPropertyView(String name) {
         //myColorProperty = colorProperty;
         myName = name;
-        //myRent = rent;
+
         myRoot = new VBox();
+        myRoot.setStyle("-fx-background-color: WHITE");
     }
 
     public String getMyName(){
@@ -31,9 +31,8 @@ public class ColorPropertyView extends SpaceView{
     @Override
     public Pane initialize() {
         myRoot.getChildren().add(HBoxMaker.makeHBoxSpace(myName, Color.ORANGE));
-        //myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("Rent", myRent));
-
-        //myRoot.setStyle("-fx-background-color: beige;");
+        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("hi", 60.00));
+        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("Ay", "yo"));
 
         return myRoot;
 

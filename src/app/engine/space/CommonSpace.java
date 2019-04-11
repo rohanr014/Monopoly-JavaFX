@@ -4,10 +4,10 @@ import app.engine.agent.Player;
 
 public class CommonSpace extends Space{
 
-    String name;
+    String myName;
 
     public CommonSpace(String name){
-        this.name = name;
+        this.myName = name;
     }
 
     @Override
@@ -17,6 +17,6 @@ public class CommonSpace extends Space{
 
     @Override
     public String getMyPropertyName(){
-        return null;
+        return myName;
     }
 }
