@@ -7,7 +7,7 @@ public class CommonSpace extends Space{
     String name;
 
     public CommonSpace(String name){
-        this.name = name;
+        super(name);
     }
 
     @Override

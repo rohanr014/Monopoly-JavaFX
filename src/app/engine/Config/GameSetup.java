@@ -190,28 +190,26 @@ public class GameSetup {
             Card tempCard;
 
             String[] valueSplit = chestBundle.getString(key).split(",");
+            String description = valueSplit[0];
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
-
-                // DON'T FORGET TO ADD NAME/TEXT DESCRIPTIONS TO CARDS
-
-
                 String amount = valueSplit[2];
-                tempCard = new MoneyCard(Double.parseDouble(amount));
+
+                tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
                 toBeReturned.add(tempCard);
             }
 
             else if(valueSplit[1].equalsIgnoreCase("MOV")){
-                tempCard = new MoveSpaceCard(valueSplit[2]);
-
+                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[2]);
+                toBeReturned.add(tempCard);
             }
 
             else if(valueSplit[1].equalsIgnoreCase("MOVN")){
-                tempCard = new MoveNumberCard(Integer.parseInt(valueSplit[2]));
+                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
             }
 
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
-                tempCard = new HoldableCard();
+                tempCard = new HoldableCard(description, myBoard);
                 toBeReturned.add(tempCard);
             }
         }

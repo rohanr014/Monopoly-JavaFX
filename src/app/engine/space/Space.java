@@ -9,9 +9,11 @@ import java.util.List;
 public abstract class Space implements ISpaceObservable {
     private List<Player> currentOccupants;
     private Board gameBoard;
+    private String name;
 
-    public Space(){
+    public Space(String name){
         currentOccupants = new ArrayList<>();
+        this.name = name;
     }
 
     /**
@@ -47,5 +49,7 @@ public abstract class Space implements ISpaceObservable {
     @Override
     public void notifySpaceObservers(){}
 
-
+    public String getName() {
+        return name;
+    }
 }
