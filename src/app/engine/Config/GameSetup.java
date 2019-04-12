@@ -52,7 +52,8 @@ public class GameSetup {
         createSpaces();
 
         // use communityCards and chanceCards as arguments for makePerkCards
-
+        communityChest = makePerkCards("communityCards");
+        chance = makePerkCards("chanceCards");
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -75,7 +76,6 @@ public class GameSetup {
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
         for(String currentKey: spacesKeys){
-            System.out.println(currentKey);
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -194,7 +194,7 @@ public class GameSetup {
 
             Card tempCard;
 
-            String[] valueSplit = chestBundle.getString(key).split(",");
+            String[] valueSplit = chestBundle.getString(key).split(">");
             String description = valueSplit[0];
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
@@ -211,6 +211,7 @@ public class GameSetup {
 
             else if(valueSplit[1].equalsIgnoreCase("MOVN")){
                 tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
+                toBeReturned.add(tempCard);
             }
 
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
@@ -218,15 +219,16 @@ public class GameSetup {
                 toBeReturned.add(tempCard);
             }
         }
+
         return toBeReturned;
     }
 
     public Collection<Card> getCommunityChest() {
-        return null;
+        return communityChest;
     }
 
     public Collection<Card> getChanceCards() {
-        return null;
+        return chance;
     }
 
     public Queue<Player> getPlayers() {
