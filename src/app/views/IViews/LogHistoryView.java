@@ -1,21 +1,34 @@
 package app.views.IViews;
 
 import app.engine.board.Board;
-import app.views.IViews.IView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
-public class LogHistoryView implements IView {//to be completed in sprint 2
+
+public class LogHistoryView implements IView {
+
     private Pane myRoot;
+    private ScrollPane myScrollPane;
     private Board myBoard;
+    private VBox vbox;
+
 
     public LogHistoryView(Board board){
-        myBoard = board;
         myRoot = new Pane();
-
+        myBoard = board;
+        myScrollPane = new ScrollPane();
+        vbox = new VBox();
+        myScrollPane.setContent(vbox);
+        myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        myScrollPane.setPrefSize(800, 100);
+        myRoot.getChildren().add(myScrollPane);
     }
 
-    @Override
+
     public Pane getMyRoot(){
         return myRoot;
     }
+
+
 }

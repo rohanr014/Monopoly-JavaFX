@@ -81,12 +81,6 @@ public class VanillaBoardView extends BoardView {
             }
             System.out.println("");
         }
-        //        else{
-//            pane.setLayoutX(600);
-//            pane.setLayoutY(index*50);
-//
-//        }
-//        myRoot.getChildren().add(pane);
     }
 
     private boolean left(int index) {
