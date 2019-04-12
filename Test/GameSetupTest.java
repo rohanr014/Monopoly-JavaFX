@@ -73,7 +73,7 @@ class GameSetupTest {
         Color testColor = Color.getColor("pink");
         assertEquals("Virginia Avenue", VirginiaAvenue.getName());
         assertEquals("pink", VirginiaAvenue.getMyColor());
-        
+
     }
 
     @Test
