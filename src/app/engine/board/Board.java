@@ -141,7 +141,6 @@ public class Board implements IBoardObservable{
         if (isDoubles(lastRoll)) {
             player.leaveJail();
             move(player, getLastRollSum());
-            //        MAGIC VALUE
         } else if (player.getNumTurnsInJail()>=getMaxTurnsInJail()){
             payJailFee(player);
             move(player, getLastRollSum());
@@ -260,6 +259,10 @@ public class Board implements IBoardObservable{
     ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
     /////////////////////
 
+
+    public boolean canEndTurn(Player player){
+        return (lastRoll != null);
+    }
 
     //    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
     public boolean canSell(Player player){
