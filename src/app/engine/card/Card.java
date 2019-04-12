@@ -1,11 +1,16 @@
 package app.engine.card;
 
 import app.engine.agent.Player;
+import app.engine.board.Board;
 
 public abstract class Card{
 
-    public Card(){
+    private String description;
+    private Board board;
 
+    public Card(String desc, Board b){
+        this.description = desc;
+        this.board = b;
     }
 
     /**
@@ -20,6 +25,11 @@ public abstract class Card{
 
     public abstract void useCard(Player currentOccupant);
 
+    public String getDescription() {
+        return description;
+    }
 
-
+    public Board getBoard() {
+        return board;
+    }
 }

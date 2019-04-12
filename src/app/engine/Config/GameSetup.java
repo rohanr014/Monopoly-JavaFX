@@ -1,17 +1,23 @@
 package app.engine.Config;
 
+import app.engine.card.*;
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
 import app.engine.agent.InfiniteBank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
-import app.engine.card.Card;
 import app.engine.space.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameSetup {
+
+    private static final String MODE_KEY = "prop_file";
+    private static final String RULES_KEY = "rules_file";
+    private static final String COMMUNITY_KEY = "communityCards";
+    private static final String CHANCE_KEY = "chanceCards";
 
     private ResourceBundle highBundle;
     private ResourceBundle myBundle;
@@ -19,6 +25,8 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
+    private List<Card> communityChest;
+    private List<Card> chance;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -31,15 +39,21 @@ public class GameSetup {
 
     public GameSetup(ResourceBundle bundle, Board b) {
         highBundle = bundle;
-        myBundle = ResourceBundle.getBundle(highBundle.getString("prop_file"));
-        rulesBundle = ResourceBundle.getBundle(highBundle.getString("rules_file"));
+        myBundle = ResourceBundle.getBundle(highBundle.getString(MODE_KEY));
+        rulesBundle = ResourceBundle.getBundle(highBundle.getString(RULES_KEY));
         myBoard = b;
 
         players = new LinkedList<Player>();
         spaces = new ArrayList<Space>();
+        communityChest = makePerkCards(COMMUNITY_KEY);
+        chance = makePerkCards(CHANCE_KEY);
 
         createPlayers();
         createSpaces();
+
+        // use communityCards and chanceCards as arguments for makePerkCards
+        communityChest = makePerkCards("communityCards");
+        chance = makePerkCards("chanceCards");
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -85,9 +99,8 @@ public class GameSetup {
 //                move!
 //            }
             else{
-                //        Here's the new syntax:
-                //        return new CommonSpace(Space destinationSpace, double amountMoney);
-                return new CommonSpace();
+                currentSpace = new CommonSpace(currentValue[0]);
+
             }
 
             spaces.add(currentSpace);
@@ -115,10 +128,12 @@ public class GameSetup {
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
         double mortgageValue = Double.parseDouble(cpBundle.getString("mortgage"));
+        String colorString = cpBundle.getString("color");
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
+        //System.out.println(name);
 
-        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
@@ -139,14 +154,13 @@ public class GameSetup {
 
     private Space makeMoney(String propFile){
         ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
+
+        String name = moneyBundle.getString("name");
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
-        //        Here's the new syntax:
-        //        return new CommonSpace(Space destinationSpace, double amountMoney);
-        return new CommonSpace();
 
+        return new CommonSpace(name);
     }
-
 
     private void createPlayers () {
         double startingBalance = Double.parseDouble(rulesBundle.getString("startingBalance"));
@@ -166,12 +180,60 @@ public class GameSetup {
         }
     }
 
+    private ArrayList<Card> makePerkCards(String keyName){
+        ArrayList<Card> toBeReturned = new ArrayList<Card>();
+
+        ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
+
+        // order not really necessary here, so sticking with enumeration data structure and directly adding
+        // to ArrayList
+
+        for(String key:chestBundle.keySet()){
+
+            Card tempCard;
+
+            String[] valueSplit = chestBundle.getString(key).split(">");
+            String description = valueSplit[0];
+
+            if(valueSplit[1].equalsIgnoreCase("MON")){
+                String amount = valueSplit[2];
+
+                tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
+                toBeReturned.add(tempCard);
+            }
+
+            else if(valueSplit[1].equalsIgnoreCase("MOV")){
+                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[2]);
+                toBeReturned.add(tempCard);
+            }
+
+            else if(valueSplit[1].equalsIgnoreCase("MOVN")){
+                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
+                toBeReturned.add(tempCard);
+            }
+
+            else if(valueSplit[1].equalsIgnoreCase("HOLD")){
+                try {
+                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 2, valueSplit.length));
+                    toBeReturned.add(tempCard);
+
+                } catch (Exception e) {
+                    System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return toBeReturned;
+    }
+
+
     public Collection<Card> getCommunityChest() {
-        return null;
+        return communityChest;
     }
 
     public Collection<Card> getChanceCards() {
-        return null;
+        return chance;
     }
 
     public Queue<Player> getPlayers() {
