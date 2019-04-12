@@ -61,6 +61,10 @@ public class Board implements IBoardObservable{
 //            if they fail to roll doubles and player.getNumTurnsInJail()<MAX_JAIL_TURNS (i.e. 3)
 //            then they stay in jail. If player.getNumTurnsInJail()>=MAX_JAIL_TURNS, then they leave jail
 //            and are forced to pay the JAIL_FEE
+
+//        Make sure that if player does something that lets them leave jail by the end of this method,
+//        to do player.setIsInJail(false);  FYI for rolling doubles in jail this is already accomplished
+//        in handleJailRolls()
     }
 
     public void endTurn() {
@@ -104,6 +108,7 @@ public class Board implements IBoardObservable{
 
     private void handleJailRolls(Player player) {
         if (isDoubles(lastRoll)) {
+            player.setIsInJail(false);
             move(player, getLastRollSum());
         }
     }
