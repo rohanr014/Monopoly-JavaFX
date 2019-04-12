@@ -96,7 +96,7 @@ public class Player extends Bank{
         return inJail;
     }
 
-    public void setIsInJail(boolean b) {
+    private void setIsInJail(boolean b) {
         inJail = b;
         numTurnsInJail = 0;
     }
@@ -115,5 +115,9 @@ public class Player extends Bank{
 
     public void dummy(int argument, int argument2){
         System.out.println("Dummy worked and printed out " + argument + " along with " + argument2);
+    }
+
+    public void leaveJail() {
+        setIsInJail(false);
     }
 }

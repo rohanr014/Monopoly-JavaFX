@@ -25,6 +25,7 @@ public class Board implements IBoardObservable{
     private int[] lastRoll;
 
     private List<IBoardObserver> myObserverList;
+    private Player winner = null;
 
     //dice types?
 
@@ -56,13 +57,6 @@ public class Board implements IBoardObservable{
         return currentPlayer;
     }
 
-    public void handleJail(Player player) {
-//            Prompt player to pay JAIL_FEE, use Get Out Of Jail Free Card, or Roll for doubles
-//            if they fail to roll doubles and player.getNumTurnsInJail()<MAX_JAIL_TURNS (i.e. 3)
-//            then they stay in jail. If player.getNumTurnsInJail()>=MAX_JAIL_TURNS, then they leave jail
-//            and are forced to pay the JAIL_FEE
-    }
-
     public void endTurn() {
         doublesCounter = 0;
         lastRoll = null;
@@ -70,60 +64,6 @@ public class Board implements IBoardObservable{
         checkWin();
         startTurn();
     }
-
-    private boolean handleBankruptcy(Player player) {
-        if (player.getWallet()<0){
-            removePlayer(player);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkWin() {
-        if (players.size()==1){
-            System.out.println(players.poll().getName() + " wins!");
-            return true;
-        }
-        return false;
-    }
-
-
-    public int[] rollDice(Player player){
-        lastRoll = gameDice.get(0).rollAllDice();
-
-        if (player.isInJail()) {
-            handleJailRolls(player);
-        } else {
-            if (isDoubles(lastRoll)){
-                doublesCounter++;
-            }
-            move(player, getLastRollSum());
-        }
-        return lastRoll;
-    }
-
-    private void handleJailRolls(Player player) {
-        if (isDoubles(lastRoll)) {
-            move(player, getLastRollSum());
-        }
-    }
-
-//    works for any number of die. Just checks if all die rolled are the same or not.
-    private boolean isDoubles(int[] lastRoll) {
-        for (int i = 0; i < lastRoll.length-1; i++){
-            if (lastRoll[i]!=lastRoll[i+1]){
-                return false;
-            }
-        }
-//        MAGIC VALUE
-        if (doublesCounter==3){
-            currentPlayer.goToJail();
-        }
-        return true;
-    }
-
-
-
 
     /**
      * Function to move player to specific space
@@ -139,7 +79,7 @@ public class Board implements IBoardObservable{
         spaces.get(start).removeFromCurrentOccupants(player);
         if (checkForGo(start, spacePosition)){
 //            MAGIC VALUE
-            bank.giveMoney(player, 200);
+            bank.giveMoney(player, getGoMoney());
         }
         destination.onLand(player);
     }
@@ -153,6 +93,84 @@ public class Board implements IBoardObservable{
         var end = player.getCurrentSpace() + steps;
         move(player, spaces.get(end));
     }
+
+    /////////////////////
+    ///BELOW: DICE-RELATED METHODS
+    /////////////////////
+
+    public int[] rollDice(Player player){
+        lastRoll = gameDice.get(0).rollAllDice();
+
+        if (player.isInJail()) {
+            handleJailRolls(player);
+        } else {
+            if (isDoubles(lastRoll)){
+                doublesCounter++;
+            }
+            move(player, getLastRollSum());
+        }
+        return lastRoll;
+    }
+
+
+    //    works for any number of die. Just checks if all die rolled are the same or not.
+    private boolean isDoubles(int[] lastRoll) {
+        for (int i = 0; i < lastRoll.length-1; i++){
+            if (lastRoll[i]!=lastRoll[i+1]){
+                return false;
+            }
+        }
+//        MAGIC VALUE
+        if (doublesCounter==getNumDoublesTilGoToJail()){
+            currentPlayer.goToJail();
+        }
+        return true;
+    }
+
+    /////////////////////
+    ///BELOW: JAIL METHODS
+    /////////////////////
+
+    public void payJailFee(Player player){
+        player.giveMoney(bank, getJailFee());
+        player.leaveJail();
+    }
+
+    private void handleJailRolls(Player player) {
+
+        if (isDoubles(lastRoll)) {
+            player.leaveJail();
+            move(player, getLastRollSum());
+            //        MAGIC VALUE
+        } else if (player.getNumTurnsInJail()>=getMaxTurnsInJail()){
+            payJailFee(player);
+            move(player, getLastRollSum());
+        }
+    }
+
+    /////////////////////
+    ///BELOW: BANKRUPTCY/WIN-CONDITION METHODS
+    /////////////////////
+
+    private boolean handleBankruptcy(Player player) {
+        if (player.getWallet()<0){
+            removePlayer(player);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkWin() {
+        if (players.size()==1){
+            winner = players.poll();
+            return true;
+        }
+        return false;
+    }
+
+    /////////////////////
+    ///BELOW: VARIOUS USEFUL METHODS
+    /////////////////////
 
     private boolean checkForGo(int start, int spacePosition) {
         return checkIfPass(start, spacePosition, getGoIndex());
@@ -174,14 +192,13 @@ public class Board implements IBoardObservable{
         return false;
     }
 
-    public boolean removePlayer(Player player){
+    private boolean removePlayer(Player player){
         return players.remove(player);
     }
 
-
-    //prob could be refactored into Property
+    //prob could be refactored into Property?
     public double getSellPrice(double purchaseCost) {
-        return purchaseCost / getSellToBankModifier();
+        return purchaseCost / getSellToBankMultiplier();
     }
 
     public boolean isJail(Space space) {
@@ -201,28 +218,89 @@ public class Board implements IBoardObservable{
         return sum;
     }
 
-
-
     /////////////////////
     ///BELOW: METHODS THAT PULL FROM PROPERTIES FILE
     /////////////////////
 
-    private double getSellToBankModifier() {
+    private int getNumDoublesTilGoToJail() {
+        return 3;
+    }
+
+    private double getGoMoney() {
+//        REPLACE WITH PROP FILE VALUES
+        return 200;
+    }
+
+    private double getSellToBankMultiplier() {
         //GETS BANK MODIFIER FROM Properties file
-        return -1;
+        return .5;
     }
 
     private int getGoIndex() {
 //        gets Index of go in spaces from properties file (default is 0)
-        return -1;
+        return 0;
     }
 
     private int getJailIndex() {
-        return -1;
+        return 10;
     }
 
     public double getUnmortgageMultiplier() {
-        return -1;
+        return 1.1;
+    }
+
+    private double getJailFee() { return 50;
+    }
+
+    private int getMaxTurnsInJail() {
+        return 3;
+    }
+
+    /////////////////////
+    ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
+    /////////////////////
+
+
+    //    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
+    public boolean canSell(Player player){
+        return (!player.getProperties().isEmpty() || !player.getCards().isEmpty() || player.hasBuildings());
+    }
+
+    public boolean canMortgage(Player player){
+        if (player.getProperties().isEmpty()){
+            return false;
+        }
+        for (Property prop: player.getProperties()){
+            if (!prop.isMortgaged()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canUnmortgage(Player player){
+        if (player.getProperties().isEmpty()){
+            return false;
+        }
+        for (Property prop: player.getProperties()){
+            if (prop.isMortgaged() && player.getWallet()>=prop.getUnmortgageValue()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canRoll(Player player){
+        if (lastRoll == null){
+            return true;
+        }
+//        MAGIC VALUE
+        return (doublesCounter>0 && doublesCounter < 3 && isDoubles(lastRoll));
+    }
+
+
+    public boolean canBuy(Player player, Property prop){
+        return (player.getWallet()>=prop.getPurchaseCost());
     }
 
 
@@ -293,46 +371,7 @@ public class Board implements IBoardObservable{
         return currentPlayer;
     }
 
-
-//    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
-    public boolean canSell(Player player){
-        return (!player.getProperties().isEmpty() || !player.getCards().isEmpty() || player.hasBuildings());
+    public Player getWinner() {
+        return winner;
     }
-
-    public boolean canMortgage(Player player){
-        if (player.getProperties().isEmpty()){
-            return false;
-        }
-        for (Property prop: player.getProperties()){
-            if (!prop.isMortgaged()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean canUnmortgage(Player player){
-        if (player.getProperties().isEmpty()){
-            return false;
-        }
-        for (Property prop: player.getProperties()){
-            if (prop.isMortgaged() && player.getWallet()>=prop.getUnmortgageValue()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean canRoll(Player player){
-        if (lastRoll == null){
-            return true;
-        }
-//        MAGIC VALUE
-        return (doublesCounter>0 && doublesCounter < 3 && isDoubles(lastRoll));
-    }
-
-    public boolean canBuy(Player player, Property prop){
-        return (player.getWallet()>=prop.getPurchaseCost());
-    }
-
 }
