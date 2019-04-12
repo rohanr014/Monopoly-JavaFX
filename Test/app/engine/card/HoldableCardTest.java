@@ -36,7 +36,7 @@ class HoldableCardTest {
 
     @Test
     void useCard() {
-        myGuy.setIsInJail(true);
+        myGuy.goToJail();
 
         jailFree.useCard(myGuy);
         assertFalse(myGuy.isInJail());
