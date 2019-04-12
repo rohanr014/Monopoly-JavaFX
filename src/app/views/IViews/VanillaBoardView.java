@@ -5,6 +5,7 @@ import app.engine.board.Board;
 import app.engine.space.Space;
 import app.views.spaces.SpaceViewFactory;
 import app.views.spaces.SpaceView;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class VanillaBoardView extends BoardView {
         myBoard = board;
         mySpaceViews = new ArrayList<>();
         mySpaceFactory = new SpaceViewFactory();
+
         initializeBoard();
     }
 
@@ -48,9 +50,8 @@ public class VanillaBoardView extends BoardView {
             //need to fill in here
             var temp = mySpaceViews.get(i).initialize();
             setLocation(i, temp);
-
-
         }
+
     }
 
     private void setLocation(int index, Pane pane){

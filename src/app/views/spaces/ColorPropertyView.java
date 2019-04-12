@@ -1,6 +1,7 @@
 package app.views.spaces;
 
 import app.engine.space.ColorProperty;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,10 +31,15 @@ public class ColorPropertyView extends SpaceView{
 
     @Override
     public Pane initialize() {
-        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace(myName, Color.ORANGE));
+        HBox temp = HBoxMaker.makeHBoxSpace(myName, Color.ORANGE);
+        temp.setSpacing(20);
+        myRoot.getChildren().add(temp);
         myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("hi", 60.00));
         myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("Ay", "yo"));
-
+        myRoot.setMinHeight(50);
+        myRoot.setMaxHeight(50);
+        myRoot.setMinWidth(20);
+        myRoot.setMaxWidth(20);
         return myRoot;
 
     }

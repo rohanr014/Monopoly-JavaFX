@@ -75,7 +75,6 @@ public class GameSetup {
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
         for(String currentKey: spacesKeys){
-            System.out.println(currentKey);
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;

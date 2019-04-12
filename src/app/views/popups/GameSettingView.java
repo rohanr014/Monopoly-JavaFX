@@ -61,7 +61,7 @@ public class GameSettingView extends PopUpView {
 
     private void handleSubmit(){
         myMainController.setGameName(myGameOptions.getItems().get(0));
-        System.out.println(myGameOptions.getItems().get(0));
+
         new PlayerView(myMainController);
         super.getMyStage().close();
     }
