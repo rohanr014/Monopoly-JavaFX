@@ -52,7 +52,8 @@ public class GameSetup {
         createSpaces();
 
         // use communityCards and chanceCards as arguments for makePerkCards
-
+        communityChest = makePerkCards("communityCards");
+        chance = makePerkCards("chanceCards");
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -75,7 +76,6 @@ public class GameSetup {
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
         for(String currentKey: spacesKeys){
-
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -160,9 +160,7 @@ public class GameSetup {
 
 
         return new CommonSpace(name);
-
     }
-
 
     private void createPlayers () {
         double startingBalance = Double.parseDouble(rulesBundle.getString("startingBalance"));
@@ -194,7 +192,7 @@ public class GameSetup {
 
             Card tempCard;
 
-            String[] valueSplit = chestBundle.getString(key).split(",");
+            String[] valueSplit = chestBundle.getString(key).split(">");
             String description = valueSplit[0];
 
             if(valueSplit[1].equalsIgnoreCase("MON")){
@@ -211,22 +209,31 @@ public class GameSetup {
 
             else if(valueSplit[1].equalsIgnoreCase("MOVN")){
                 tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
+                toBeReturned.add(tempCard);
             }
 
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
-                tempCard = new HoldableCard(description, myBoard);
-                toBeReturned.add(tempCard);
+                try {
+                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 2, valueSplit.length));
+                    toBeReturned.add(tempCard);
+
+                } catch (Exception e) {
+                    System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
+                    e.printStackTrace();
+                }
             }
         }
+
         return toBeReturned;
     }
 
+
     public Collection<Card> getCommunityChest() {
-        return null;
+        return communityChest;
     }
 
     public Collection<Card> getChanceCards() {
-        return null;
+        return chance;
     }
 
     public Queue<Player> getPlayers() {
