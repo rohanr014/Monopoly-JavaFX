@@ -44,38 +44,93 @@ public class VanillaBoardView extends BoardView {
 
     }
     private void deploySpacesOnBoard(){
-        for(int i =0; i<mySpaceViews.size();i++){
-            //need to fill in here
+//        double height = myRoot.getBoundsInParent().getHeight();
+//        double width = myRoot.getBoundsInParent().getWidth();
+        double x0 =0;
+        double y0 = 0;
+        double xsize=1000;
+        double ysize = 1000;
+        double fractionNotSpaces = 0.6;
+        double x = x0+xsize-(((1.0-fractionNotSpaces)/2)*xsize);
+        double y = y0+ysize-(((1-fractionNotSpaces)/2)*ysize);
+        for (int i=0; i<mySpaceViews.size();i++) {
+            System.out.println(x);
+            System.out.println(y);
             var temp = mySpaceViews.get(i).initialize();
-            setLocation(i, temp);
-
-
+            temp.setLayoutX(x);
+            temp.setLayoutY(y);
+            myRoot.getChildren().add(temp);
+            if (left(i)) {
+                x=x-(xsize/(mySpaceViews.size()/4));
+            }
+            else if (up(i)) {
+                y=y-(ysize/(mySpaceViews.size()/4));
+            }
+            else if (right(i)) {
+                x=x+(xsize/(mySpaceViews.size()/4));
+            }
+            else if (down(i)) {
+                y=y+(ysize/(mySpaceViews.size()/4));
+            }
         }
+        //        else{
+//            pane.setLayoutX(600);
+//            pane.setLayoutY(index*50);
+//
+//        }
+//        myRoot.getChildren().add(pane);
     }
 
-    private void setLocation(int index, Pane pane){
-        if(index<10) {
-            pane.setLayoutX(600-((index) * 50));
-            pane.setLayoutY(600);
-
-        }
-        else if(index>=10&&index<20){
-            pane.setLayoutX(10);
-            pane.setLayoutY(600-(index * 50));
-
-        }
-        else if(index>=20 && index<30){
-            pane.setLayoutX(index * 50);
-            pane.setLayoutY(10);
-
-        }
-        else{
-            pane.setLayoutX(600);
-            pane.setLayoutY(index*50);
-
-        }
-        myRoot.getChildren().add(pane);
+    private boolean left(int index) {
+        return (index>=0 && index<((mySpaceViews.size()-4)/4)+1);
     }
+
+    private boolean up(int index) {
+        return (index>=((mySpaceViews.size()-4)/4)+1 && index<((mySpaceViews.size()-4)/4)+7);
+    }
+
+    private boolean right(int index) {
+        return (index>=((mySpaceViews.size()-4)/4)+7 && index<((mySpaceViews.size()-4)/4)+13);
+    }
+
+    private boolean down(int index) {
+        return (index>=((mySpaceViews.size()-4)/4)+13 && index<((mySpaceViews.size()-4)/4)+18);
+
+    }
+
+//    private void deploySpacesOnBoard(){
+//        for(int i =0; i<mySpaceViews.size();i++){
+//            //need to fill in here
+//            var temp = mySpaceViews.get(i).initialize();
+//            setLocation(i, temp);
+//
+//
+//        }
+//    }
+//
+//    private void setLocation(int index, Pane pane){
+//        if(index<10) {
+//            pane.setLayoutX(600-((index) * 50));
+//            pane.setLayoutY(600);
+//
+//        }
+//        else if(index>=10&&index<20){
+//            pane.setLayoutX(10);
+//            pane.setLayoutY(600-(index * 50));
+//
+//        }
+//        else if(index>=20 && index<30){
+//            pane.setLayoutX(index * 50);
+//            pane.setLayoutY(10);
+//
+//        }
+//        else{
+//            pane.setLayoutX(600);
+//            pane.setLayoutY(index*50);
+//
+//        }
+//        myRoot.getChildren().add(pane);
+//    }
     private void createSpaceViews(){
 
     }
