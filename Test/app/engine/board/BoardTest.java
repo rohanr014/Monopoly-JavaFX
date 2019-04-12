@@ -12,12 +12,11 @@ class BoardTest {
     @BeforeAll
     void setup(){
         var s = "sampleGameSetup.properties";
-        b = new Board(s);
     }
-
 
     @Test
     void startTurn() {
+
     }
 
     @Test

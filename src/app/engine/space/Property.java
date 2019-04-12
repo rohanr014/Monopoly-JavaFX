@@ -14,17 +14,20 @@ public class Property extends Space implements Asset {
     private Board board;
     private boolean ownedByPlayer;
     private boolean mortgaged;
+    private double unmortgageValue;
 
 
     //mostly for utilities
-    public Property(double purchaseCost, double mortgageValue) {
+
+    public Property(String name, double purchaseCost, double mortgageValue) {
+        super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
     }
 
     //for every other property
-    public Property(double purchaseCost, double mortgageValue, double rent) {
-        this(purchaseCost, mortgageValue);
+    public Property(String name, double purchaseCost, double mortgageValue, double rent) {
+        this(name, purchaseCost, mortgageValue);
         this.rent = rent;
     }
 
@@ -54,16 +57,21 @@ public class Property extends Space implements Asset {
      * @return true if successful, false otherwise
      */
     public boolean mortgage() {
-        mortgaged = true;
-        rent = 0;
-        return board.getBank().giveMoney(owner, mortgageValue);
+        boolean success = board.getBank().giveMoney(owner, mortgageValue);
+        if (success) {
+            mortgaged = true;
+            rent = 0;
+        }
+        return success;
     }
 
     public boolean unmortgage() {
-        mortgaged = false;
-        rent = calculateRent();
-
-        return ownershipSwitchedTo(board.getBank());
+        boolean success = owner.giveMoney(board.getBank(), mortgageValue*board.getUnmortgageMultiplier());
+        if (success) {
+            mortgaged = false;
+            rent = calculateRent();
+        }
+        return success;
     }
 
     protected double calculateRent() {
@@ -128,4 +136,17 @@ public class Property extends Space implements Asset {
     public Board getBoard() {
         return board;
     }
+
+    public double getMortgageValue() {
+        return mortgageValue;
+    }
+
+    public double getUnmortgageValue() {
+        return unmortgageValue;
+    }
+
+    public double getPurchaseCost() {
+        return purchaseCost;
+    }
+
 }

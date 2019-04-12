@@ -1,6 +1,5 @@
 package app.engine.agent;
 
-import app.engine.board.Board;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
@@ -13,16 +12,19 @@ public class Player extends Bank{
     private String pieceFile;
     private List<Property> properties;
     private List<HoldableCard> cards;
-    private int currentSpace;
+
+//    MAGIC VALUES
+    private int currentSpace = 0;
+    private boolean inJail = false;
+    private int numTurnsInJail = 0;
 
 
-    public Player(String playerName, String file, double initBalance, Board board){
-        super(initBalance, board);
+    public Player(String playerName, String file, double initBalance){
+        super(initBalance);
         name = playerName;
         pieceFile = file;
         properties = new ArrayList<>();
         cards = new ArrayList<>();
-        currentSpace = 0;
     }
 
     //player mortgages p, returns false if method fails
@@ -88,5 +90,34 @@ public class Player extends Bank{
 
     public String getPieceFile() {
         return pieceFile;
+    }
+
+    public boolean isInJail() {
+        return inJail;
+    }
+
+    private void setIsInJail(boolean b) {
+        inJail = b;
+        numTurnsInJail = 0;
+    }
+
+    public void addNumTurnsInJail(){
+        numTurnsInJail++;
+    }
+
+    public int getNumTurnsInJail() {
+        return numTurnsInJail;
+    }
+
+    public void goToJail() {
+        setIsInJail(true);
+    }
+
+    public void dummy(int argument, int argument2){
+        System.out.println("Dummy worked and printed out " + argument + " along with " + argument2);
+    }
+
+    public void leaveJail() {
+        setIsInJail(false);
     }
 }

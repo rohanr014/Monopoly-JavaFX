@@ -1,0 +1,47 @@
+package app.views.spaces;
+
+import app.engine.space.ColorProperty;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
+public class ColorPropertyView extends SpaceView{
+
+    private ColorProperty myColorProperty;
+    //private double myRent;
+
+
+    private Pane myRoot;
+
+
+    public ColorPropertyView(String name) {
+        //myColorProperty = colorProperty;
+        myName = name;
+
+        myRoot = new VBox();
+        myRoot.setStyle("-fx-background-color: WHITE");
+    }
+
+    public String getMyName(){
+        return myName;
+    }
+
+
+
+    @Override
+    public Pane initialize() {
+        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace(myName, Color.ORANGE));
+        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("hi", 60.00));
+        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("Ay", "yo"));
+
+        return myRoot;
+
+    }
+
+    public Pane getMyRoot(){return myRoot;}
+
+    @Override
+    public void spaceUpdate() {
+
+    }
+}
