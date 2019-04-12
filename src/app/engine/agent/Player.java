@@ -112,4 +112,8 @@ public class Player extends Bank{
     public void goToJail() {
         setIsInJail(true);
     }
+
+    public void dummy(int argument, int argument2){
+        System.out.println("Dummy worked and printed out " + argument + " along with " + argument2);
+    }
 }

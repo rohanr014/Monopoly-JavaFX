@@ -160,9 +160,7 @@ public class GameSetup {
 
 
         return new CommonSpace(name);
-
     }
-
 
     private void createPlayers () {
         double startingBalance = Double.parseDouble(rulesBundle.getString("startingBalance"));
@@ -215,13 +213,20 @@ public class GameSetup {
             }
 
             else if(valueSplit[1].equalsIgnoreCase("HOLD")){
-                tempCard = new HoldableCard(description, myBoard);
-                toBeReturned.add(tempCard);
+                try {
+                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 2, valueSplit.length));
+                    toBeReturned.add(tempCard);
+
+                } catch (Exception e) {
+                    System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
+                    e.printStackTrace();
+                }
             }
         }
 
         return toBeReturned;
     }
+
 
     public Collection<Card> getCommunityChest() {
         return communityChest;
