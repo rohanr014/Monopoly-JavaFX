@@ -20,7 +20,6 @@ public class SpaceViewFactory {
             Class cls = Class.forName("app.views.spaces." + className + "View");
             Constructor cons = cls.getConstructor(String.class);
             SpaceView result = (SpaceView) cons.newInstance(propertyName);
-
             return result;
         }catch (ClassNotFoundException | NoSuchMethodException
                 | IllegalAccessException | InvocationTargetException

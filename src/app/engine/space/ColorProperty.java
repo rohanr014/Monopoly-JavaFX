@@ -5,6 +5,7 @@ import app.engine.Asset;
 import app.engine.board.Board;
 import app.engine.agent.Player;
 
+import java.awt.*;
 import java.util.Collection;
 
 //subclass for Color Properties
@@ -16,14 +17,14 @@ public class ColorProperty extends SetProperty{
     private int hotels;
     private double hotelCost;
     private double[] hotelRents;
+    private String myColor;
 
 
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost, String colorString) {
         super(name, purchaseCost, mortgageValue, allRents);
         //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
-
-
+        this.myColor = colorString;
     }
 
 
@@ -47,6 +48,9 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
+    public String getMyColor() {
+        return myColor;
+    }
 
     //    public boolean buildHouse() {
 //        //check if house can be built, increment houses, rent = houseRents[houses], charge owner houseCost

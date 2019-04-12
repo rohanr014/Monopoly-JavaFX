@@ -75,6 +75,7 @@ public class GameSetup {
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
         for(String currentKey: spacesKeys){
+
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace;
@@ -127,11 +128,12 @@ public class GameSetup {
         double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
         double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
         double mortgageValue = Double.parseDouble(cpBundle.getString("mortgage"));
+        String colorString = cpBundle.getString("color");
 
         String[] rentStrings = cpBundle.getString("rents").split(",");
         //System.out.println(name);
 
-        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
     }
 
     private Space makeRR(String propFile, boolean isRailroad){
