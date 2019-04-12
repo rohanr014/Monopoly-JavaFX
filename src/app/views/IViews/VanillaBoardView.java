@@ -48,30 +48,35 @@ public class VanillaBoardView extends BoardView {
 //        double width = myRoot.getBoundsInParent().getWidth();
         double x0 =0;
         double y0 = 0;
-        double xsize=1000;
-        double ysize = 1000;
-        double fractionNotSpaces = 0.6;
+        double xsize=800;
+        double ysize = 800;
+        double fractionNotSpaces = 0.2;
         double x = x0+xsize-(((1.0-fractionNotSpaces)/2)*xsize);
         double y = y0+ysize-(((1-fractionNotSpaces)/2)*ysize);
         for (int i=0; i<mySpaceViews.size();i++) {
-            System.out.println(x);
-            System.out.println(y);
+//            System.out.println(i+": "+Double.toString(x)+","+Double.toString(y));
             var temp = mySpaceViews.get(i).initialize();
             temp.setLayoutX(x);
             temp.setLayoutY(y);
             myRoot.getChildren().add(temp);
+
             if (left(i)) {
-                x=x-(xsize/(mySpaceViews.size()/4));
+//                System.out.println("left");
+                x=x-((xsize-(((1-fractionNotSpaces)/2)*xsize))/(mySpaceViews.size()/4));
             }
             else if (up(i)) {
-                y=y-(ysize/(mySpaceViews.size()/4));
+//                System.out.println("up");
+                y=y-((ysize-(((1-fractionNotSpaces)/2)*ysize))/(mySpaceViews.size()/4));
             }
             else if (right(i)) {
-                x=x+(xsize/(mySpaceViews.size()/4));
+//                System.out.println("right");
+                x=x+((xsize-(((1-fractionNotSpaces)/2)*xsize))/(mySpaceViews.size()/4));
             }
             else if (down(i)) {
-                y=y+(ysize/(mySpaceViews.size()/4));
+//                System.out.println("down");
+                y=y+((ysize-(((1-fractionNotSpaces)/2)*ysize))/(mySpaceViews.size()/4));
             }
+            System.out.println("");
         }
         //        else{
 //            pane.setLayoutX(600);
@@ -86,15 +91,15 @@ public class VanillaBoardView extends BoardView {
     }
 
     private boolean up(int index) {
-        return (index>=((mySpaceViews.size()-4)/4)+1 && index<((mySpaceViews.size()-4)/4)+7);
+        return (index>=((mySpaceViews.size()-4)/4)+1 && index<(((mySpaceViews.size()-4)/4)+1)*2);
     }
 
     private boolean right(int index) {
-        return (index>=((mySpaceViews.size()-4)/4)+7 && index<((mySpaceViews.size()-4)/4)+13);
+        return (index>=(((mySpaceViews.size()-4)/4)+1)*2 && index<(((mySpaceViews.size()-4)/4)+1)*3);
     }
 
     private boolean down(int index) {
-        return (index>=((mySpaceViews.size()-4)/4)+13 && index<((mySpaceViews.size()-4)/4)+18);
+        return (index>=(((mySpaceViews.size()-4)/4)+1)*3 && index<(((mySpaceViews.size()-4)/4)+1)*4);
 
     }
 
