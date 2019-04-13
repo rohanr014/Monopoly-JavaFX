@@ -22,9 +22,12 @@ public class ColorPropertyView extends SpaceView{
         //myColorProperty = colorProperty;
         myName = name;
 
+
         myRoot = new StackPane();
+        myRoot.setPrefSize(100, 200);
         myVBox = new VBox();
-        myRoot.getChildren().addAll(new Rectangle(30, 60,Color.WHITE),myVBox);
+        myRoot.getChildren().addAll(new Rectangle(),myVBox);
+
         initialize();
 
     }
@@ -38,8 +41,7 @@ public class ColorPropertyView extends SpaceView{
     @Override
     public Pane initialize() {
         HBox temp = HBoxMaker.makeHBoxSpace(myName, Color.ORANGE);
-        temp.setSpacing(20);
-        temp.resize(30,60);
+        temp.setPrefSize(10,20);
 
         myRoot.getChildren().add(temp);
         myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("hi", 60.00));
