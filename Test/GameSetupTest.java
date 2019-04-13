@@ -1,5 +1,6 @@
 import app.engine.agent.Player;
 import app.engine.board.Board;
+import app.engine.card.*;
 import app.engine.dice.Dice;
 import app.engine.Config.GameSetup;
 import app.engine.space.*;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 
@@ -58,10 +60,6 @@ class GameSetupTest {
     void getSpaces() {
         List<Space> spaces = test.getSpaces();
 
-        System.out.println("Class is " + spaces.get(3).getClass());
-        ColorProperty test = (ColorProperty) spaces.get(3);
-        System.out.println("Name is " + test.getName());
-
         ColorProperty VirginiaAvenue = (ColorProperty) spaces.get(14);
         Railroad ShortLine = (Railroad) spaces.get(35);
         Utility WaterWorks = (Utility) spaces.get(28);
@@ -90,6 +88,39 @@ class GameSetupTest {
         int secondRolled = rolled[1];
 
         assertTrue(1<=firstRolled && firstRolled<=6 && 1<=secondRolled && secondRolled<=6);
+
+    }
+
+    @Test
+    void getPerkCards(){
+        ArrayList<Card> testChest = (ArrayList<Card>)test.getCommunityChest();
+
+        ArrayList<String> chestNames = new ArrayList<String>();
+
+        for(Card card:testChest){
+            chestNames.add(card.getDescription());
+        }
+
+        Collections.sort(chestNames);
+
+        ArrayList<Card> testChance = (ArrayList<Card>) test.getChanceCards();
+        ArrayList<String> chanceNames = new ArrayList<String>();
+
+        for(Card card:testChance){
+            chanceNames.add(card.getDescription());
+        }
+
+        Collections.sort(chanceNames);
+
+        // check parsing of description
+        assertEquals("Advance to \"Go\". Collect $200", chestNames.get(0));
+        assertEquals("Advance to Illinois Ave. If you pass Go, collect $200.", chanceNames.get(1));
+
+        // check to make sure correct type constructed
+        assertEquals(testChest.get(1).getClass(), MoneyCard.class);
+        assertEquals(testChest.get(4).getClass(), HoldableCard.class);
+        assertEquals(testChance.get(1).getClass(), MoveSpaceCard.class);
+        assertEquals(testChance.get(7).getClass(), MoveNumberCard.class);
 
     }
 }
