@@ -9,9 +9,14 @@ import java.util.List;
 public abstract class Space implements ISpaceObservable {
     private List<Player> currentOccupants;
     private Board gameBoard;
+    private String myName;
 
-    public Space(){
+    public Space() {
         currentOccupants = new ArrayList<>();
+    }
+    public Space(String name){
+        this();
+        myName = name;
     }
 
     /**
@@ -40,6 +45,10 @@ public abstract class Space implements ISpaceObservable {
 
     public boolean containsPlayer(Player player) {
         return (currentOccupants.contains(player));
+    }
+
+    public String getMyName() {
+        return myName;
     }
 
     @Override

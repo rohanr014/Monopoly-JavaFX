@@ -11,14 +11,14 @@ public abstract class SetProperty extends Property {
     protected Set<SetProperty> sharedSet;
     protected double[] possibleRents;
 
-    public SetProperty(double purchaseCost, double mortgageValue) {
-        super(purchaseCost, mortgageValue);
+    public SetProperty(String name, double purchaseCost, double mortgageValue) {
+        super(name, purchaseCost, mortgageValue);
         sharedSet = new HashSet<>();
         completeSet = new HashSet<>();
     }
 
-    public SetProperty(double purchaseCost, double mortgageValue, double[] allRents) {
-        this(purchaseCost,  mortgageValue);
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents) {
+        this(name, purchaseCost,  mortgageValue);
         possibleRents = allRents;
     }
 

@@ -17,14 +17,16 @@ public class Property extends Space implements Asset {
 
 
     //mostly for utilities
-    public Property(double purchaseCost, double mortgageValue) {
+    public Property(String name, double purchaseCost, double mortgageValue) {
+        super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
+
     }
 
     //for every other property
-    public Property(double purchaseCost, double mortgageValue, double rent) {
-        this(purchaseCost, mortgageValue);
+    public Property(String name, double purchaseCost, double mortgageValue, double rent) {
+        this(name, purchaseCost, mortgageValue);
         this.rent = rent;
     }
 

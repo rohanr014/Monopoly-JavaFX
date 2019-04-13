@@ -10,7 +10,7 @@ import app.engine.space.Space;
 
 import java.util.*;
 
-public class Board implements IBoardObservable{
+public class    Board implements IBoardObservable{
     private Collection<Card> communityChest;
     private Collection<Card> chanceCards;
     private List<Space> spaces;
