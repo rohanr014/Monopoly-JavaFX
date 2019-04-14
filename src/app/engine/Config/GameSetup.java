@@ -9,7 +9,6 @@ import app.engine.board.Board;
 import app.engine.space.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameSetup {
@@ -226,11 +225,11 @@ public class GameSetup {
     }
 
 
-    public Collection<Card> getCommunityChest() {
+    public Queue<Card> getCommunityChest() {
         return communityChest;
     }
 
-    public Collection<Card> getChanceCards() {
+    public Queue<Card> getChanceCards() {
         return chance;
     }
 
