@@ -1,5 +1,6 @@
 package app.views.IViews;
 
+import app.engine.agent.Bank;
 import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.views.IViews.AgentView;
@@ -23,6 +24,11 @@ public class AssetView implements IView {
 
     private void setRoot(){
         var tempPane = new VBox();
+        tempPane.getChildren().add(new AgentView(myBoard.getBank()).getMyRoot());
+        Queue<Player> players = myBoard.getPlayers();
+        for (Player player: players) {
+            tempPane.getChildren().add(new AgentView(player).getMyRoot());
+        }
         myRoot.getChildren().add(tempPane);
     }
 

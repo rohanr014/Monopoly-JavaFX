@@ -109,6 +109,8 @@ public class Player extends Bank{
         return numTurnsInJail;
     }
 
+
+
     public void goToJail() {
         setIsInJail(true);
     }
