@@ -89,11 +89,13 @@ public class PlayerView extends PopUpView {
     private void handleSubmit(){
         ArrayList<String> tempNames = new ArrayList<>();
         ArrayList<String> tempPiece = new ArrayList<>();
-        for (TextField player: myNames){
-            tempNames.add(player.getCharacters().toString());
-        }
-        for (ComboBox<String> choice: myGamePieceChoices){
-            tempPiece.add(choice.getValue());
+        for (int i = 0; i<myNames.size();i++) {
+            TextField player = myNames.get(i);
+            ComboBox<String> piece = myGamePieceChoices.get(i);
+            if (player.getCharacters().length()!=0) {
+                tempNames.add(player.getCharacters().toString());
+                tempPiece.add(piece.getValue());
+            }
         }
 
         super.getMyStage().close();

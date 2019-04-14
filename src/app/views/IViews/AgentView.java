@@ -10,16 +10,18 @@ import javafx.scene.text.Text;
 
 public class AgentView implements IAgentObserver, IView {
     private Pane myRoot;
-    private double myWallet;
+    private double myCash;
     private String myName;
     private int myHotelNum;
     private int myHouseNum;
+    private String myPiece;
 
 
-    public AgentView(String name){
+    public AgentView(String name,double cash,String piece){//take in correct paramaters
         myName = name;
-        myWallet = 1500.00;
+        myCash = cash; //1500.00;
         myRoot = new Pane();
+        myPiece = piece;
         setRoot();
     }
 
@@ -28,7 +30,7 @@ public class AgentView implements IAgentObserver, IView {
         var tempPane1 = new HBox();
         var tempPane2 = new HBox();
         tempPane1.getChildren().add(new Text(myName));
-        tempPane1.getChildren().add(new Text("$" + Integer.toString((int) myWallet) ));
+        tempPane1.getChildren().add(new Text("$" + Integer.toString((int) myCash) ));
         tempPane2.getChildren().add(new Text("Number of Hotels : " + Integer.toString(myHotelNum)));
         tempPane2.getChildren().add(new Text("Number of Houses : " + Integer.toString(myHouseNum)));
         tempPane.getChildren().add(tempPane1);
@@ -38,9 +40,16 @@ public class AgentView implements IAgentObserver, IView {
 
     }
 
+    public double getMyCash() { return myCash; }
+
+    public void setMyCash(double cash) { this.myCash = cash; }
+
+    public set
+
 
     @Override
     public void agentUpdate(double wallet) {//why does this need board as an input?
+        //change money amount
 
     }
 
