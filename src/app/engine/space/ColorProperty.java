@@ -27,6 +27,23 @@ public class ColorProperty extends SetProperty{
         this.name = name;
     }
 
+    @Override
+    public double calculateRent() {
+        if (monopoly) {
+            if (hotels == 0) {
+                if (houses == 0) {
+                    setRent(getRent() * 2);
+                }
+                else {
+                    setRent(developmentRents[houses]);
+                }
+            }
+            else {
+                setRent(developmentRents[developmentRents.length - 1]);
+            }
+        }
+        return getRent();
+    }
 
     @Override
     public boolean mortgage() {
@@ -61,26 +78,8 @@ public class ColorProperty extends SetProperty{
             return true;
         }
         return false;
-
     }
 
-    @Override
-    public double calculateRent() {
-        if (monopoly) {
-            if (hotels == 0) {
-                if (houses == 0) {
-                    setRent(getRent() * 2);
-                }
-                else {
-                    setRent(developmentRents[houses]);
-                }
-            }
-            else {
-                setRent(developmentRents[developmentRents.length - 1]);
-            }
-        }
-        return getRent();
-    }
     public boolean buildHotel() {
         if (this.getHouses() != 4) {
             return false;
@@ -95,6 +94,30 @@ public class ColorProperty extends SetProperty{
         }
         if (getOwner().giveMoney(getBoard().getBank(), hotelPrice)) {
             hotels++;
+            calculateRent();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sellHouse() {
+        if (getHouses() == 0) {
+            return false;
+        }
+        else if (getBoard().getBank().giveMoney(getOwner(), housePrice)) {
+            houses--;
+            calculateRent();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sellHotel() {
+        if (getHotels() == 0) {
+            return false;
+        }
+        else if (getBoard().getBank().giveMoney(getOwner(), hotelPrice)) {
+            hotels--;
             calculateRent();
             return true;
         }

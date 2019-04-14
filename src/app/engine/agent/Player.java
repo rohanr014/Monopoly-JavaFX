@@ -61,11 +61,17 @@ public class Player extends Bank{
 
     //player sells house on cp, returns false if method fails
     boolean sellHouse(ColorProperty colorProp){
+        if (colorProp.sellHouse()) {
+            logAction = name + " sold a house on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
     //player sells hotel on cp, returns false if method fails
     boolean sellHotel(ColorProperty colorProp){
+        if (colorProp.sellHotel()) {
+            logAction = name + " sold a hotel on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
