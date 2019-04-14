@@ -23,12 +23,6 @@ public class AssetView implements IView {
 
     private void setRoot(){
         var tempPane = new VBox();
-        tempPane.setAlignment(Pos.CENTER);
-        Queue<Player> players = myBoard.getPlayers();
-        System.out.println(players.size());
-        for (Player player: players) {
-            tempPane.getChildren().add(new AgentView(player.getName()).getMyRoot());
-        }
         myRoot.getChildren().add(tempPane);
     }
 

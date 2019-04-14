@@ -100,11 +100,9 @@ public class GameSetup {
 //            }
             else{
                 currentSpace = new CommonSpace(currentValue[0]);
-
             }
 
             spaces.add(currentSpace);
-
         }
 
     }

@@ -43,6 +43,7 @@ public class Board implements IBoardObservable{
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
+        System.out.println(players.poll().getName());
     }
 
     private void initializeSpaces() {
