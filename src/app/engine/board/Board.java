@@ -43,7 +43,7 @@ public class Board implements IBoardObservable{
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
-        System.out.println(players.poll().getName());
+        //System.out.println(players.poll().getName());
     }
 
     private void initializeSpaces() {
@@ -107,6 +107,7 @@ public class Board implements IBoardObservable{
         } else {
             if (isDoubles(lastRoll)){
                 doublesCounter++;
+                checkIfDoublesSendsToJail(player);
             }
             move(player, getLastRollSum());
         }
@@ -114,17 +115,12 @@ public class Board implements IBoardObservable{
         //return lastRoll;
     }
 
-
     //    works for any number of die. Just checks if all die rolled are the same or not.
     private boolean isDoubles(int[] lastRoll) {
         for (int i = 0; i < lastRoll.length-1; i++){
             if (lastRoll[i]!=lastRoll[i+1]){
                 return false;
             }
-        }
-//        MAGIC VALUE
-        if (doublesCounter==getNumDoublesTilGoToJail()){
-            currentPlayer.goToJail();
         }
         return true;
     }
@@ -138,6 +134,14 @@ public class Board implements IBoardObservable{
         player.leaveJail();
     }
 
+    public boolean canUseGetOutOfJailCard(Player player){
+        return (player.findGetOutOfJailCard() != null);
+    }
+
+    public boolean isJail(Space space) {
+        return getSpaceIndex(space)==getJailIndex();
+    }
+
     private void handleJailRolls(Player player) {
 
         if (isDoubles(lastRoll)) {
@@ -146,6 +150,12 @@ public class Board implements IBoardObservable{
         } else if (player.getNumTurnsInJail()>=getMaxTurnsInJail()){
             payJailFee(player);
             move(player, getLastRollSum());
+        }
+    }
+
+    private void checkIfDoublesSendsToJail(Player player) {
+        if (doublesCounter==getNumDoublesTilGoToJail()){
+            player.goToJail();
         }
     }
 
@@ -200,10 +210,6 @@ public class Board implements IBoardObservable{
     //prob could be refactored into Property?
     public double getSellPrice(double purchaseCost) {
         return purchaseCost / getSellToBankMultiplier();
-    }
-
-    public boolean isJail(Space space) {
-        return getSpaceIndex(space)==getJailIndex();
     }
 
     private int getSpaceIndex(Space space) {
@@ -261,9 +267,20 @@ public class Board implements IBoardObservable{
     ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
     /////////////////////
 
+    public boolean canPayJailFee(Player player){
+        return canPay(player, getJailFee());
+    }
+
+    public boolean canPay(Player player, double amount){
+        return (player.getWallet()>=amount);
+    }
+
 
     public boolean canEndTurn(Player player){
-        return (lastRoll != null);
+        if (lastRoll ==null){
+            return false;
+        }
+        return !(isDoubles(lastRoll) && doublesCounter < getNumDoublesTilGoToJail());
     }
 
     //    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
@@ -307,7 +324,6 @@ public class Board implements IBoardObservable{
     public boolean canBuy(Player player, Property prop){
         return (player.getWallet()>=prop.getPurchaseCost());
     }
-
 
 
     /////////////////////

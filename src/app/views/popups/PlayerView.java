@@ -39,7 +39,6 @@ public class PlayerView extends PopUpView {
         myNumberPlayers = 8;
         myNames = new ArrayList<>();
         myGamePieceChoices = new ArrayList<>();
-        System.out.println(Integer.toString(myNumberPlayers));
         for (int i=1;i<=myNumberPlayers;i++){
             myNames.add(setPlayerEditable());
             myGamePieceChoices.add(setGamePieceOptions());
