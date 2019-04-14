@@ -1,6 +1,9 @@
 package app.views.IViews;
 
+import app.engine.agent.Agent;
+import app.engine.agent.Bank;
 import app.engine.agent.IAgentObserver;
+import app.engine.agent.Player;
 import app.engine.board.Board;
 
 import javafx.scene.layout.*;
@@ -16,6 +19,8 @@ public class AgentView implements IAgentObserver, IView {
     private int myHouseNum;
     private String myPiece;
 
+    private Agent myModel;
+
 
     public AgentView(String name,double cash,String piece){//take in correct paramaters
         myName = name;
@@ -24,6 +29,17 @@ public class AgentView implements IAgentObserver, IView {
         myPiece = piece;
         setRoot();
     }
+
+
+    public AgentView(Bank model){
+        myModel = model;
+    }
+
+    public AgentView(Player model){
+        myModel = model;
+    }
+
+
 
     private void setRoot(){
         var tempPane = new VBox();
@@ -43,9 +59,6 @@ public class AgentView implements IAgentObserver, IView {
     public double getMyCash() { return myCash; }
 
     public void setMyCash(double cash) { this.myCash = cash; }
-
-    public set
-
 
     @Override
     public void agentUpdate(double wallet) {//why does this need board as an input?
