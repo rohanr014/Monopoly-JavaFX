@@ -24,7 +24,6 @@ public class MainController {
 
     public MainController(Stage stage){
         mySplashView = new SplashView(this);
-        ColorPropertyView CPV = new ColorPropertyView("New York");
         myStage = stage;
         myStage.setTitle("monopoly_tobe_replaced");
         myStage.setResizable(false);

@@ -1,6 +1,7 @@
 package app.views.spaces;
 
 
+import app.engine.space.Space;
 import javafx.scene.image.ImageView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -14,19 +15,15 @@ public class SpaceViewFactory {
 
     }
 
-    public SpaceView createSpace(String className, String propertyName){
+    public SpaceView createSpace(Space space){
         try{
-
-            Class cls = Class.forName("app.views.spaces." + className + "View");
-            Constructor cons = cls.getConstructor(String.class);
-            SpaceView result = (SpaceView) cons.newInstance(propertyName);
-            return result;
-        }catch (ClassNotFoundException | NoSuchMethodException
-                | IllegalAccessException | InvocationTargetException
-                | InstantiationException e){
+            Class cls = Class.forName("app.views.spaces." + space.getClass().getSimpleName() + "View");
+            System.out.println(cls.getName() + " " + space.getClass().getName());
+            Constructor cons = cls.getConstructors()[0];
+            return (SpaceView) cons.newInstance(space);
+        }catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | InstantiationException e){
             e.printStackTrace();
         }
-
         throw new RuntimeException();
     }
 
