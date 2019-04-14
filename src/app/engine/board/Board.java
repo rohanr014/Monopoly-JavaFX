@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class Board implements IBoardObservable{
-    private Collection<Card> communityChest;
-    private Collection<Card> chanceCards;
+    private Queue<Card> communityChest;
+    private Queue<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
     private Player currentPlayer;
@@ -97,6 +97,14 @@ public class Board implements IBoardObservable{
         move(player, spaces.get(end));
     }
 
+    public void drawCard(Player player, Queue<Card> whichPile){
+//        cards add themselves back to their piles
+        var card = whichPile.poll();
+//        setOriginPile() MUST be called before invokeAction()
+        card.setOriginPile(whichPile);
+        card.invokeAction(player);
+    }
+
     /////////////////////
     ///BELOW: DICE-RELATED METHODS
     /////////////////////
@@ -104,6 +112,7 @@ public class Board implements IBoardObservable{
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
+        System.out.println(player);
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
@@ -263,6 +272,10 @@ public class Board implements IBoardObservable{
 
     private int getMaxTurnsInJail() {
         return 3;
+    }
+
+    public double getHoldableCardSellValue() {
+        return 30;
     }
 
     /////////////////////

@@ -139,6 +139,15 @@ public class Player extends Bank{
             return false;
         }
         card.useCard(this);
+        removeCard(card);
         return true;
+    }
+
+    public void addCard(HoldableCard holdableCard) {
+        cards.add(holdableCard);
+    }
+
+    public void removeCard(HoldableCard holdableCard) {
+        cards.remove(holdableCard);
     }
 }

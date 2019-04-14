@@ -1,6 +1,8 @@
 package app.engine;
 
+import app.engine.agent.Player;
+
 public interface Asset {
-    boolean sellToBank();
-//    boolean getValue();
+    boolean sellToBank(Player player);
+    double getValue();
 }
