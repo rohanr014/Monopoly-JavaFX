@@ -39,7 +39,7 @@ public class MainController {
     public void setPlayerInfo(ArrayList<String> playerNames, ArrayList<String> playerPieces ){
         myPlayerNames = playerNames;
         myPlayerPieces = playerPieces;
-        setGame();
+        setGame();//maybe this should not be in this function
     }
 
     private void setGame(){

@@ -102,6 +102,7 @@ public class Board implements IBoardObservable{
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
+        System.out.println(player);
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
