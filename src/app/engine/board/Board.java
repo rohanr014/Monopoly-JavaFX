@@ -99,7 +99,7 @@ public class Board implements IBoardObservable{
     ///BELOW: DICE-RELATED METHODS
     /////////////////////
 
-    public int[] rollDice(Player player){
+    public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
         if (player.isInJail()) {
@@ -111,7 +111,8 @@ public class Board implements IBoardObservable{
             }
             move(player, getLastRollSum());
         }
-        return lastRoll;
+        notifyBoardObservers();
+        //return lastRoll;
     }
 
     //    works for any number of die. Just checks if all die rolled are the same or not.

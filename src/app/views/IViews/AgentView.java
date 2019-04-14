@@ -23,6 +23,8 @@ public class AgentView implements IAgentObserver, IView {
     private Player myPlayer;
     private Bank myBank;
 
+    private Agent myModel;
+
 
     public AgentView(Player player){//take in correct paramaters
         myPlayer = player;
@@ -48,7 +50,6 @@ public class AgentView implements IAgentObserver, IView {
         myRoot = new Pane();
 
     }
-
 
     private void setBankRoot(){
         var tempPane = new VBox();
@@ -80,7 +81,6 @@ public class AgentView implements IAgentObserver, IView {
     public double getMyCash() { return myCash; }
 
     public void setMyCash(double cash) { this.myCash = cash; }
-
 
     @Override
     public void agentUpdate(double wallet) {//why does this need board as an input?

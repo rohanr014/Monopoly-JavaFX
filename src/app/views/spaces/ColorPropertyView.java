@@ -27,6 +27,8 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
 
         myRoot = new StackPane();
         myRoot.getChildren().addAll(myVBox);
+
+        myRoot.hoverProperty().addListener(e->onHover());
     }
 
     @Override
@@ -39,6 +41,12 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
 
     @Override
     public void spaceUpdate() {
+
+    }
+
+    private void onHover() {
+        DetailColorProperty dcp = new DetailColorProperty(myModel);
+        dcp.adjustSize();
 
     }
 }
