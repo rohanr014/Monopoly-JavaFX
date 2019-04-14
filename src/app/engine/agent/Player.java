@@ -1,5 +1,6 @@
 package app.engine.agent;
 
+import app.engine.card.Card;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
@@ -121,5 +122,23 @@ public class Player extends Bank{
 
     public void leaveJail() {
         setIsInJail(false);
+    }
+
+    public HoldableCard findGetOutOfJailCard() {
+        for (HoldableCard card: cards){
+            if (card.getFuncName().equals("leaveJail")){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public boolean useGetOutOfJailCard(){
+        var card = findGetOutOfJailCard();
+        if (card == null) {
+            return false;
+        }
+        card.useCard(this);
+        return true;
     }
 }
