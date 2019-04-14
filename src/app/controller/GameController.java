@@ -13,9 +13,19 @@ public class GameController {
     public GameController(Board board, MainView mainView) {
         myBoard = board;
         myMainView = mainView;
+        registerBoardObservers();
+
     }
 
+
     public void initialize(){
+        myBoard.startTurn();
+
+    }
+
+    private void registerBoardObservers(){
+        myBoard.addBoardObserver(myMainView.getMyVanillaBoardView());
+        myBoard.addBoardObserver(myMainView.getMyControlView());
 
     }
 

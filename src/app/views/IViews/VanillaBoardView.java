@@ -95,62 +95,16 @@ public class VanillaBoardView extends BoardView {
 
         // vertical
     }
-
-    private boolean left(int index) {
-        return (index>=0 && index<((mySpaceViews.size()-4)/4)+1);
-    }
-
-    private boolean up(int index) {
-        return (index>=((mySpaceViews.size()-4)/4)+1 && index<(((mySpaceViews.size()-4)/4)+1)*2);
-    }
-
-    private boolean right(int index) {
-        return (index>=(((mySpaceViews.size()-4)/4)+1)*2 && index<(((mySpaceViews.size()-4)/4)+1)*3);
-    }
-
-    private boolean down(int index) {
-        return (index>=(((mySpaceViews.size()-4)/4)+1)*3 && index<(((mySpaceViews.size()-4)/4)+1)*4);
-
-    }
-
-//    private void deploySpacesOnBoard(){
-//        for(int i =0; i<mySpaceViews.size();i++){
-//            //need to fill in here
-//            var temp = mySpaceViews.get(i).initialize();
-//            setLocation(i, temp);
-//
-//
-//        }
-//    }
-//
-//    private void setLocation(int index, Pane pane){
-//        if(index<10) {
-//            pane.setLayoutX(600-((index) * 50));
-//            pane.setLayoutY(600);
-//
-//        }
-//        else if(index>=10&&index<20){
-//            pane.setLayoutX(10);
-//            pane.setLayoutY(600-(index * 50));
-//
-//        }
-//        else if(index>=20 && index<30){
-//            pane.setLayoutX(index * 50);
-//            pane.setLayoutY(10);
-//
-//        }
-//        else{
-//            pane.setLayoutX(600);
-//            pane.setLayoutY(index*50);
-//
-//        }
-//        myRoot.getChildren().add(pane);
-//    }
     private void createSpaceViews(){
 
     }
 
 
+    public void boardUpdate(Board model){
+        myBoard = model;
+        //call subsequent methods to reset the values that need to be updated
+
+    }
 
 
     @Override

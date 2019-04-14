@@ -31,7 +31,7 @@ public class DetailColorProperty {
 
     public void adjustSize(){
         myHeader.setHeight(myRoot.getHeight()/4);
-        myHeader.setWidth(myRoot.getWidth()-20);
+        myHeader.setWidth(myRoot.getWidth()-40);
 
         myDivider.setStartY(0);
         myDivider.setStartY(myRoot.getHeight()/4 + 5);
@@ -53,8 +53,8 @@ public class DetailColorProperty {
         myAnchorPane = new AnchorPane();
         myAnchorPane.getChildren().add(myHeader);
         myAnchorPane.setTopAnchor(myHeader, 10.0);
-        myAnchorPane.setLeftAnchor(myHeader, 10.0);
-        myAnchorPane.setRightAnchor(myHeader, 10.0);
+        myAnchorPane.setLeftAnchor(myHeader, 20.0);
+        myAnchorPane.setRightAnchor(myHeader, 20.0);
         myAnchorPane.setBottomAnchor(myHeader, 10.0);
 
 
