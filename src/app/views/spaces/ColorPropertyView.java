@@ -1,41 +1,38 @@
 package app.views.spaces;
 
 import app.engine.space.ColorProperty;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class ColorPropertyView extends SpaceView{
+public class ColorPropertyView extends SpaceView<ColorProperty> {
+    private VBox myVBox;
+    private Rectangle colorHeader;
 
-    private ColorProperty myColorProperty;
-    //private double myRent;
-
-
-    private Pane myRoot;
-
-
-    public ColorPropertyView(String name) {
-        //myColorProperty = colorProperty;
-        myName = name;
-
-        myRoot = new VBox();
-        myRoot.setStyle("-fx-background-color: WHITE");
+    public ColorPropertyView(ColorProperty model) {
+        super(model.getName(), model);
     }
 
     public String getMyName(){
         return myName;
     }
 
+    @Override
+    public void initialize() {
+        colorHeader = new Rectangle();
+        colorHeader.setFill(Color.valueOf(myModel.getMyColor()));
 
+        myVBox = new VBox();
+        myVBox.getChildren().add(colorHeader);
+
+        myRoot = new StackPane();
+        myRoot.getChildren().addAll(myVBox);
+    }
 
     @Override
-    public Pane initialize() {
-        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace(myName, Color.ORANGE));
-        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("hi", 60.00));
-        myRoot.getChildren().add(HBoxMaker.makeHBoxSpace("Ay", "yo"));
-
-        return myRoot;
-
+    public void adjustSize() {
+        colorHeader.setWidth(myRoot.getPrefWidth()-2);
+        colorHeader.setHeight(myRoot.getPrefHeight()/5);
     }
 
     public Pane getMyRoot(){return myRoot;}

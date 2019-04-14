@@ -5,6 +5,7 @@ import app.engine.board.Board;
 import app.engine.space.Space;
 import app.views.spaces.SpaceViewFactory;
 import app.views.spaces.SpaceView;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class VanillaBoardView extends BoardView {
         myBoard = board;
         mySpaceViews = new ArrayList<>();
         mySpaceFactory = new SpaceViewFactory();
+
         initializeBoard();
     }
 
@@ -34,56 +36,64 @@ public class VanillaBoardView extends BoardView {
     }
 
     private void loadSpacesToList(){
-        for(Space space : mySpaces ){
-            var list = space.getClass().toString().split(" ");//bad code
-            var list2 = list[1].split("space.");
-            var className = list2[1];
-            mySpaceViews.add(mySpaceFactory.createSpace(className, space.getName()));
+        for(Space space : mySpaces){
+            mySpaceViews.add(mySpaceFactory.createSpace(space));
         }
-
-
     }
-    private void deploySpacesOnBoard(){
-//        double height = myRoot.getBoundsInParent().getHeight();
-//        double width = myRoot.getBoundsInParent().getWidth();
-        double x0 =0;
-        double y0 = 0;
-        double xsize=800;
-        double ysize = 800;
-        double fractionNotSpaces = 0.2;
-        double x = x0+xsize-(((1.0-fractionNotSpaces)/2)*xsize);
-        double y = y0+ysize-(((1-fractionNotSpaces)/2)*ysize);
-        for (int i=0; i<mySpaceViews.size();i++) {
-//            System.out.println(i+": "+Double.toString(x)+","+Double.toString(y));
-            var temp = mySpaceViews.get(i).initialize();
-            temp.setLayoutX(x);
-            temp.setLayoutY(y);
-            myRoot.getChildren().add(temp);
 
-            if (left(i)) {
-//                System.out.println("left");
-                x=x-((xsize-(((1-fractionNotSpaces)/2)*xsize))/(mySpaceViews.size()/4));
-            }
-            else if (up(i)) {
-//                System.out.println("up");
-                y=y-((ysize-(((1-fractionNotSpaces)/2)*ysize))/(mySpaceViews.size()/4));
-            }
-            else if (right(i)) {
-//                System.out.println("right");
-                x=x+((xsize-(((1-fractionNotSpaces)/2)*xsize))/(mySpaceViews.size()/4));
-            }
-            else if (down(i)) {
-//                System.out.println("down");
-                y=y+((ysize-(((1-fractionNotSpaces)/2)*ysize))/(mySpaceViews.size()/4));
-            }
-            System.out.println("");
+    private void deploySpacesOnBoard(){
+        double xsize = 600;
+        double ysize = 600;
+
+        int numberOfCardsOnASide = 10;
+
+        double dx = xsize/numberOfCardsOnASide;
+        double dy = ysize/numberOfCardsOnASide;
+
+        // add all views into myRoot
+        mySpaceViews.forEach(view -> myRoot.getChildren().add(view.getMyRoot()));
+
+        // assuming rectangular board,
+
+        // bottom
+        for(int i = 0 ; i < numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX((numberOfCardsOnASide - i) * dx);
+            root.setLayoutY(numberOfCardsOnASide * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
         }
-        //        else{
-//            pane.setLayoutX(600);
-//            pane.setLayoutY(index*50);
-//
-//        }
-//        myRoot.getChildren().add(pane);
+
+        // left
+        for(int i = numberOfCardsOnASide ; i < 2*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX(0);
+            root.setLayoutY((numberOfCardsOnASide*2-i) * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        // top
+        for(int i = 2*numberOfCardsOnASide ; i < 3*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX((i-2*numberOfCardsOnASide) * dx);
+            root.setLayoutY(0);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        // right
+        for(int i = 3*numberOfCardsOnASide ; i < 4*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX(numberOfCardsOnASide * dx);
+            root.setLayoutY((i-3*numberOfCardsOnASide) * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        mySpaceViews.forEach(SpaceView::adjustSize);
+
+        // vertical
     }
 
     private boolean left(int index) {

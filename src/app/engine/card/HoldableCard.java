@@ -51,6 +51,11 @@ public class HoldableCard extends Card implements Asset {
         Class playerClass = currentOccupant.getClass();
 
         try {
+            if(processedArguments.length == 0) {
+                Method funcToCall = playerClass.getDeclaredMethod(funcName);
+                funcToCall.invoke(currentOccupant);
+            }
+
             if (processedArguments.length == 1) {
                 Method funcToCall = playerClass.getDeclaredMethod(funcName, getPrimitiveType(processedArguments[0]));
                 funcToCall.invoke(currentOccupant, processedArguments[0]);
@@ -111,5 +116,6 @@ public class HoldableCard extends Card implements Asset {
     }
 
     public String getFuncName() {
+        return funcName;
     }
 }

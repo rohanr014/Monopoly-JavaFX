@@ -64,6 +64,7 @@ class GameSetupTest {
         Railroad ShortLine = (Railroad) spaces.get(35);
         Utility WaterWorks = (Utility) spaces.get(28);
 
+
         assertEquals("Short Line", ShortLine.getName());
         assertEquals("Water Works", WaterWorks.getName());
 
