@@ -289,6 +289,7 @@ public class Board implements IBoardObservable{
     }
 
 
+//    if player has rolled and the roll wasn't doubles
     public boolean canEndTurn(Player player){
         if (lastRoll ==null){
             return false;

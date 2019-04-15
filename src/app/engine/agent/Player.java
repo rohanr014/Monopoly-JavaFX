@@ -65,7 +65,7 @@ public class Player extends Bank{
 
     //player sells hc to bank, returns false if method fails
     boolean sell(HoldableCard holdableCard){
-        return holdableCard.sellToBank();
+        return holdableCard.sellToBank(this);
     }
 
 
