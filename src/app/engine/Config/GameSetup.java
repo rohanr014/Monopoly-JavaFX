@@ -24,8 +24,8 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
-    private List<Card> communityChest;
-    private List<Card> chance;
+    private Queue<Card> communityChest;
+    private Queue<Card> chance;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -42,10 +42,10 @@ public class GameSetup {
         rulesBundle = ResourceBundle.getBundle(highBundle.getString(RULES_KEY));
         myBoard = b;
 
-        players = new LinkedList<Player>();
-        spaces = new ArrayList<Space>();
         communityChest = makePerkCards(COMMUNITY_KEY);
         chance = makePerkCards(CHANCE_KEY);
+        players = new LinkedList<Player>();
+        spaces = new ArrayList<Space>();
 
         createPlayers();
         createSpaces();
@@ -77,7 +77,7 @@ public class GameSetup {
         for(String currentKey: spacesKeys){
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
-            Space currentSpace;
+            Space currentSpace = null;
 
             if(currentValue[1].equalsIgnoreCase("CP")){
                 currentSpace = makeCP(currentValue[2]);
@@ -88,17 +88,21 @@ public class GameSetup {
             else if(currentValue[1].equalsIgnoreCase("U")){
                 currentSpace = makeRR(currentValue[2], false);
             }
-//            else if(currentValue[1].equalsIgnoreCase("CH")){
-//                do stuff
-//            }
-//            else if(currentValue[1].equalsIgnoreCase("CC")){
-//                do stuff
-//            }
-//            else if(currentValue[1].equalsIgnoreCase("MOV")){
-//                move!
-//            }
-            else{
-                currentSpace = new CommonSpace(currentValue[0]);
+            else if(currentValue[1].equalsIgnoreCase("CH")){
+                currentSpace = new CardSpace(currentValue[1], chance);
+            }
+            else if(currentValue[1].equalsIgnoreCase("CC")){
+                currentSpace = new CardSpace(currentValue[1], communityChest);
+            }
+            else if(currentValue[1].equalsIgnoreCase("MOV")){
+                currentSpace = makeMoveSpace(currentValue[2]);
+            }
+            else if(currentValue[1].equalsIgnoreCase("MON")){
+                currentSpace = makeMoney(currentValue[2]);
+            }
+
+            if(currentSpace == null){
+                System.out.println("Found space with invalid type: " + currentValue[0]);
             }
 
             spaces.add(currentSpace);
@@ -156,8 +160,18 @@ public class GameSetup {
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
 
-        return new CommonSpace(name);
+        return new CommonSpace(name, moneyGiven);
     }
+
+    private Space makeMoveSpace(String propFile){
+        ResourceBundle moveBundle = ResourceBundle.getBundle(propFile);
+
+        String name = moveBundle.getString("name");
+        String destinationName = moveBundle.getString("destination");
+
+        return new CommonSpace(name, destinationName);
+    }
+
 
     private void createPlayers () {
         double startingBalance = Double.parseDouble(rulesBundle.getString("startingBalance"));
@@ -177,8 +191,8 @@ public class GameSetup {
         }
     }
 
-    private ArrayList<Card> makePerkCards(String keyName){
-        ArrayList<Card> toBeReturned = new ArrayList<Card>();
+    private Queue<Card> makePerkCards(String keyName){
+        Queue<Card> toBeReturned = new LinkedList<>();
 
         ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
 
