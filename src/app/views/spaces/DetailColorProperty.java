@@ -148,7 +148,11 @@ public class DetailColorProperty {
         if(myPropName.size()==1){
             myTextVBox.getChildren().add(myPropName.get(0));
         }else if(myPropName.size()==2){
-            myTextVBox.getChildren().addAll(myPropName.get(0), myPropName.get(1));
+            if(myPropName.get(1)!=null) {
+                myTextVBox.getChildren().addAll(myPropName.get(0), myPropName.get(1));
+            }else{
+                myTextVBox.getChildren().add(myPropName.get(0));
+            }
         }else{//need to do something about this really, idk make the font small or something
             System.out.println("too long of prop name");
         }
@@ -162,19 +166,23 @@ public class DetailColorProperty {
             Text t2 = new Text(temp[2]);
             setText(t1, t2);
         }
-        else if(temp.length<=2){
+        else if(temp.length<=1){
+            Text t1 = new Text(temp[0]);
+            setText(t1, null);
+
+        }else{
             Text t1 = new Text(temp[0]);
             Text t2 = new Text(temp[1]);
             setText(t1, t2);
 
-        }else{
-            System.out.println("Too long of a name");
         }
     }
 
     private void setText(Text one, Text two){
         one.setFont(new Font(30));
-        two.setFont(new Font(30));
+        if(two!=null) {
+            two.setFont(new Font(30));
+        }
         myPropName.add(one);
         myPropName.add(two);
 
