@@ -7,9 +7,7 @@ import app.engine.space.Space;
 import java.util.List;
 
 public class MoveSpaceCard extends Card {
-    private String description;
     private String destinationName;
-    private Board activeBoard;
 
     public MoveSpaceCard(String desc, Board b, String spaceName){
         super(desc, b);
@@ -28,6 +26,8 @@ public class MoveSpaceCard extends Card {
         else{
             b.move(currentOccupant, destinationSpace);
         }
+
+        putSelfBackInPile();
     }
 
     private Space findSpace(Board b){
@@ -40,10 +40,5 @@ public class MoveSpaceCard extends Card {
             }
         }
         return null;
-    }
-
-    @Override
-    public void useCard(Player currentOccupant) {
-        // nothing?
     }
 }

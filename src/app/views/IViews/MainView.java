@@ -12,23 +12,45 @@ public class MainView{
     private Board myBoard;
 
 
+
+    private VanillaBoardView myVanillaBoardView;
+    private AssetView myAssetView;
+    private ControlView myControlView;
+    private LogHistoryView myLogHistoryView;
+
+
     public MainView(Board board){
         myBoard = board;
         myRoot = new BorderPane();
+        myVanillaBoardView = new VanillaBoardView(board);
+        myAssetView = new AssetView(board);
+        myControlView = new ControlView(board);
+        myLogHistoryView = new LogHistoryView(board);
         setComponents();
         myScene = new Scene(myRoot, 1100,800);
     }
 
     private void setComponents(){
-        myRoot.setCenter(new VanillaBoardView(myBoard).getMyRoot());
-        myRoot.setRight(new AssetView(myBoard).getMyRoot());
-        myRoot.setTop(new ControlView(myBoard).getMyRoot());
-        myRoot.setBottom(new LogHistoryView(myBoard).getMyRoot());
-        Pane center = (Pane) myRoot.getCenter();
-        System.out.println(center.getWidth());
-        System.out.println(myRoot.getCenter().getBoundsInParent().getHeight());
-        System.out.println(myRoot.getCenter().getBoundsInLocal().getWidth());
-        System.out.println(myRoot.getCenter().getBoundsInLocal().getHeight());
+        myRoot.setCenter(myVanillaBoardView.getMyRoot());
+        myRoot.setRight(myAssetView.getMyRoot());
+        myRoot.setTop(myControlView.getMyRoot());
+        myRoot.setBottom(myLogHistoryView.getMyRoot());
+    }
+
+    public VanillaBoardView getMyVanillaBoardView() {
+        return myVanillaBoardView;
+    }
+
+    public AssetView getMyAssetView() {
+        return myAssetView;
+    }
+
+    public ControlView getMyControlView(){
+        return myControlView;
+    }
+
+    public LogHistoryView getMyLogHistoryView(){
+        return myLogHistoryView;
     }
 
 

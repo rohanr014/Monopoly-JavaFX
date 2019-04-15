@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public class HoldableCard extends Card implements Asset {
+public class HoldableCard extends Card implements Asset, Holdable {
     String funcName;
     Object[] processedArguments;
 
@@ -45,25 +45,23 @@ public class HoldableCard extends Card implements Asset {
         }
     }
 
-
-    @Override
-    public void useCard(Player currentOccupant) {
-        Class playerClass = currentOccupant.getClass();
+    public void useCard(Player currentOwner) {
+        Class playerClass = currentOwner.getClass();
 
         try {
             if(processedArguments.length == 0) {
                 Method funcToCall = playerClass.getDeclaredMethod(funcName);
-                funcToCall.invoke(currentOccupant);
+                funcToCall.invoke(currentOwner);
             }
 
             if (processedArguments.length == 1) {
                 Method funcToCall = playerClass.getDeclaredMethod(funcName, getPrimitiveType(processedArguments[0]));
-                funcToCall.invoke(currentOccupant, processedArguments[0]);
+                funcToCall.invoke(currentOwner, processedArguments[0]);
             }
 
             else if(processedArguments.length == 2){
                 Method funcToCall = playerClass.getDeclaredMethod(funcName, getPrimitiveType(processedArguments[0]), getPrimitiveType(processedArguments[1]));
-                funcToCall.invoke(currentOccupant, processedArguments[0], processedArguments[1]);
+                funcToCall.invoke(currentOwner, processedArguments[0], processedArguments[1]);
             }
         }
 
@@ -80,8 +78,10 @@ public class HoldableCard extends Card implements Asset {
             catch (InvocationTargetException e) {
                 System.out.println("Invocation target exception - check arguments");
                 e.printStackTrace();
-
         }
+
+        putSelfBackInPile();
+        currentOwner.getCards().remove(this);
     }
 
     private Class getPrimitiveType(Object b){
@@ -105,14 +105,18 @@ public class HoldableCard extends Card implements Asset {
         }
     }
 
-
     @Override
-    public void invokeAction(Player currentOccupant) {
-
+    public void invokeAction(Player newOwner) {
+        newOwner.addCard(this);
     }
 
-    public boolean sellToBank() {
-        return false;
+    public boolean sellToBank(Player player) {
+        return putSelfBackInPile() && getBoard().getBank().giveMoney(player, getValue());
+    }
+
+    @Override
+    public double getValue() {
+        return getBoard().getHoldableCardSellValue();
     }
 
     public String getFuncName() {

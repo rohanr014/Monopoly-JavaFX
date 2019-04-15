@@ -9,7 +9,6 @@ import app.engine.board.Board;
 import app.engine.space.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameSetup {
@@ -25,8 +24,8 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
-    private List<Card> communityChest;
-    private List<Card> chance;
+    private Queue<Card> communityChest;
+    private Queue<Card> chance;
 
     private String gamePropFile;
     private String rulesPropFile;
@@ -99,7 +98,7 @@ public class GameSetup {
 //                move!
 //            }
             else{
-                currentSpace = new CommonSpace(currentValue[0]);
+                currentSpace = new CommonSpace(currentValue[0], null, 0, 0);
             }
 
             spaces.add(currentSpace);
@@ -157,7 +156,7 @@ public class GameSetup {
         double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
 
 
-        return new CommonSpace(name);
+        return new CommonSpace(name, moneyGiven);
     }
 
     private void createPlayers () {
@@ -178,8 +177,8 @@ public class GameSetup {
         }
     }
 
-    private ArrayList<Card> makePerkCards(String keyName){
-        ArrayList<Card> toBeReturned = new ArrayList<Card>();
+    private Queue<Card> makePerkCards(String keyName){
+        Queue<Card> toBeReturned = new LinkedList<>();
 
         ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
 
@@ -226,11 +225,11 @@ public class GameSetup {
     }
 
 
-    public Collection<Card> getCommunityChest() {
+    public Queue<Card> getCommunityChest() {
         return communityChest;
     }
 
-    public Collection<Card> getChanceCards() {
+    public Queue<Card> getChanceCards() {
         return chance;
     }
 

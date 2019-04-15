@@ -5,39 +5,68 @@ import app.engine.board.Board;
 import app.engine.board.IBoardObserver;
 import app.engine.dice.IDiceObserver;
 import app.views.utility.ButtonMaker;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ResourceBundle;
 
 
 public class ControlView implements IView, IDiceObserver, IBoardObserver {
+    private static final int DISPLAY_RADIUS = 10;
+    private static final Color DISPLAY_COLOR = Color.BEIGE;
+
     private Pane myRoot;
     private Board myBoard;
-    private Text myDiceVal;
+    private Text myDiceText;
+    private int diceValue;
+
+
+    private Button mySellButton;
+    private Button myMortgageButton;
+    private Button myUnmortgageButton;
+    private Button myRollDiceButton;
+
+    private StackPane myDiceDisplay;
+    private Circle myDiceContainer;
 
     private ResourceBundle myResources;
 
-    private int diceValue;
+
 
     public ControlView(Board board){
         myBoard = board;
         myRoot = new Pane();
-        myDiceVal = new Text();
         diceValue = 0;
         setRoot();
     }
 
     private void setRoot(){
         var tempPane = new HBox();
-        tempPane.getChildren().add(ButtonMaker.makeButton("Sell", e->pressedSell()));
-        tempPane.getChildren().add(ButtonMaker.makeButton("Buy", e->pressedBuy()));
-        tempPane.getChildren().add(ButtonMaker.makeButton("Mortgage", e->pressedMortgage()));
-        tempPane.getChildren().add(ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage()));
-        tempPane.getChildren().add(ButtonMaker.makeButton("Roll Dice", e-> rollDice()));
-        myDiceVal.setText(Integer.toString(diceValue));
+        mySellButton = ButtonMaker.makeButton("Sell", e->pressedSell());
+        myMortgageButton = ButtonMaker.makeButton("Mortgage", e->pressedMortgage());
+        myUnmortgageButton = ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage());
+        myRollDiceButton = ButtonMaker.makeButton("Roll Dice", e-> rollDice());
+        tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton, myRollDiceButton, makeDiceDisplay());
         myRoot.getChildren().add(tempPane);
+
+
+    }
+
+    private StackPane makeDiceDisplay(){
+        myDiceDisplay = new StackPane();
+        myDiceContainer = new Circle(DISPLAY_RADIUS, DISPLAY_COLOR);
+        myDiceText = new Text(Integer.toString(diceValue));
+        myDiceText.setFont(new Font(20));
+        myDiceDisplay.getChildren().addAll(myDiceContainer,myDiceText);
+
+        return myDiceDisplay;
+
     }
 
     private void pressedSell(){
@@ -85,8 +114,12 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     }
 
-    @Override
     public void boardUpdate() {
         diceValue = this.myBoard.getLastRollSum();
+    }
+
+    @Override
+    public void boardUpdate(Board board) {
+
     }
 }

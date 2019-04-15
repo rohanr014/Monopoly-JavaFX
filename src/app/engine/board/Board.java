@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class Board implements IBoardObservable{
-    private Collection<Card> communityChest;
-    private Collection<Card> chanceCards;
+    private Queue<Card> communityChest;
+    private Queue<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
     private Player currentPlayer;
@@ -31,10 +31,12 @@ public class Board implements IBoardObservable{
 
     public Board(String directory, String filename) throws IOException {
         this(GameFileHandler.getGamedata(directory, filename));
+        myObserverList = new ArrayList<>();
     }
 
     public Board(ResourceBundle propertyFile){
         GameSetup setup = new GameSetup(propertyFile, this);
+        myObserverList = new ArrayList<>();
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
@@ -95,6 +97,14 @@ public class Board implements IBoardObservable{
         move(player, spaces.get(end));
     }
 
+    public void drawCard(Player player, Queue<Card> whichPile){
+//        cards add themselves back to their piles
+        var card = whichPile.poll();
+//        setOriginPile() MUST be called before invokeAction()
+        card.setOriginPile(whichPile);
+        card.invokeAction(player);
+    }
+
     /////////////////////
     ///BELOW: DICE-RELATED METHODS
     /////////////////////
@@ -102,6 +112,7 @@ public class Board implements IBoardObservable{
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
+        System.out.println(player);
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
@@ -263,6 +274,10 @@ public class Board implements IBoardObservable{
         return 3;
     }
 
+    public double getHoldableCardSellValue() {
+        return 30;
+    }
+
     /////////////////////
     ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
     /////////////////////
@@ -332,20 +347,20 @@ public class Board implements IBoardObservable{
 
     @Override
     public void addBoardObserver(IBoardObserver o) {
-        myObserverList.add(o);
+        this.myObserverList.add(o);
 
     }
 
     @Override
     public void removeBoardObserver(IBoardObserver o) {
-        myObserverList.remove(o);
+        this.myObserverList.remove(o);
 
     }
 
     @Override
     public void notifyBoardObservers() {
-        for(IBoardObserver o : myObserverList){
-            o.boardUpdate();
+        for(IBoardObserver o : this.myObserverList){
+            o.boardUpdate(this);
         }
 
     }
