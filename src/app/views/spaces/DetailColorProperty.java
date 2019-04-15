@@ -1,7 +1,7 @@
 package app.views.spaces;
 
 import app.engine.space.ColorProperty;
-import app.engine.space.Space;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class DetailColorProperty {
-    private Stage myStage;
+    private Stage myDialog;
     private Pane myRoot;
     private ColorProperty myColorProperty;
     private String myName;
@@ -23,16 +23,13 @@ public class DetailColorProperty {
     private Line myDivider;
     private StackPane myStackPane;
     private VBox myTextVBox;
-
     private GridPane myGridPane;
-
     private ArrayList<Text> myPropName;
-
-
+    private Text rentPrice;
 
     public DetailColorProperty(ColorProperty colorProperty) {
-        myRoot = new Pane();
-        myStage = new Stage();
+        myRoot = new VBox(10);
+        myDialog = new Stage();
         myDivider = new Line();
         myColorProperty = colorProperty;
         myName = myColorProperty.getName();
@@ -48,53 +45,79 @@ public class DetailColorProperty {
 
         myDivider.setEndX(myRoot.getWidth()-20);
         myDivider.setEndY(myRoot.getHeight()/4 + 5);
-
     }
 
-    public Stage getMyStage(){
-        return myStage;
+    public Stage getMyDialog(){
+        return myDialog;
     }
 
     private void initialize(){
         myRoot.setPrefSize(300, 400);
-
         makeHeader();
         makeBody();
-        myStage.setScene(new Scene(myRoot));
-        myStage.show();
-
+        myDialog.setScene(new Scene(myRoot));
+        myDialog.show();
     }
 
     private void makeBody(){
         myGridPane = new GridPane();
-        
         //set basic rent in center
         setRentArea();
         //set prices for each houses,
         setHouseArea();
         // set price for hotel
-        setHotelArea();
+        setOtherArea();
 
+        myRoot.getChildren().add(myGridPane);
     }
 
     private void setRentArea(){
-
+        rentPrice = new Text("Rent "  + Double.toString(myColorProperty.getAllRent()[0]));
+        myGridPane.add(rentPrice, 0, 0);
     }
 
     private void setHouseArea(){
+        var result = new VBox();
+        for(int i = 1; i<myColorProperty.getAllRent().length;i++){
+            var tempHBox = houseField(i, myColorProperty.getAllRent()[i]);
+            result.getChildren().add(tempHBox);
+        }
+        myGridPane.add(result, 2,2);
 
     }
 
-    private void setHotelArea(){
+    private void setOtherArea(){//do stuff here later on
 
     }
 
-    private void makeHeader(){
+    private HBox houseField(int number, double rent){//code is very redundant
+        var result = new HBox();
+        if(number==1){
+            var tempText1 = new Text("With " + number + "House ");
+            var tempText2 = new Text("$ " + rent);
+            result.getChildren().addAll(tempText1,tempText2);
+        }else if(number==5) {
+            var tempText1 = new Text("With Hotel ");
+            var tempText2 = new Text("$ " + rent);
+            result.getChildren().addAll(tempText1,tempText2);
+        }else{
+            var tempText1 = new Text("With " + number + "Houses ");
+            var tempText2 = new Text("$ " + rent);
+            result.getChildren().addAll(tempText1,tempText2);
+        }
+        return result;
+    }
 
+
+
+    private void makeHeader() {
         myStackPane = new StackPane();
         myHeader = new Rectangle();
         myHeader.setFill(Color.valueOf(myColorProperty.getMyColor()));
         myHeader.setStroke(Color.BLACK);
+
+        myAnchorPane = new AnchorPane();
+        myStackPane.getChildren().add(myAnchorPane);
 
         setAnchorHeader();
         textEditor();
@@ -102,25 +125,22 @@ public class DetailColorProperty {
         setAnchorText();
 
         myRoot.getChildren().add(myStackPane);
-
     }
 
     private void setAnchorText(){
         myAnchorPane.getChildren().add(myTextVBox);
-        myAnchorPane.setTopAnchor(myTextVBox, 25.0);
-        myAnchorPane.setBottomAnchor(myTextVBox, 20.0);
-        myAnchorPane.setRightAnchor(myTextVBox,130.0);
-        myAnchorPane.setLeftAnchor(myTextVBox,100.0);
+        AnchorPane.setTopAnchor(myTextVBox, 25.0);
+        AnchorPane.setBottomAnchor(myTextVBox, 20.0);
+        AnchorPane.setRightAnchor(myTextVBox,130.0);
+        AnchorPane.setLeftAnchor(myTextVBox,100.0);
     }
 
     private void setAnchorHeader(){
-        myAnchorPane = new AnchorPane();
         myAnchorPane.getChildren().add(myHeader);
-        myAnchorPane.setTopAnchor(myHeader, 10.0);
-        myAnchorPane.setLeftAnchor(myHeader, 20.0);
-        myAnchorPane.setRightAnchor(myHeader, 20.0);
-        myAnchorPane.setBottomAnchor(myHeader, 10.0);
-        myStackPane.getChildren().add(myAnchorPane);
+        AnchorPane.setTopAnchor(myHeader, 10.0);
+        AnchorPane.setLeftAnchor(myHeader, 20.0);
+        AnchorPane.setRightAnchor(myHeader, 20.0);
+        AnchorPane.setBottomAnchor(myHeader, 10.0);
     }
 
     private void placeText(){
@@ -132,7 +152,6 @@ public class DetailColorProperty {
         }else{//need to do something about this really, idk make the font small or something
             System.out.println("too long of prop name");
         }
-        myStackPane.getChildren().add(myTextVBox);
     }
 
     private void textEditor(){
