@@ -47,6 +47,10 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
+    public double getHotelCost(){
+        return hotelCost;
+    }
+
     public String getMyColor() {
         return myColor;
     }
