@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HoldableCardTest {
 
     private Board myBoard;
-    private Card jailFree;
+    private HoldableCard jailFree;
     private Player myGuy;
 
     @BeforeEach
@@ -30,7 +30,7 @@ class HoldableCardTest {
         myGuy = new Player("Jaiveer", "Vanilla/Pieces/car.png", 69);
         ArrayList<Card> chance = (ArrayList<Card>) myBoard.getChanceCards();
 
-        jailFree = chance.get(6);
+        jailFree = (HoldableCard) chance.get(6);
 
     }
 
