@@ -7,9 +7,9 @@ import java.util.Queue;
 public class CardSpace extends Space {
     private Queue<Card> cardType;
 
-    public CardSpace(String name, Queue<Card> cardType) {
+    public CardSpace(String name, Queue<Card> whichPile) {
         super(name);
-        this.cardType = cardType;
+        cardType = whichPile;
     }
 
     @Override

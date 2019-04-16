@@ -6,32 +6,26 @@ import java.util.List;
 
 public class CommonSpace extends Space{
 
-    private Space destinationSpace;
     private final int stepsToMove;
     private double amountMoney;
+    private String destinationSpaceName;
 
-    public CommonSpace(String name, Space space, int steps, double money){
+    public CommonSpace(String name, String destinationName, int steps, double money){
         super(name);
-        destinationSpace = space;
+        destinationSpaceName = destinationName;
         stepsToMove = steps;
         amountMoney = money;
     }
 
-    public CommonSpace(String name, String destinationName){
-        super(name);
-        destinationSpace = findSpace(destinationName);
-        stepsToMove = 0;
-        amountMoney = 0;
-    }
+//    space moves player to another space with the name destinationName
+    public CommonSpace(String name, String destinationName){ this(name, destinationName, 0, 0); }
 
+//    space gives/takes player money
     public CommonSpace(String name, double money) {
         this(name, null, 0, money);
     }
 
-    public CommonSpace(String name, Space space) {
-        this(name, space, 0, 0);
-    }
-
+//    space moves player a certain number of steps
     public CommonSpace(String name, int steps) {
         this(name, null, steps, 0);
     }
@@ -39,7 +33,8 @@ public class CommonSpace extends Space{
 
     @Override
     protected void invokeAction(Player player) {
-        if (destinationSpace!=null){
+        if (destinationSpaceName!=null){
+            var destinationSpace = findSpace(destinationSpaceName);
             getBoard().move(player, destinationSpace);
             if (getBoard().isJail(destinationSpace)){
                 player.goToJail();
@@ -63,8 +58,8 @@ public class CommonSpace extends Space{
         return null;
     }
 
-    public Space getDestinationSpace() {
-        return destinationSpace;
+    public String getDestinationSpaceName() {
+        return destinationSpaceName;
     }
 
     public double getAmountMoney() {
