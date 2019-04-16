@@ -14,9 +14,11 @@ public class ColorProperty extends SetProperty{
     private int houses;
     private double housePrice;
     private int hotels;
+<<<<<<< src/app/engine/space/ColorProperty.java
     private double hotelPrice;
     private double[] developmentRents;
     private String name;
+    private String myColor;
 
     public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
         super(name, purchaseCost, mortgageValue, allRents);
@@ -25,6 +27,7 @@ public class ColorProperty extends SetProperty{
         developmentRents = allRents;
         //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
         this.name = name;
+        this.myColor = colorString;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
+<<<<<<< src/app/engine/space/ColorProperty.java
     public boolean buildHouse() {
         if (houses == 4 || (!(monopoly))) {
             return false;
@@ -131,5 +135,32 @@ public class ColorProperty extends SetProperty{
     public int getHotels() {
         return hotels;
     }
+=======
+    public String getMyColor() {
+        return myColor;
+    }
+
+    public int getHouses() { return this.houses; }
+
+    public int getHotels() { return this.hotels; }
+
+
+    //    public boolean buildHouse() {
+//        //check if house can be built, increment houses, rent = houseRents[houses], charge owner houseCost
+//    }
+//
+//    public boolean buildHotel() {
+//        //check if hotel can be built, increment hotel, rent = hotelRents[hotels], charge owner hotelCost
+//    }
+//
+//    public int getHouses() {
+//        return houses;
+//    }
+//
+//    public int getHotel() {
+//        return hotels;
+//    }
+>>>>>>> src/app/engine/space/ColorProperty.java
+
 
 }

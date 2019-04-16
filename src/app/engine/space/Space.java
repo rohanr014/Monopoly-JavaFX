@@ -9,10 +9,11 @@ import java.util.List;
 public abstract class Space implements ISpaceObservable {
     private List<Player> currentOccupants;
     private Board gameBoard;
-    private String myName;
+    private String name;
 
-    public Space() {
+    public Space(String name){
         currentOccupants = new ArrayList<>();
+        this.name = name;
     }
     public Space(String name){
         this();
@@ -28,12 +29,11 @@ public abstract class Space implements ISpaceObservable {
         addToCurrentOccupants(occupant);
         invokeAction(occupant);
     }
+    protected abstract void invokeAction(Player occupant);
 
     public void initializeSpace(Board board){
         gameBoard = board;
     }
-
-    protected abstract void invokeAction(Player occupant);
 
     private void addToCurrentOccupants(Player occupant) {
         currentOccupants.add(occupant);
@@ -58,7 +58,13 @@ public abstract class Space implements ISpaceObservable {
     public void removeSpaceObserver(ISpaceObserver o){}
 
     @Override
-    public void notifySpaceObservers(){};
+    public void notifySpaceObservers(){}
 
+    public String getName() {
+        return name;
+    }
 
+    public Board getBoard() {
+        return gameBoard;
+    }
 }

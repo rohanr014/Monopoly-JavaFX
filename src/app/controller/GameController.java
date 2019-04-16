@@ -1,18 +1,23 @@
 package app.controller;
 
+import app.engine.board.Board;
+import app.views.IViews.MainView;
+
 public class GameController {
+    private Board myBoard;
+    private MainView myMainView;
 
-//    private MainView myMainView;
-//
-//
-//    public GameController(MainView main_view) {
-//        myMainView = main_view;
-//    }
 
-    public void startGame(){}
 
-    public void loadGame(){}
 
-    public void makeGame(){}
+    public GameController(Board board, MainView mainView) {
+        myBoard = board;
+        myMainView = mainView;
+    }
+
+    public void initialize(){
+
+    }
+
 
 }

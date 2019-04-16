@@ -1,11 +1,18 @@
 package app.engine.card;
 
 import app.engine.agent.Player;
+import app.engine.board.Board;
+
+import java.util.Queue;
 
 public abstract class Card{
+    private String description;
+    private Board board;
+    private Queue<Card> originPile;
 
-    public Card(){
-
+    public Card(String desc, Board b){
+        this.description = desc;
+        this.board = b;
     }
 
     /**
@@ -14,12 +21,19 @@ public abstract class Card{
 
     public abstract void invokeAction(Player currentOccupant);
 
-    /**
-     * Function for player to use card (like get out of jail free)
-     */
+    public String getDescription() {
+        return description;
+    }
 
-    public abstract void useCard(Player currentOccupant);
+    public Board getBoard() {
+        return board;
+    }
 
+    public void setOriginPile(Queue<Card> pile){
+        originPile = pile;
+    }
 
-
+    protected boolean putSelfBackInPile(){
+        return originPile.add(this);
+    }
 }

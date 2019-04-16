@@ -10,5 +10,9 @@ module monopoly_team01 {
 
     exports app.controller;
     exports app.engine;
-    exports app.views;
+    exports app.engine.space;
+    exports app.views.IViews;
+    exports app.views.popups;
+    exports app.views.spaces;
+    exports app.views.utility;
 }

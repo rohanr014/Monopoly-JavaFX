@@ -1,15 +1,13 @@
 package app.engine.agent;
 
-import app.engine.board.Board;
-
 public class InfiniteBank extends Bank {
-    public InfiniteBank(Board b) {
-        super(0, b);
+    public InfiniteBank() {
+        super(0);
     }
 
     @Override
-    public boolean giveMoney(Agent a, double m){
-        a.addToWallet(m);
+    public boolean giveMoney(Agent agent, double amount){
+        agent.addToWallet(amount);
         return true;
 
 //        MORE LOGIC FOR BANKRUPTING

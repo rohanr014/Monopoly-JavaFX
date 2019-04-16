@@ -4,15 +4,17 @@ import app.engine.board.Board;
 
 public class Bank extends Agent{
 
-    public Bank(double initBalance, Board b) {
-        super(initBalance, b);
+    public Bank(double initBalance) {
+        super(initBalance);
     }
 
     @Override
-    public boolean giveMoney(Agent a, double m){
-        if (getWallet()<m)
+    public boolean giveMoney(Agent agent, double m){
+        if (getWallet()<m) {
+//            prob should throw something here? better than boolean?
             return false;
-        a.addToWallet(m);
+        }
+        agent.addToWallet(m);
         setWallet(getWallet()-m);
         return true;
 //        MORE LOGIC FOR BANKRUPTING

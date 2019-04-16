@@ -1,0 +1,160 @@
+package app.views.IViews;
+
+
+import app.engine.board.Board;
+import app.engine.space.Space;
+import app.views.spaces.SpaceViewFactory;
+import app.views.spaces.SpaceView;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class VanillaBoardView extends BoardView {
+    private Pane myRoot;
+    private Board myBoard;
+    private List<Space> mySpaces;
+    private List<SpaceView> mySpaceViews;
+    private SpaceViewFactory mySpaceFactory;
+
+    public VanillaBoardView(Board board){
+        myRoot = new Pane();
+        myRoot.setStyle("-fx-background-color: BEIGE;");
+        myBoard = board;
+        mySpaceViews = new ArrayList<>();
+        mySpaceFactory = new SpaceViewFactory();
+
+        initializeBoard();
+    }
+
+    private void initializeBoard(){
+        mySpaces = myBoard.getSpaces();
+        loadSpacesToList();
+        deploySpacesOnBoard();
+
+    }
+
+    private void loadSpacesToList(){
+        for(Space space : mySpaces){
+            mySpaceViews.add(mySpaceFactory.createSpace(space));
+        }
+    }
+
+    private void deploySpacesOnBoard(){
+        double xsize = 600;
+        double ysize = 600;
+
+        int numberOfCardsOnASide = 10;
+
+        double dx = xsize/numberOfCardsOnASide;
+        double dy = ysize/numberOfCardsOnASide;
+
+        // add all views into myRoot
+        mySpaceViews.forEach(view -> myRoot.getChildren().add(view.getMyRoot()));
+
+        // assuming rectangular board,
+
+        // bottom
+        for(int i = 0 ; i < numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX((numberOfCardsOnASide - i) * dx);
+            root.setLayoutY(numberOfCardsOnASide * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        // left
+        for(int i = numberOfCardsOnASide ; i < 2*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX(0);
+            root.setLayoutY((numberOfCardsOnASide*2-i) * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        // top
+        for(int i = 2*numberOfCardsOnASide ; i < 3*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX((i-2*numberOfCardsOnASide) * dx);
+            root.setLayoutY(0);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        // right
+        for(int i = 3*numberOfCardsOnASide ; i < 4*numberOfCardsOnASide ; i ++) {
+            var root = mySpaceViews.get(i).getMyRoot();
+            root.setLayoutX(numberOfCardsOnASide * dx);
+            root.setLayoutY((i-3*numberOfCardsOnASide) * dy);
+            root.setPrefWidth(dx);
+            root.setPrefHeight(dy);
+        }
+
+        mySpaceViews.forEach(SpaceView::adjustSize);
+
+        // vertical
+    }
+
+    private boolean left(int index) {
+        return (index>=0 && index<((mySpaceViews.size()-4)/4)+1);
+    }
+
+    private boolean up(int index) {
+        return (index>=((mySpaceViews.size()-4)/4)+1 && index<(((mySpaceViews.size()-4)/4)+1)*2);
+    }
+
+    private boolean right(int index) {
+        return (index>=(((mySpaceViews.size()-4)/4)+1)*2 && index<(((mySpaceViews.size()-4)/4)+1)*3);
+    }
+
+    private boolean down(int index) {
+        return (index>=(((mySpaceViews.size()-4)/4)+1)*3 && index<(((mySpaceViews.size()-4)/4)+1)*4);
+
+    }
+
+//    private void deploySpacesOnBoard(){
+//        for(int i =0; i<mySpaceViews.size();i++){
+//            //need to fill in here
+//            var temp = mySpaceViews.get(i).initialize();
+//            setLocation(i, temp);
+//
+//
+//        }
+//    }
+//
+//    private void setLocation(int index, Pane pane){
+//        if(index<10) {
+//            pane.setLayoutX(600-((index) * 50));
+//            pane.setLayoutY(600);
+//
+//        }
+//        else if(index>=10&&index<20){
+//            pane.setLayoutX(10);
+//            pane.setLayoutY(600-(index * 50));
+//
+//        }
+//        else if(index>=20 && index<30){
+//            pane.setLayoutX(index * 50);
+//            pane.setLayoutY(10);
+//
+//        }
+//        else{
+//            pane.setLayoutX(600);
+//            pane.setLayoutY(index*50);
+//
+//        }
+//        myRoot.getChildren().add(pane);
+//    }
+    private void createSpaceViews(){
+
+    }
+
+
+
+
+    @Override
+    public Pane getMyRoot() {
+        return myRoot;
+    }
+}

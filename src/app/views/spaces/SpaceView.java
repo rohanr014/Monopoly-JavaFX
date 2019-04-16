@@ -1,11 +1,25 @@
 package app.views.spaces;
 
 import app.engine.space.ISpaceObserver;
-import javafx.scene.layout.Pane;
+import app.engine.space.Space;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
-abstract class SpaceView implements ISpaceObserver {
-    private Pane root;
+public abstract class SpaceView<M extends Space> implements ISpaceObserver {
+    protected Pane myRoot;
+    protected String myName;
+    protected M myModel;
 
-    public abstract Pane initialize();
-    public Pane root() { return root; }
+    public SpaceView(String name, M model) {
+        myName = name;
+        myModel = model;
+        initialize();
+        myRoot.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+    }
+
+    public abstract void initialize();
+    public abstract void adjustSize();
+
+    public Pane getMyRoot(){return myRoot;}
+    public String getMyName(){return myName;}
 }
