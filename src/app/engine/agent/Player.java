@@ -60,7 +60,7 @@ public class Player extends Bank{
 
     //player sells p to bank, returns false if method fails
     boolean sell(Property property){
-        return property.sellToBank();
+        return property.sellToBank(this);
     }
 
     //player sells hc to bank, returns false if method fails
