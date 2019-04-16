@@ -53,6 +53,7 @@ public abstract class Space implements ISpaceObservable {
     }
 
     public Board getBoard() {
+        System.out.println(gameBoard);
         return gameBoard;
     }
 }

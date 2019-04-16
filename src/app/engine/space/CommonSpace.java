@@ -53,7 +53,7 @@ public class CommonSpace extends Space{
     }
 
     private Space findSpace(String spaceName){
-        List<Space> spaces = getBoard().getSpaces();
+         List<Space> spaces = getBoard().getSpaces();
 
         for(Space space:spaces){
             if(space.getName().equalsIgnoreCase(spaceName)){
