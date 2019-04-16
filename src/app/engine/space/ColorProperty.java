@@ -58,7 +58,7 @@ public class ColorProperty extends SetProperty{
     public int getHouses() { return this.houses; }
 
     public int getHotels() { return this.hotels; }
-    
+
     //public int getMyRent() { return this.}
     public double[] getAllRent() { return super.getPossibleRents();}
 

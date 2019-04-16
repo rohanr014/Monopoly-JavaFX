@@ -152,13 +152,13 @@ public class Property extends Space implements Asset {
         return purchaseCost;
     }
 
-    @Override
-    public boolean sellToBank(Player player) {
-        return false;
-    }
-
-    @Override
-    public double getValue() {
-        return 0;
-    }
+//    @Override
+//    public boolean sellToBank(Player player) {
+//        return false;
+//    }
+//
+//    @Override
+//    public double getValue() {
+//        return 0;
+//    }
 }
