@@ -17,7 +17,6 @@ public class Player extends Bank{
     private String logAction;
 
 //    MAGIC VALUES
-    private int currentSpace = 0;
     private boolean inJail = false;
     private int numTurnsInJail = 0;
 

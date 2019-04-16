@@ -15,10 +15,7 @@ public abstract class Space implements ISpaceObservable {
         currentOccupants = new ArrayList<>();
         this.name = name;
     }
-    public Space(String name){
-        this();
-        myName = name;
-    }
+
 
     /**
      * Function for space to perform action on player that
@@ -48,7 +45,7 @@ public abstract class Space implements ISpaceObservable {
     }
 
     public String getMyName() {
-        return myName;
+        return name;
     }
 
     @Override

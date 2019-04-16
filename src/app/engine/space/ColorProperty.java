@@ -14,13 +14,12 @@ public class ColorProperty extends SetProperty{
     private int houses;
     private double housePrice;
     private int hotels;
-<<<<<<< src/app/engine/space/ColorProperty.java
     private double hotelPrice;
     private double[] developmentRents;
     private String name;
     private String myColor;
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost,String colorString) {
         super(name, purchaseCost, mortgageValue, allRents);
         housePrice = houseCost;
         hotelPrice = hotelCost;
@@ -58,7 +57,6 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
-<<<<<<< src/app/engine/space/ColorProperty.java
     public boolean buildHouse() {
         if (houses == 4 || (!(monopoly))) {
             return false;
@@ -135,14 +133,12 @@ public class ColorProperty extends SetProperty{
     public int getHotels() {
         return hotels;
     }
-=======
+
     public String getMyColor() {
         return myColor;
     }
 
-    public int getHouses() { return this.houses; }
 
-    public int getHotels() { return this.hotels; }
 
 
     //    public boolean buildHouse() {
@@ -160,7 +156,6 @@ public class ColorProperty extends SetProperty{
 //    public int getHotel() {
 //        return hotels;
 //    }
->>>>>>> src/app/engine/space/ColorProperty.java
 
 
 }
