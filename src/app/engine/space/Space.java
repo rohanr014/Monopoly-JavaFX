@@ -15,15 +15,19 @@ public abstract class Space implements ISpaceObservable {
         currentOccupants = new ArrayList<>();
         this.name = name;
     }
+    public Space(String name){
+        this();
+        myName = name;
+    }
 
     /**
      * Function for space to perform action on player that
      * lands on it
      * @param p player to perform the action upon
      */
-    public void onLand(Player p){
-        addToCurrentOccupants(p);
-        invokeAction(p);
+    public void onLand(Player occupant){
+        addToCurrentOccupants(occupant);
+        invokeAction(occupant);
     }
     protected abstract void invokeAction(Player occupant);
 
@@ -37,6 +41,14 @@ public abstract class Space implements ISpaceObservable {
 
     public void removeFromCurrentOccupants(Player occupant){
         currentOccupants.remove(occupant);
+    }
+
+    public boolean containsPlayer(Player player) {
+        return (currentOccupants.contains(player));
+    }
+
+    public String getMyName() {
+        return myName;
     }
 
     @Override

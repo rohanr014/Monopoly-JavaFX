@@ -23,6 +23,7 @@ public class Property extends Space implements Asset {
         super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
+
     }
 
     //for every other property
