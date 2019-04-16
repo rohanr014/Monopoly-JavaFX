@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceTest {
@@ -15,8 +17,8 @@ class SpaceTest {
     Space testSpace;
 
     @BeforeEach
-    private void setup() {
-        testBoard = new Board("sampleGameSetup");
+    private void setup() throws IOException {
+        testBoard = new Board("gamedata/Vanilla", "Game1");
         testPlayer = testBoard.getPlayers().peek();
         testSpace = testBoard.getSpaces().get(2);
         testSpace.onLand(testPlayer);

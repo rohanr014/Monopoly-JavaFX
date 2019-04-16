@@ -57,6 +57,10 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
+    public double getHotelCost() {
+        return hotelPrice;
+    }
+
     public boolean buildHouse() {
         if (houses == 4 || (!(monopoly))) {
             return false;
@@ -138,24 +142,7 @@ public class ColorProperty extends SetProperty{
         return myColor;
     }
 
-
-
-
-    //    public boolean buildHouse() {
-//        //check if house can be built, increment houses, rent = houseRents[houses], charge owner houseCost
-//    }
-//
-//    public boolean buildHotel() {
-//        //check if hotel can be built, increment hotel, rent = hotelRents[hotels], charge owner hotelCost
-//    }
-//
-//    public int getHouses() {
-//        return houses;
-//    }
-//
-//    public int getHotel() {
-//        return hotels;
-//    }
-
+    //public int getMyRent() { return this.}
+    public double[] getAllRent() { return super.getPossibleRents();}
 
 }
