@@ -26,6 +26,7 @@ public class Board implements IBoardObservable{
 
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
+    private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
 
     //dice types?
 
@@ -239,7 +240,8 @@ public class Board implements IBoardObservable{
     /////////////////////
 
     private int getNumDoublesTilGoToJail() {
-        return 3;
+        String val = myBundle.getString("DoublesForJail");
+        return Integer.parseInt(val);
     }
 
     private double getGoMoney() {
