@@ -2,6 +2,7 @@ package app.views.IViews;
 
 
 import app.engine.board.Board;
+import app.engine.board.IBoardObserver;
 import app.engine.dice.IDiceObserver;
 import app.views.utility.ButtonMaker;
 import javafx.scene.layout.HBox;
@@ -11,9 +12,10 @@ import javafx.scene.text.Text;
 import java.util.ResourceBundle;
 
 
-public class ControlView implements IView, IDiceObserver {
+public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private Pane myRoot;
     private Board myBoard;
+    private Text myDiceVal;
 
     private ResourceBundle myResources;
 
@@ -22,6 +24,7 @@ public class ControlView implements IView, IDiceObserver {
     public ControlView(Board board){
         myBoard = board;
         myRoot = new Pane();
+        myDiceVal = new Text();
         diceValue = 0;
         setRoot();
     }
@@ -33,7 +36,7 @@ public class ControlView implements IView, IDiceObserver {
         tempPane.getChildren().add(ButtonMaker.makeButton("Mortgage", e->pressedMortgage()));
         tempPane.getChildren().add(ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage()));
         tempPane.getChildren().add(ButtonMaker.makeButton("Roll Dice", e-> rollDice()));
-        tempPane.getChildren().add(new Text(Integer.toString(diceValue)));
+        myDiceVal.setText(Integer.toString(diceValue));
         myRoot.getChildren().add(tempPane);
     }
 
@@ -59,9 +62,10 @@ public class ControlView implements IView, IDiceObserver {
     }
 
     private void rollDice(){
+        myBoard.rollDice(myBoard.getCurrentPlayer());
+
         System.out.println("pressed rolled dice");
     }
-
 
 
 
@@ -79,5 +83,10 @@ public class ControlView implements IView, IDiceObserver {
         }
         this.diceValue = i;
 
+    }
+
+    @Override
+    public void boardUpdate() {
+        diceValue = this.myBoard.getLastRollSum();
     }
 }

@@ -1,5 +1,6 @@
 package app.engine.agent;
 
+import app.engine.card.Card;
 import app.engine.card.HoldableCard;
 import app.engine.space.ColorProperty;
 import app.engine.space.Property;
@@ -64,7 +65,7 @@ public class Player extends Bank{
 
     //player sells hc to bank, returns false if method fails
     boolean sell(HoldableCard holdableCard){
-        return holdableCard.sellToBank();
+        return holdableCard.sellToBank(this);
     }
 
 
@@ -109,6 +110,8 @@ public class Player extends Bank{
         return numTurnsInJail;
     }
 
+
+
     public void goToJail() {
         setIsInJail(true);
     }
@@ -119,5 +122,32 @@ public class Player extends Bank{
 
     public void leaveJail() {
         setIsInJail(false);
+    }
+
+    public HoldableCard findGetOutOfJailCard() {
+        for (HoldableCard card: cards){
+            if (card.getFuncName().equals("leaveJail")){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public boolean useGetOutOfJailCard(){
+        var card = findGetOutOfJailCard();
+        if (card == null) {
+            return false;
+        }
+        card.useCard(this);
+        removeCard(card);
+        return true;
+    }
+
+    public void addCard(HoldableCard holdableCard) {
+        cards.add(holdableCard);
+    }
+
+    public void removeCard(HoldableCard holdableCard) {
+        cards.remove(holdableCard);
     }
 }

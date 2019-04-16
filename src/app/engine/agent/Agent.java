@@ -47,7 +47,7 @@ public abstract class Agent implements IAgentObservable{
 
     @Override
     public void removeAgentObserver(IAgentObserver o) {
-        myObserverList.add(o);
+        myObserverList.remove(o);
     }
 
     @Override

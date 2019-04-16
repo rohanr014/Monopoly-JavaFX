@@ -8,10 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class PlayerView extends PopUpView {
@@ -32,14 +29,12 @@ public class PlayerView extends PopUpView {
     public PlayerView(MainController main_controller){
         super("player setting");
         myMainController = main_controller;
-        System.out.println("Player setting called");
     }
 
     private void setPlayerTypes(){
         myNumberPlayers = 8;
         myNames = new ArrayList<>();
         myGamePieceChoices = new ArrayList<>();
-        System.out.println(Integer.toString(myNumberPlayers));
         for (int i=1;i<=myNumberPlayers;i++){
             myNames.add(setPlayerEditable());
             myGamePieceChoices.add(setGamePieceOptions());
@@ -89,11 +84,26 @@ public class PlayerView extends PopUpView {
     private void handleSubmit(){
         ArrayList<String> tempNames = new ArrayList<>();
         ArrayList<String> tempPiece = new ArrayList<>();
-        for (TextField player: myNames){
-            tempNames.add(player.getCharacters().toString());
-        }
-        for (ComboBox<String> choice: myGamePieceChoices){
-            tempPiece.add(choice.getValue());
+        Set<String> seenNames = new HashSet();
+        Set<String> seenPieces = new HashSet();
+        for (int i = 0; i<myNames.size();i++) {
+            TextField player = myNames.get(i);
+            ComboBox<String> piece = myGamePieceChoices.get(i);
+            if (player.getCharacters().length()!=0) {
+                if (!seenNames.contains(player.getCharacters().toString()) && !seenPieces.contains(piece.getValue())) {
+                    tempNames.add(player.getCharacters().toString());
+                    tempPiece.add(piece.getValue());
+                    seenNames.add(player.getCharacters().toString());
+                    seenPieces.add(piece.getValue());
+                }
+                else {
+                    tempNames.clear();
+                    tempPiece.clear();
+                    new ErrorMessageView();
+                    return;
+                }
+
+            }
         }
 
         super.getMyStage().close();

@@ -22,10 +22,7 @@ public class MoneyCard extends Card {
         else{
             currentOccupant.giveMoney(bank, amount*-1);
         }
-    }
 
-    @Override
-    public void useCard(Player currentOccupant) {
-
+        putSelfBackInPile();
     }
 }
