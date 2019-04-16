@@ -55,6 +55,7 @@ public class ColorProperty extends SetProperty{
 
     public int getHotels() { return this.hotels; }
 
+
     //    public boolean buildHouse() {
 //        //check if house can be built, increment houses, rent = houseRents[houses], charge owner houseCost
 //    }
@@ -70,5 +71,6 @@ public class ColorProperty extends SetProperty{
 //    public int getHotel() {
 //        return hotels;
 //    }
+
 
 }

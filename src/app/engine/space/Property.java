@@ -84,9 +84,12 @@ public class Property extends Space implements Asset {
      *
      * @return true if succesful, false otherwise
      */
-    public boolean sellToBank(){
-        Bank bank = board.getBank();
-        return bank.giveMoney(owner, board.getSellPrice(purchaseCost)) && ownershipSwitchedTo(bank);
+    public boolean sellToBank(Player player) {
+        return getBoard().getBank().giveMoney(player, getValue()) && ownershipSwitchedTo(getBoard().getBank());
+    }
+    
+    public double getValue() {
+        return getBoard().getSellPrice(getPurchaseCost());
     }
 
 
