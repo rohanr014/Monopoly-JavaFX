@@ -95,10 +95,10 @@ public class VanillaBoardView extends BoardView {
 
         // vertical
     }
-    private void createSpaceViews(){
 
+    public List<SpaceView> getMySpaceViews(){
+        return mySpaceViews;
     }
-
 
     public void boardUpdate(Board model){
         myBoard = model;

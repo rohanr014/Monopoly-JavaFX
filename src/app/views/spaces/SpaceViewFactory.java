@@ -18,8 +18,7 @@ public class SpaceViewFactory {
     }
 
     public SpaceView createSpace(Space space){
-        try {
-            System.out.println(space.getClass().getSimpleName());
+        try{
             Class cls = Class.forName("app.views.spaces." + space.getClass().getSimpleName() + "View");
             Constructor cons = cls.getConstructors()[0];
             return (SpaceView) cons.newInstance(space);
