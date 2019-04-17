@@ -26,6 +26,7 @@ public class Board implements IBoardObservable{
 
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
+    private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
 
     //dice types?
 
@@ -241,17 +242,18 @@ public class Board implements IBoardObservable{
     /////////////////////
 
     private int getNumDoublesTilGoToJail() {
-        return 3;
+        String val = myBundle.getString("DoublesForJail");
+        return Integer.parseInt(val);
     }
 
     private double getGoMoney() {
-//        REPLACE WITH PROP FILE VALUES
-        return 200;
+        String val = myBundle.getString("GoMoney");
+        return Double.parseDouble(val);
     }
 
     private double getSellToBankMultiplier() {
-        //GETS BANK MODIFIER FROM Properties file
-        return .5;
+        String val = myBundle.getString("SaleToBankMultiplier");
+        return Double.parseDouble(val);
     }
 
     private int getGoIndex() {
@@ -264,18 +266,23 @@ public class Board implements IBoardObservable{
     }
 
     public double getUnmortgageMultiplier() {
-        return 1.1;
+        String val = myBundle.getString("UnmortgageMultiplier");
+        return Double.parseDouble(val);
     }
 
-    private double getJailFee() { return 50;
+    private double getJailFee() {
+        String val = myBundle.getString("GetOutOfJailFee");
+        return Double.parseDouble(val);
     }
 
     private int getMaxTurnsInJail() {
-        return 3;
+        String val = myBundle.getString("MaxTurnsInJail");
+        return Integer.parseInt(val);
     }
 
     public double getHoldableCardSellValue() {
-        return 30;
+        String val = myBundle.getString("HoadableCardSaleValue");
+        return Double.parseDouble(val);
     }
 
     /////////////////////
