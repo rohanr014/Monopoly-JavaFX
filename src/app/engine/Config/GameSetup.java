@@ -13,10 +13,37 @@ import java.util.*;
 
 public class GameSetup {
 
-    private static final String MODE_KEY = "prop_file";
-    private static final String RULES_KEY = "rules_file";
-    private static final String COMMUNITY_KEY = "communityCards";
-    private static final String CHANCE_KEY = "chanceCards";
+    private final String MODE_KEY = "prop_file";
+    private final String RULES_KEY = "rules_file";
+    private final String COMMUNITY_KEY = "communityCards";
+    private final String CHANCE_KEY = "chanceCards";
+
+    private final String COMMUNITY_CHEST_FILE_KEY = "communityCards";
+    private final String CHANCE_FILE_KEY = "chanceCards";
+
+    private final String SPACES_FILE_KEY = "spacesFile";
+    private final String SPACE = "space";
+
+    private final String COLOR_PROP_DESIGNATION = "CP";
+    private final String RAILROAD_DESIGNATION = "RR";
+    private final String UTILITY_DESIGNATION = "U";
+    private final String CHANCE_DESIGNATION = "CH";
+    private final String COMMUNITY_CHEST_DESIGNATION = "CC";
+    private final String MOVE_SPACE_DESIGNATION = "MOV";
+    private final String MOVE_NUMBER_DESIGNATION = "MOVN";
+    private final String MONEY_SPACE_DESIGNATION = "MON";
+
+    private final String FoundSpaceWithInvalidType = "Found space with invalid type: ";
+
+    private final String NAME_KEY = "name";
+    private final String SALE_PRICE_KEY = "salePrice";
+    private final String HOUSE_PRICE_KEY = "housePrice";
+    private final String HOTEL_PRICE_KEY = "hotelPrice";
+    private final String MORTGAGE_KEY = "mortgage";
+    private final String COLOR_KEY = "color";
+    private final String RENTS_KEY = "rents";
+    private final String MONEY_KEY = "money";
+
 
     private ResourceBundle highBundle;
     private ResourceBundle myBundle;
@@ -51,8 +78,8 @@ public class GameSetup {
         createSpaces();
 
         // use communityCards and chanceCards as arguments for makePerkCards
-        communityChest = makePerkCards("communityCards");
-        chance = makePerkCards("chanceCards");
+        communityChest = makePerkCards(COMMUNITY_CHEST_FILE_KEY);
+        chance = makePerkCards(CHANCE_FILE_KEY);
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -61,7 +88,7 @@ public class GameSetup {
         String[] inOrder = new String[size];
 
         for(int i=0; i<size; i++){
-            String currentString = "space" + i;
+            String currentString = SPACE + i;
             inOrder[i] = currentString;
         }
 
@@ -70,7 +97,7 @@ public class GameSetup {
 
 
     private void createSpaces(){
-        String spacesFile = myBundle.getString("spacesFile");
+        String spacesFile = myBundle.getString(SPACES_FILE_KEY);
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
@@ -79,31 +106,31 @@ public class GameSetup {
 
             Space currentSpace = null;
 
-            if(currentValue[1].equalsIgnoreCase("CP")){
+            if(currentValue[1].equalsIgnoreCase(COLOR_PROP_DESIGNATION)){
                 currentSpace = makeCP(currentValue[2]);
             }
-            else if(currentValue[1].equalsIgnoreCase("RR")){
+            else if(currentValue[1].equalsIgnoreCase(RAILROAD_DESIGNATION)){
                 currentSpace = makeRR(currentValue[2], true);
             }
-            else if(currentValue[1].equalsIgnoreCase("U")){
+            else if(currentValue[1].equalsIgnoreCase(UTILITY_DESIGNATION)){
                 currentSpace = makeRR(currentValue[2], false);
             }
 
-            else if(currentValue[1].equalsIgnoreCase("CH")){
+            else if(currentValue[1].equalsIgnoreCase(CHANCE_DESIGNATION)){
                 currentSpace = new CardSpace(currentValue[1], chance);
             }
-            else if(currentValue[1].equalsIgnoreCase("CC")){
+            else if(currentValue[1].equalsIgnoreCase(COMMUNITY_CHEST_DESIGNATION)){
                 currentSpace = new CardSpace(currentValue[1], communityChest);
             }
-            else if(currentValue[1].equalsIgnoreCase("MOV")){
+            else if(currentValue[1].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
                 currentSpace = makeMoveSpace(currentValue[2]);
             }
-            else if(currentValue[1].equalsIgnoreCase("MON")){
+            else if(currentValue[1].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
                 currentSpace = makeMoney(currentValue[2]);
             }
 
             if(currentSpace == null){
-                System.out.println("Found space with invalid type: " + currentValue[0]);
+                System.out.println(FoundSpaceWithInvalidType + currentValue[0]);
             }
 
             spaces.add(currentSpace);
@@ -124,15 +151,15 @@ public class GameSetup {
     private Space makeCP(String propFile){
         ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
 
-        String name = cpBundle.getString("name");
+        String name = cpBundle.getString(NAME_KEY);
 
-        double purchaseCost = Double.parseDouble(cpBundle.getString("salePrice"));
-        double housePrice = Double.parseDouble(cpBundle.getString("housePrice"));
-        double hotelPrice = Double.parseDouble(cpBundle.getString("hotelPrice"));
-        double mortgageValue = Double.parseDouble(cpBundle.getString("mortgage"));
-        String colorString = cpBundle.getString("color");
+        double purchaseCost = Double.parseDouble(cpBundle.getString(SALE_PRICE_KEY));
+        double housePrice = Double.parseDouble(cpBundle.getString(HOUSE_PRICE_KEY));
+        double hotelPrice = Double.parseDouble(cpBundle.getString(HOTEL_PRICE_KEY));
+        double mortgageValue = Double.parseDouble(cpBundle.getString(MORTGAGE_KEY));
+        String colorString = cpBundle.getString(COLOR_KEY);
 
-        String[] rentStrings = cpBundle.getString("rents").split(",");
+        String[] rentStrings = cpBundle.getString(RENTS_KEY).split(",");
         //System.out.println(name);
 
         return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
@@ -141,10 +168,10 @@ public class GameSetup {
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
-        String name = currentBundle.getString("name");
-        double purchaseCost = Double.parseDouble(currentBundle.getString("salePrice"));
-        double mortgageValue = Double.parseDouble(currentBundle.getString("mortgage"));
-        String[] rentStrings = currentBundle.getString("rents").split(",");
+        String name = currentBundle.getString(NAME_KEY);
+        double purchaseCost = Double.parseDouble(currentBundle.getString(SALE_PRICE_KEY));
+        double mortgageValue = Double.parseDouble(currentBundle.getString(MORTGAGE_KEY));
+        String[] rentStrings = currentBundle.getString(RENTS_KEY).split(",");
 
         if(isRailroad) {
             return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
@@ -157,8 +184,8 @@ public class GameSetup {
     private Space makeMoney(String propFile){
         ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
 
-        String name = moneyBundle.getString("name");
-        double moneyGiven = Double.parseDouble(moneyBundle.getString("money"));
+        String name = moneyBundle.getString(NAME_KEY);
+        double moneyGiven = Double.parseDouble(moneyBundle.getString(MONEY_KEY));
 
 
         return new CommonSpace(name, moneyGiven);
@@ -207,19 +234,19 @@ public class GameSetup {
             String[] valueSplit = chestBundle.getString(key).split(">");
             String description = valueSplit[0];
 
-            if(valueSplit[1].equalsIgnoreCase("MON")){
+            if(valueSplit[1].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
                 String amount = valueSplit[2];
 
                 tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
                 toBeReturned.add(tempCard);
             }
 
-            else if(valueSplit[1].equalsIgnoreCase("MOV")){
+            else if(valueSplit[1].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
                 tempCard = new MoveSpaceCard(description, myBoard, valueSplit[2]);
                 toBeReturned.add(tempCard);
             }
 
-            else if(valueSplit[1].equalsIgnoreCase("MOVN")){
+            else if(valueSplit[1].equalsIgnoreCase(MOVE_NUMBER_DESIGNATION)){
                 tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
                 toBeReturned.add(tempCard);
             }
