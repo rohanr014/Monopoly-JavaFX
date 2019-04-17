@@ -258,7 +258,7 @@ public class Board implements IBoardObservable, IDiceObservable {
             sum += x;
         }
         //return sum;
-        return 6;
+        return sum;
     }
 
     /////////////////////
