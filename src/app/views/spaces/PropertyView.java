@@ -22,7 +22,7 @@ public class PropertyView<M extends Property> extends SpaceView<M> {
 
     @Override
     public void offerPopUp() {
-        BuyAuctionView bav = new BuyAuctionView("Buy/Auction");
+        BuyAuctionView bav = new BuyAuctionView(myModel);
     }
 
 }
