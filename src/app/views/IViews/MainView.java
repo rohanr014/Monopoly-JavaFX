@@ -22,10 +22,11 @@ public class MainView{
     public MainView(Board board){
         myBoard = board;
         myRoot = new BorderPane();
-        myVanillaBoardView = new VanillaBoardView(board);
+        myLogHistoryView = new LogHistoryView(board);
+        myVanillaBoardView = new VanillaBoardView(board, myLogHistoryView);
         myAssetView = new AssetView(board);
         myControlView = new ControlView(board);
-        myLogHistoryView = new LogHistoryView(board);
+
         setComponents();
         myScene = new Scene(myRoot, 1100,800);
         myScene.getStylesheets().add(getClass().getResource("/vanilla.css").toExternalForm());
@@ -33,6 +34,7 @@ public class MainView{
     }
 
     private void setComponents(){
+
         myRoot.setCenter(myVanillaBoardView.getMyRoot());
         myRoot.setRight(myAssetView.getMyRoot());
         myRoot.setTop(myControlView.getMyRoot());
