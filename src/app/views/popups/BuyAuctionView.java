@@ -35,7 +35,8 @@ public class BuyAuctionView extends PopUpView {
         return new Scene(myRoot, Color.DARKGREEN);
     }
 
-    private void pressedBuy(){
+    private void pressedBuy() {
+
 
     }
     private void pressedAuction(){
