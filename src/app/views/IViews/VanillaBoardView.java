@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VanillaBoardView extends BoardView {
+public class VanillaBoardView extends BoardView {//need to be scrolled down automatically
     private Pane myRoot;
     private Board myBoard;
     private List<Space> mySpaces;
