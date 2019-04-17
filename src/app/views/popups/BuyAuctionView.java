@@ -1,5 +1,6 @@
 package app.views.popups;
 
+import app.engine.space.Property;
 import app.views.utility.ButtonMaker;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,11 +15,13 @@ public class BuyAuctionView extends PopUpView {
     private AnchorPane myAnchor2;
     private Button myBuyButton;
     private Button myAutctionButton;
+    private Property myProperty;
 
 
 
-    public BuyAuctionView(String name){
-        super(name);
+    public BuyAuctionView(Property model){
+        super(model.getName());
+        myProperty = model;
     }
 
 
@@ -39,6 +42,7 @@ public class BuyAuctionView extends PopUpView {
 
 
     }
+
     private void pressedAuction(){
 
     }
