@@ -1,10 +1,13 @@
 package app.views.IViews;
 
+import app.engine.agent.IAgentObserver;
 import app.engine.board.Board;
+import app.engine.board.IBoardObserver;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 
 public class LogHistoryView implements IView {
@@ -27,6 +30,9 @@ public class LogHistoryView implements IView {
         myRoot.getChildren().add(myScrollPane);
     }
 
+    public void addMovementLog(String str){
+        vbox.getChildren().add(new Text(str));
+    }
 
     public Pane getMyRoot(){
         return myRoot;

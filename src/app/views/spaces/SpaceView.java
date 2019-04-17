@@ -18,7 +18,9 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
     protected String myName;
     protected M myModel;
     protected Map<Player, ImageView> myPlayerPieces;
+
     private StackPane playerViews;
+
 
     public SpaceView(String name, M model) {
         myName = name;
@@ -36,6 +38,7 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
     public String getMyName(){return myName;}
 
     public void spaceUpdate() {
+
         //player.getChildren().remove();
         myRoot.getChildren().remove(playerViews);
         playerViews = new StackPane();
@@ -44,6 +47,7 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
 //                playerViews.getChildren().remove(myPlayerPieces.get(player));
 //            }
 //        }
+
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
                 ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("car.png"), 40, 40, false, false));

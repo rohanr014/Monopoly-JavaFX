@@ -32,7 +32,7 @@ public class Player extends Bank{
     //player mortgages p, returns false if method fails
     public boolean mortgage(Property property){
         if (property.mortgage()) {
-            logAction = name + " mortgaged " + property.getMyName() + ".";
+            notifyAgentObservers(name + " mortgaged " + property.getMyName() + ".");
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ public class Player extends Bank{
     //player unmortgages p, returns false if method fails
     public boolean unmortgage(Property property){
         if (property.unmortgage()) {
-            logAction = name + " unmortgaged " + property.getMyName() + ".";
+            notifyAgentObservers(name + " unmortgaged " + property.getMyName() + ".");
         }
         return false;
     }
@@ -49,7 +49,7 @@ public class Player extends Bank{
     //player builds house on cp, returns false if method fails
     boolean buildHouse(ColorProperty colorProp){
         if (colorProp.buildHouse()) {
-            logAction = name + " built a house on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(logAction = name + " built a house on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -57,7 +57,7 @@ public class Player extends Bank{
     //player builds hotel on cp, returns false if method fails
     boolean buildHotel(ColorProperty colorProp){
         if (colorProp.buildHotel()) {
-            logAction = name + " built a hotel on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(name + " built a hotel on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -65,7 +65,7 @@ public class Player extends Bank{
     //player sells house on cp, returns false if method fails
     boolean sellHouse(ColorProperty colorProp){
         if (colorProp.sellHouse()) {
-            logAction = name + " sold a house on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(logAction = name + " sold a house on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class Player extends Bank{
     //player sells hotel on cp, returns false if method fails
     boolean sellHotel(ColorProperty colorProp){
         if (colorProp.sellHotel()) {
-            logAction = name + " sold a hotel on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(logAction = name + " sold a hotel on " + colorProp.getMyName() + ".");
         }
         return false;
     }

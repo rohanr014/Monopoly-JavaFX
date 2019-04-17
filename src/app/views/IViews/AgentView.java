@@ -20,14 +20,13 @@ public class AgentView implements IAgentObserver, IView {
     private int myHotelNum;
     private int myHouseNum;
     private String myPiece;
-    private Player myPlayer;
+    protected Player myPlayer;
     private Bank myBank;
 
-    private Agent myModel;
 
 
-    public AgentView(Player player){//take in correct paramaters
-        myPlayer = player;
+    public AgentView(Player agent){//take in correct paramaters
+        myPlayer = agent;
         initializePlayer();
     }
 
@@ -83,9 +82,8 @@ public class AgentView implements IAgentObserver, IView {
     public void setMyCash(double cash) { this.myCash = cash; }
 
     @Override
-    public void agentUpdate(double wallet) {//why does this need board as an input?
-        //change money amount
-
+    public void agentUpdate(String logAction) {//why does this need board as an input?
+        System.out.println(logAction);
     }
 
     @Override

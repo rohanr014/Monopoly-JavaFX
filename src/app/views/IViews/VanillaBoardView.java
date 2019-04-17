@@ -17,14 +17,15 @@ public class VanillaBoardView extends BoardView {
     private List<Space> mySpaces;
     private List<SpaceView> mySpaceViews;
     private SpaceViewFactory mySpaceFactory;
+    private LogHistoryView myLogHistoryView;
 
-    public VanillaBoardView(Board board){
+    public VanillaBoardView(Board board, LogHistoryView logHistoryView){
         myRoot = new Pane();
         myRoot.setStyle("-fx-background-color: BEIGE;");
         myBoard = board;
         mySpaceViews = new ArrayList<>();
         mySpaceFactory = new SpaceViewFactory();
-
+        myLogHistoryView = logHistoryView;
         initializeBoard();
     }
 
@@ -118,7 +119,9 @@ public class VanillaBoardView extends BoardView {
         int endInd = mySpaces.indexOf(end);
         mySpaceViews.get(startInd).spaceUpdate();
         mySpaceViews.get(endInd).spaceUpdate();
-        System.out.println("Start index: " + startInd + ", End index: " + endInd);
+        String strPlayerName = myBoard.getCurrentPlayer().getName();
+        myLogHistoryView.addMovementLog(strPlayerName + "moved from " + myBoard.getSpaces().get(startInd).getName() + "to " + myBoard.getSpaces().get(endInd).getName() + ".");
+        //System.out.println("Start index: " + startInd + ", End index: " + endInd);
 
     }
 
