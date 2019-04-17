@@ -27,7 +27,6 @@ public class GameController {
 
     public void initialize(){
         myBoard.startTurn();
-
     }
 
 

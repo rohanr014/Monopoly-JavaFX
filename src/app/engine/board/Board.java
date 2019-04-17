@@ -29,8 +29,6 @@ public class Board implements IBoardObservable{
     private Player winner = null;
     private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
 
-    //dice types?
-
     public Board(String directory, String filename) throws IOException {
         this(GameFileHandler.getGamedata(directory, filename));
         myObserverList = new ArrayList<>();
@@ -341,7 +339,7 @@ public class Board implements IBoardObservable{
             return true;
         }
 //        MAGIC VALUE
-        return (doublesCounter>0 && doublesCounter < 3 && isDoubles(lastRoll));
+        return (doublesCounter > 0 && doublesCounter < 3 && isDoubles(lastRoll));
     }
 
 
