@@ -116,7 +116,7 @@ public class HoldableCard extends Card implements Asset, Holdable {
 
     @Override
     public double getValue() {
-        return getBoard().getHoldableCardSellValue();
+        return getBoard().getRules().getHoldableCardSellValue();
     }
 
     public String getFuncName() {

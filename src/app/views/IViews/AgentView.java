@@ -44,6 +44,7 @@ public class AgentView implements IAgentObserver, IView {
 
     public AgentView(Bank bank, LogHistoryView logHistoryView){//take in correct paramaters
         myBank = bank;
+        setMyCash(myBank.getWallet());
         myLogHistoryView = logHistoryView;
         initializeBank();
     }
@@ -101,12 +102,20 @@ public class AgentView implements IAgentObserver, IView {
     @Override
     public void agentUpdate(String logAction) {
         myLogHistoryView.addTransactionLog(logAction);
-        setMyCash(myPlayer.getWallet());
+        if (myPlayer!=null) {
+            setMyCash(myPlayer.getWallet());
+        } else if (myBank!=null){
+            setMyCash(myBank.getWallet());
+        }
         updateCashText();
 
     }
 
     private void updateCashText(){
+        if (myBank != null){
+            return;
+        }
+
         hbox2.getChildren().removeAll(cashText,hotelText,houseText);
         cashText = new Text("$" + Integer.toString((int) myCash) );
         hbox2.getChildren().add(cashText);

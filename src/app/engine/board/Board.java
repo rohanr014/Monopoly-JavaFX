@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Board implements IBoardObservable, IDiceObservable {
+
     private Queue<Card> communityChest;
     private Queue<Card> chanceCards;
     private List<Space> spaces;
@@ -29,8 +30,9 @@ public class Board implements IBoardObservable, IDiceObservable {
     private List<IDiceObserver> myDiceObserverList;
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
-    private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
+
     private boolean firstTurnTest = true;
+    private final RulesInitializer rules;
 
     private List<Agent> myAgentList;
     //dice types?
@@ -59,6 +61,7 @@ public class Board implements IBoardObservable, IDiceObservable {
             myAgentList.add(e);
         });
         spaces.get(0).getCurrentOccupants().addAll(players);
+        rules = new RulesInitializer();
         //System.out.println(players.poll().getName());
     }
 
@@ -98,7 +101,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         spaces.get(start).removeFromCurrentOccupants(player);
         if (checkForGo(start, spacePosition)){
 //            MAGIC VALUE
-            bank.giveMoney(player, getGoMoney());
+            bank.giveMoney(player, rules.getGoMoney());
         }
         destination.onLand(player);
         notifyBoardObservers(spaces.get(start), destination);
@@ -165,16 +168,12 @@ public class Board implements IBoardObservable, IDiceObservable {
     /////////////////////
 
     public void payJailFee(Player player){
-        player.giveMoney(bank, getJailFee());
+        player.giveMoney(bank, rules.getJailFee());
         player.leaveJail();
     }
 
-    public boolean canUseGetOutOfJailCard(Player player){
-        return (player.findGetOutOfJailCard() != null);
-    }
-
     public boolean isJail(Space space) {
-        return getSpaceIndex(space)==getJailIndex();
+        return getSpaceIndex(space)==rules.getJailIndex();
     }
 
     private void handleJailRolls(Player player) {
@@ -182,14 +181,14 @@ public class Board implements IBoardObservable, IDiceObservable {
         if (isDoubles(lastRoll)) {
             player.leaveJail();
             move(player, getLastRollSum());
-        } else if (player.getNumTurnsInJail()>=getMaxTurnsInJail()){
+        } else if (player.getNumTurnsInJail()>=rules.getMaxTurnsInJail()){
             payJailFee(player);
             move(player, getLastRollSum());
         }
     }
 
     private void checkIfDoublesSendsToJail(Player player) {
-        if (doublesCounter==getNumDoublesTilGoToJail()){
+        if (doublesCounter==rules.getNumDoublesTilGoToJail()){
             player.goToJail();
         }
     }
@@ -219,7 +218,14 @@ public class Board implements IBoardObservable, IDiceObservable {
     /////////////////////
 
     private boolean checkForGo(int start, int spacePosition) {
-        return checkIfPass(start, spacePosition, getGoIndex());
+        if (currentPlayer.isInJail() || start==rules.getGoIndex()){
+            return false;
+        }
+        if (checkIfPass(start, spacePosition, rules.getGoIndex())){
+            System.out.println("Passed go");
+            return true;
+        }
+        return false;
     }
 
     private boolean checkIfPass(int start, int end, int targetSpaceIndex) {
@@ -244,7 +250,7 @@ public class Board implements IBoardObservable, IDiceObservable {
 
     //prob could be refactored into Property?
     public double getSellPrice(double purchaseCost) {
-        return purchaseCost / getSellToBankMultiplier();
+        return purchaseCost / rules.getSellToBankMultiplier();
     }
 
     private int getSpaceIndex(Space space) {
@@ -262,59 +268,15 @@ public class Board implements IBoardObservable, IDiceObservable {
     }
 
     /////////////////////
-    ///BELOW: METHODS THAT PULL FROM PROPERTIES FILE
-    /////////////////////
-
-    private int getNumDoublesTilGoToJail() {
-        String val = myBundle.getString("DoublesForJail");
-        return Integer.parseInt(val);
-    }
-
-    private double getGoMoney() {
-        String val = myBundle.getString("GoMoney");
-        return Double.parseDouble(val);
-    }
-
-    private double getSellToBankMultiplier() {
-        String val = myBundle.getString("SaleToBankMultiplier");
-        return Double.parseDouble(val);
-    }
-
-    private int getGoIndex() {
-//        gets Index of go in spaces from properties file (default is 0)
-        return 0;
-    }
-
-    private int getJailIndex() {
-        return 10;
-    }
-
-    public double getUnmortgageMultiplier() {
-        String val = myBundle.getString("UnmortgageMultiplier");
-        return Double.parseDouble(val);
-    }
-
-    private double getJailFee() {
-        String val = myBundle.getString("GetOutOfJailFee");
-        return Double.parseDouble(val);
-    }
-
-    private int getMaxTurnsInJail() {
-        String val = myBundle.getString("MaxTurnsInJail");
-        return Integer.parseInt(val);
-    }
-
-    public double getHoldableCardSellValue() {
-        String val = myBundle.getString("HoadableCardSaleValue");
-        return Double.parseDouble(val);
-    }
-
-    /////////////////////
     ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
     /////////////////////
 
+    public boolean canUseGetOutOfJailCard(Player player){
+        return (player.findGetOutOfJailCard() != null);
+    }
+
     public boolean canPayJailFee(Player player){
-        return canPay(player, getJailFee());
+        return canPay(player, rules.getJailFee());
     }
 
     public boolean canPay(Player player, double amount){
@@ -327,7 +289,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         if (lastRoll ==null){
             return false;
         }
-        return !(isDoubles(lastRoll) && doublesCounter < getNumDoublesTilGoToJail());
+        return !(isDoubles(lastRoll) && doublesCounter < rules.getNumDoublesTilGoToJail());
     }
 
     //    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
@@ -473,5 +435,9 @@ public class Board implements IBoardObservable, IDiceObservable {
 
     public List<Player> getPlayersByTurn() {
         return playersByTurn;
+    }
+
+    public RulesInitializer getRules() {
+        return rules;
     }
 }
