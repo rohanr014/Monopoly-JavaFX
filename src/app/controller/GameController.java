@@ -35,7 +35,7 @@ public class GameController {
 
     private void registerAgentObservers(){
         List<AgentView> agentViewList = myMainView.getMyAssetView().getMyAgentViewList();
-        List<Agent>  agentList =myBoard.getMyAgentList();
+        List<Agent>  agentList = myBoard.getMyAgentList();
 
         for(int i= 0; i<agentViewList.size();i++){
             agentList.get(i).addAgentObserver(agentViewList.get(i));

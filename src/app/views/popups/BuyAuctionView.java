@@ -40,6 +40,7 @@ public class BuyAuctionView extends PopUpView {
 
     private void pressedBuy() {
         myProperty.boughtBy(myProperty.getCurrentOccupants().get(myProperty.getCurrentOccupants().size() - 1));
+        this.getMyStage().close();
     }
 
     private void pressedAuction(){

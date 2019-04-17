@@ -5,7 +5,6 @@ import app.engine.board.Board;
 import app.engine.space.Space;
 import app.views.spaces.SpaceViewFactory;
 import app.views.spaces.SpaceView;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
