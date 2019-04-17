@@ -5,6 +5,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -23,7 +24,7 @@ public class RailroadView extends SpaceView<Railroad> {
 
     @Override
     public void initialize() {
-        myRoot = new Pane();
+        myRoot = new StackPane();
         myRoot.setStyle("-fx-background-color: PINK");
     }
 

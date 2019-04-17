@@ -2,6 +2,7 @@ package app.views.spaces;
 
 import app.engine.space.CommonSpace;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class CommonSpaceView extends SpaceView<CommonSpace> {
@@ -11,7 +12,7 @@ public class CommonSpaceView extends SpaceView<CommonSpace> {
 
     @Override
     public void initialize(){
-        myRoot = new Pane();
+        myRoot = new StackPane();
         myRoot.setStyle("-fx-background-color: white");
     }
 

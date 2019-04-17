@@ -3,6 +3,7 @@ package app.views.spaces;
 import app.engine.space.Utility;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -20,7 +21,7 @@ public class UtilityView extends SpaceView<Utility> {
 
     @Override
     public void initialize() {
-        myRoot = new Pane();
+        myRoot = new StackPane();
         myRoot.setStyle("-fx-background-color: SKYBLUE");
     }
 

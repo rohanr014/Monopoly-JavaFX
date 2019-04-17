@@ -23,6 +23,10 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         myModel = model;
         initialize();
         myRoot.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        StackPane view = new StackPane();
+        ImageView carView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("car.png"), 40, 40, false, false));
+        view.getChildren().add(carView);
+        myRoot.getChildren().add(view);
     }
 
     public abstract void initialize();
@@ -35,15 +39,8 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         StackPane playerViews = new StackPane();
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
-                try {
-                    FileInputStream inputStream = new FileInputStream(player.getPieceFile());
-                    Image image = new Image(inputStream);
-                    ImageView gamePiece = new ImageView(image);
-                    myPlayerPieces.put(player, gamePiece);
-                }
-                catch (FileNotFoundException e) {
-                    //DO SOMETHING HERE IDK?~?
-                }
+                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("car.png"), 40, 40, false, false));
+                myPlayerPieces.put(player, gamePiece);
             }
             playerViews.getChildren().add(myPlayerPieces.get(player));
         }
