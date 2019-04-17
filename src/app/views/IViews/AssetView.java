@@ -19,12 +19,14 @@ public class AssetView implements IView {
     private Board myBoard;
 
     private List<AgentView> myAgentViewList;
+    private LogHistoryView myLogHistoryView;
 
 
-    public AssetView(Board board){
+    public AssetView(Board board, LogHistoryView logHistoryView){
         myRoot = new Pane();
         myBoard = board;
         myAgentViewList = new ArrayList<>();
+        myLogHistoryView = logHistoryView;
         setRoot();
     }
 
@@ -34,12 +36,12 @@ public class AssetView implements IView {
 
     private void setRoot(){
         var tempPane = new VBox();
-        AgentView bankAgentView = new AgentView(myBoard.getBank());
+        AgentView bankAgentView = new AgentView(myBoard.getBank(), myLogHistoryView);
         tempPane.getChildren().add(bankAgentView.getMyRoot());
         myAgentViewList.add(bankAgentView);
         Queue<Player> players = myBoard.getPlayers();
         for (Player player: players) {
-            AgentView agentView = new AgentView(player);
+            AgentView agentView = new AgentView(player, myLogHistoryView);
             myAgentViewList.add(agentView);
             tempPane.getChildren().add(agentView.getMyRoot());
         }

@@ -50,7 +50,7 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
 
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
-                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(player.getPieceFile()), 40, 40, false, false));
+                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(player.getPieceFile()) , 40, 40, false, false));
                 myPlayerPieces.put(player, gamePiece);
             }
             if (!(playerViews.getChildren().contains(myPlayerPieces.get(player)))) {
@@ -59,4 +59,6 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         }
         myRoot.getChildren().add(playerViews);
     }
+
+    
 }

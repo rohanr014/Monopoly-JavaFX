@@ -12,10 +12,12 @@ public abstract class Agent implements IAgentObservable{
     private List<IAgentObserver> myObserverList;
     private int numHousesOwned;
     private int numHotelsOwned;
+    private String myName;
 
 
-    public Agent(double initBalance) {
+    public Agent(double initBalance, String name) {
         wallet = initBalance;
+        myName = name;
         myObserverList = new ArrayList<>();
     }
 
@@ -40,6 +42,8 @@ public abstract class Agent implements IAgentObservable{
     public double getWallet() {
         return wallet;
     }
+
+    public String getName() { return myName; }
 
     //methods required for observer pattern
     @Override

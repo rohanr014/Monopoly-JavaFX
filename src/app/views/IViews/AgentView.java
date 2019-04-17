@@ -21,17 +21,20 @@ public class AgentView implements IAgentObserver, IView {
     private int myHouseNum;
     private String myPiece;
     protected Player myPlayer;
+    private LogHistoryView myLogHistoryView;
     private Bank myBank;
 
 
 
-    public AgentView(Player agent){//take in correct paramaters
+    public AgentView(Player agent, LogHistoryView logHistoryView){//take in correct paramaters
         myPlayer = agent;
+        myLogHistoryView = logHistoryView;
         initializePlayer();
     }
 
-    public AgentView(Bank bank){//take in correct paramaters
+    public AgentView(Bank bank, LogHistoryView logHistoryView){//take in correct paramaters
         myBank = bank;
+        myLogHistoryView = logHistoryView;
         initializeBank();
     }
 
@@ -83,7 +86,7 @@ public class AgentView implements IAgentObserver, IView {
 
     @Override
     public void agentUpdate(String logAction) {//why does this need board as an input?
-        System.out.println(logAction);
+        myLogHistoryView.addTransactionLog(logAction);
     }
 
     @Override
