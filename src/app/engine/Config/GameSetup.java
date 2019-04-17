@@ -14,36 +14,36 @@ import java.util.*;
 
 public class GameSetup {
 
-    private final String MODE_KEY = "prop_file";
-    private final String RULES_KEY = "rules_file";
-    private final String COMMUNITY_KEY = "communityCards";
-    private final String CHANCE_KEY = "chanceCards";
+    private static final String MODE_KEY = "prop_file";
+    private static final String RULES_KEY = "rules_file";
+    private static final String COMMUNITY_KEY = "communityCards";
+    private static final String CHANCE_KEY = "chanceCards";
 
-    private final String COMMUNITY_CHEST_FILE_KEY = "communityCards";
-    private final String CHANCE_FILE_KEY = "chanceCards";
+    private static final String COMMUNITY_CHEST_FILE_KEY = "communityCards";
+    private static final String CHANCE_FILE_KEY = "chanceCards";
 
-    private final String SPACES_FILE_KEY = "spacesFile";
-    private final String SPACE = "space";
+    private static final String SPACES_FILE_KEY = "spacesFile";
+    private static final String SPACE = "space";
 
-    private final String COLOR_PROP_DESIGNATION = "CP";
-    private final String RAILROAD_DESIGNATION = "RR";
-    private final String UTILITY_DESIGNATION = "U";
-    private final String CHANCE_DESIGNATION = "CH";
-    private final String COMMUNITY_CHEST_DESIGNATION = "CC";
-    private final String MOVE_SPACE_DESIGNATION = "MOV";
-    private final String MOVE_NUMBER_DESIGNATION = "MOVN";
-    private final String MONEY_SPACE_DESIGNATION = "MON";
+    private static final String COLOR_PROP_DESIGNATION = "CP";
+    private static final String RAILROAD_DESIGNATION = "RR";
+    private static final String UTILITY_DESIGNATION = "U";
+    private static final String CHANCE_DESIGNATION = "CH";
+    private static final String COMMUNITY_CHEST_DESIGNATION = "CC";
+    private static final String MOVE_SPACE_DESIGNATION = "MOV";
+    private static final String MOVE_NUMBER_DESIGNATION = "MOVN";
+    private static final String MONEY_SPACE_DESIGNATION = "MON";
 
-    private final String FoundSpaceWithInvalidType = "Found space with invalid type: ";
+    private static final String FoundSpaceWithInvalidType = "Found space with invalid type: ";
 
-    private final String NAME_KEY = "name";
-    private final String SALE_PRICE_KEY = "salePrice";
-    private final String HOUSE_PRICE_KEY = "housePrice";
-    private final String HOTEL_PRICE_KEY = "hotelPrice";
-    private final String MORTGAGE_KEY = "mortgage";
-    private final String COLOR_KEY = "color";
-    private final String RENTS_KEY = "rents";
-    private final String MONEY_KEY = "money";
+    private static final String NAME_KEY = "name";
+    private static final String SALE_PRICE_KEY = "salePrice";
+    private static final String HOUSE_PRICE_KEY = "housePrice";
+    private static final String HOTEL_PRICE_KEY = "hotelPrice";
+    private static final String MORTGAGE_KEY = "mortgage";
+    private static final String COLOR_KEY = "color";
+    private static final String RENTS_KEY = "rents";
+    private static final String MONEY_KEY = "money";
 
 
     private ResourceBundle highBundle;
