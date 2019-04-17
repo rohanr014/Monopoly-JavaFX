@@ -5,7 +5,6 @@ import app.views.utility.ButtonMaker;
 import app.views.popups.GameSettingView;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
