@@ -50,10 +50,11 @@ public abstract class Agent implements IAgentObservable{
         myObserverList.remove(o);
     }
 
+
     @Override
-    public void notifyAgentObservers() {
+    public void notifyAgentObservers(String logAction) {
         for(IAgentObserver o : myObserverList){
-            o.agentUpdate(wallet);
+            o.agentUpdate(logAction);
         }
     }
 

@@ -365,7 +365,7 @@ public class Board implements IBoardObservable, IDiceObservable {
             return true;
         }
 //        MAGIC VALUE
-        return (doublesCounter>0 && doublesCounter < 3 && isDoubles(lastRoll));
+        return (doublesCounter > 0 && doublesCounter < 3 && isDoubles(lastRoll));
     }
 
 

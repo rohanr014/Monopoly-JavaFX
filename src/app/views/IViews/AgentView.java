@@ -82,9 +82,8 @@ public class AgentView implements IAgentObserver, IView {
     public void setMyCash(double cash) { this.myCash = cash; }
 
     @Override
-    public void agentUpdate(double wallet) {//why does this need board as an input?
-        //change money amount
-
+    public void agentUpdate(String logAction) {//why does this need board as an input?
+        System.out.println(logAction);
     }
 
     @Override

@@ -19,4 +19,5 @@ public class Bank extends Agent{
         return true;
 //        MORE LOGIC FOR BANKRUPTING
     }
+
 }

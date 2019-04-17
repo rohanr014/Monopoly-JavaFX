@@ -32,7 +32,6 @@ public class GameController {
 
     public void initialize(){
         myBoard.startTurn();
-
     }
     private void registerAgentObservers(){
         List<AgentView> agentViewList = myMainView.getMyAssetView().getMyAgentViewList();
