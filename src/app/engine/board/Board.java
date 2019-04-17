@@ -32,10 +32,12 @@ public class Board implements IBoardObservable{
 
     public Board(String directory, String filename) throws IOException {
         this(GameFileHandler.getGamedata(directory, filename));
+        myObserverList = new ArrayList<>();
     }
 
     public Board(ResourceBundle propertyFile){
         GameSetup setup = new GameSetup(propertyFile, this);
+        myObserverList = new ArrayList<>();
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
@@ -353,20 +355,20 @@ public class Board implements IBoardObservable{
 
     @Override
     public void addBoardObserver(IBoardObserver o) {
-        myObserverList.add(o);
+        this.myObserverList.add(o);
 
     }
 
     @Override
     public void removeBoardObserver(IBoardObserver o) {
-        myObserverList.remove(o);
+        this.myObserverList.remove(o);
 
     }
 
     @Override
     public void notifyBoardObservers() {
-        for(IBoardObserver o : myObserverList){
-            o.boardUpdate();
+        for(IBoardObserver o : this.myObserverList){
+            o.boardUpdate(this);
         }
 
     }

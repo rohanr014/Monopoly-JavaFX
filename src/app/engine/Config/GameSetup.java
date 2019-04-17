@@ -88,6 +88,7 @@ public class GameSetup {
             else if(currentValue[1].equalsIgnoreCase("U")){
                 currentSpace = makeRR(currentValue[2], false);
             }
+
             else if(currentValue[1].equalsIgnoreCase("CH")){
                 currentSpace = new CardSpace(currentValue[1], chance);
             }
