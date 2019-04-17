@@ -114,6 +114,7 @@ public class Property extends Space implements Asset {
 
     @Override
     public void notifySpaceObservers(){
+        System.out.println(getMySpaceObserverList().size());
         for(ISpaceObserver spaceObserver : getMySpaceObserverList()){
             spaceObserver.offerPopUp();
         }
