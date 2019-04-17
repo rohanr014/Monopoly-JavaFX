@@ -14,8 +14,8 @@ public class RulesInitializer {
     private final double holdableCardSellValue;
     private ResourceBundle myBundle;
 
-    public RulesInitializer(WHATEVER ARGUMENTN) {
-        myBundle = ResourceBundle.getBundle(WHATEVER RULES FILE);
+    public RulesInitializer(ResourceBundle rulesFile) {
+        myBundle = rulesFile;
         numDoublesTilGoToJail = Integer.parseInt(myBundle.getString("DoublesForJail"));
         goMoney = Double.parseDouble(myBundle.getString("GoMoney"));
         sellToBankMult = Double.parseDouble(myBundle.getString("SaleToBankMultiplier"));

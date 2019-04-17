@@ -1,5 +1,6 @@
 package app.engine.Config;
 
+import app.engine.board.RulesInitializer;
 import app.engine.card.*;
 import app.engine.dice.Dice;
 import app.engine.agent.Bank;
@@ -27,10 +28,8 @@ public class GameSetup {
     private Queue<Card> communityChest;
     private Queue<Card> chance;
 
-    private String gamePropFile;
-    private String rulesPropFile;
-
     private Board myBoard;
+    private RulesInitializer rules;
 
     public GameSetup(String directory, String filename, Board board) throws IOException {
         this(GameFileHandler.getGamedata(directory, filename), board);
@@ -41,11 +40,12 @@ public class GameSetup {
         myBundle = ResourceBundle.getBundle(highBundle.getString(MODE_KEY));
         rulesBundle = ResourceBundle.getBundle(highBundle.getString(RULES_KEY));
         myBoard = b;
+        rules = new RulesInitializer(rulesBundle);
 
         communityChest = makePerkCards(COMMUNITY_KEY);
         chance = makePerkCards(CHANCE_KEY);
-        players = new LinkedList<Player>();
-        spaces = new ArrayList<Space>();
+        players = new LinkedList<>();
+        spaces = new ArrayList<>();
 
         createPlayers();
         createSpaces();
@@ -286,5 +286,9 @@ public class GameSetup {
         else{
             return new Bank(Double.parseDouble(bankString), "bank");
         }
+    }
+
+    public RulesInitializer getRules() {
+        return rules;
     }
 }
