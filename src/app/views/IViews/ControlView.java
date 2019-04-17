@@ -4,6 +4,7 @@ package app.views.IViews;
 import app.engine.board.Board;
 import app.engine.board.IBoardObserver;
 import app.engine.dice.IDiceObserver;
+import app.engine.space.Space;
 import app.views.utility.ButtonMaker;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -31,7 +32,6 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private Button myMortgageButton;
     private Button myUnmortgageButton;
     private Button myRollDiceButton;
-
     private StackPane myDiceDisplay;
     private Circle myDiceContainer;
 
@@ -84,14 +84,12 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     private void pressedUnmortgage(){
-        System.out.println("Pressed unmortgage");
 
     }
 
     private void rollDice(){
         myBoard.rollDice(myBoard.getCurrentPlayer());
 
-        System.out.println("pressed rolled dice");
     }
 
 
@@ -112,8 +110,8 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         }
 
         diceValue = i;
-        System.out.println(diceValue);
         resetDiceValue();
+        //myBoard.move(myBoard.getCurrentPlayer(),diceValue);//need to check if its best to do it this way
 
     }
 
@@ -124,12 +122,16 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         myDiceDisplay.getChildren().add(myDiceText);
 
     }
+
+
+    @Override
     public void boardUpdate() {
-        diceValue = this.myBoard.getLastRollSum();
+
     }
 
     @Override
-    public void boardUpdate(Board board) {
+    public void boardUpdate(Space start, Space end) {
 
     }
+
 }

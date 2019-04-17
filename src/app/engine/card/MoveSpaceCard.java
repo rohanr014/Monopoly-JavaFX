@@ -8,14 +8,18 @@ import java.util.List;
 
 public class MoveSpaceCard extends Card {
     private String destinationName;
+    private String ds;
 
     public MoveSpaceCard(String desc, Board b, String spaceName){
         super(desc, b);
+        ds = desc;
+
         this.destinationName = spaceName;
     }
 
     @Override
     public void invokeAction(Player currentOccupant) {
+        System.out.println(ds);
         Board b = getBoard();
 
         Space destinationSpace = findSpace(b);

@@ -43,9 +43,6 @@ public class GameController {
                 space.addSpaceObserver(spaceView);
             }
         });
-        for(SpaceView spaceView : temp){
-            spaceView.spaceUpdate();
-        }
 
     }
 

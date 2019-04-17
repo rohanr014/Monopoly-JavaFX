@@ -30,6 +30,7 @@ public class Board implements IBoardObservable, IDiceObservable {
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
     private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
+    private boolean firstTurnTest = true;
 
     //dice types?
 
@@ -90,6 +91,7 @@ public class Board implements IBoardObservable, IDiceObservable {
             bank.giveMoney(player, getGoMoney());
         }
         destination.onLand(player);
+        notifyBoardObservers(spaces.get(start), destination);
     }
 
     /**
@@ -98,7 +100,7 @@ public class Board implements IBoardObservable, IDiceObservable {
      */
 
     public void move(Player player, int steps){
-        var end = player.getCurrentSpace() + steps;
+        var end = (player.getCurrentSpace() + steps)%40;
         move(player, spaces.get(end));
     }
 
@@ -117,7 +119,6 @@ public class Board implements IBoardObservable, IDiceObservable {
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
-        System.out.println(player.getName());
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
@@ -125,13 +126,20 @@ public class Board implements IBoardObservable, IDiceObservable {
                 doublesCounter++;
                 checkIfDoublesSendsToJail(player);
             }
-            move(player, getLastRollSum());
+            if (!(firstTurnTest)) {
+                move(player, getLastRollSum());
+            }
+            if (firstTurnTest) {
+                move(player, 7);
+                firstTurnTest = false;
+            }
+
+
         }
         for(int num : lastRoll){
             System.out.println(num);
         }
         notifyDiceObservers();
-        notifyBoardObservers();
         //return lastRoll;
     }
 
@@ -374,9 +382,14 @@ public class Board implements IBoardObservable, IDiceObservable {
     }
 
     @Override
-    public void notifyBoardObservers() {
-        for(IBoardObserver o : this.myObserverList){
-            o.boardUpdate(this);
+    public void notifyBoardObservers(){
+
+    }
+
+    public void notifyBoardObservers(Space start, Space end) {
+        for(IBoardObserver o : myObserverList){
+            System.out.println("notify observers " + start.getName() + " " + end.getName());
+            o.boardUpdate(start, end);
         }
 
     }
@@ -391,7 +404,6 @@ public class Board implements IBoardObservable, IDiceObservable {
     }
 
     public void notifyDiceObservers(){
-        System.out.println("here");
         for(IDiceObserver diceObserver : myDiceObserverList){
             diceObserver.diceUpdate(lastRoll);
         }
@@ -418,6 +430,7 @@ public class Board implements IBoardObservable, IDiceObservable {
     public List<Space> getSpaces() {
         return spaces;
     }
+
 
     public Collection<Card> getChanceCards() {
         return chanceCards;
