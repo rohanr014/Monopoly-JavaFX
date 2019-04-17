@@ -120,7 +120,7 @@ public class VanillaBoardView extends BoardView {
         mySpaceViews.get(startInd).spaceUpdate();
         mySpaceViews.get(endInd).spaceUpdate();
         String strPlayerName = myBoard.getCurrentPlayer().getName();
-        myLogHistoryView.addMovementLog(strPlayerName + "moved from " + myBoard.getSpaces().get(startInd).getName() + "to " + myBoard.getSpaces().get(endInd).getName() + ".");
+        myLogHistoryView.addMovementLog(strPlayerName + " moved from " + myBoard.getSpaces().get(startInd).getName() + " to " + myBoard.getSpaces().get(endInd).getName() + ".");
         //System.out.println("Start index: " + startInd + ", End index: " + endInd);
 
     }

@@ -135,13 +135,13 @@ public class Board implements IBoardObservable, IDiceObservable {
                 doublesCounter++;
                 checkIfDoublesSendsToJail(player);
             }
-            if (!(firstTurnTest)) {
+//            if (!(firstTurnTest)) {
                 move(player, getLastRollSum());
-            }
-            if (firstTurnTest) {
-                move(player, 7);
-                firstTurnTest = false;
-            }
+
+//            if (firstTurnTest) {
+//                move(player, 7);
+//                firstTurnTest = false;
+//            }
 
 
         }
