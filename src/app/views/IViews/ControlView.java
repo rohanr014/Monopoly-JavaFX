@@ -38,8 +38,6 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     private ResourceBundle myResources;
 
-
-
     public ControlView(Board board){
         myBoard = board;
         myRoot = new Pane();
@@ -54,6 +52,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         myEndTurnButton = ButtonMaker.makeButton("End Turn", e-> pressedEndTurn());
         myUnmortgageButton = ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage());
         myRollDiceButton = ButtonMaker.makeButton("Roll Dice", e-> rollDice());
+        myEndTurnButton.setDisable(true);
         tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton,  myEndTurnButton, myRollDiceButton, makeDiceDisplay());
         myRoot.getChildren().add(tempPane);
     }
@@ -76,7 +75,9 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     private void pressedEndTurn(){
         myBoard.endTurn();
-        System.out.println("pressed End Turn");
+
+        myRollDiceButton.setDisable(false);
+        myEndTurnButton.setDisable(true);
     }
 
     private void pressedMortgage(){
@@ -89,7 +90,11 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     private void rollDice(){
+
         myBoard.rollDice(myBoard.getCurrentPlayer());
+        myRollDiceButton.setDisable(true);
+        myEndTurnButton.setDisable(false);
+
 
     }
 
