@@ -11,7 +11,6 @@ public class Property extends Space implements Asset {
     private double rent;
     private double mortgageValue;
     private Agent owner;
-    private Board board;
     private boolean ownedByPlayer;
     private boolean mortgaged;
     private double unmortgageValue;
@@ -45,10 +44,13 @@ public class Property extends Space implements Asset {
      */
     public boolean boughtBy(Player p) {
         //should properties handle money transactions?
-        p.giveMoney(owner, purchaseCost);
-
-        ownedByPlayer = true;
-        return ownershipSwitchedTo(p);
+        //System.print
+        if (p.giveMoney(owner, purchaseCost)) {
+            ownedByPlayer = true;
+            getBoard().notifyPurchase();
+            return ownershipSwitchedTo(p);
+        }
+        return false;
     }
 
 
@@ -58,7 +60,7 @@ public class Property extends Space implements Asset {
      * @return true if successful, false otherwise
      */
     public boolean mortgage() {
-        boolean success = board.getBank().giveMoney(owner, mortgageValue);
+        boolean success = getBoard().getBank().giveMoney(owner, mortgageValue);
         if (success) {
             mortgaged = true;
             rent = 0;
@@ -67,7 +69,7 @@ public class Property extends Space implements Asset {
     }
 
     public boolean unmortgage() {
-        boolean success = owner.giveMoney(board.getBank(), mortgageValue*board.getUnmortgageMultiplier());
+        boolean success = owner.giveMoney(getBoard().getBank(), mortgageValue*getBoard().getUnmortgageMultiplier());
         if (success) {
             mortgaged = false;
             rent = calculateRent();
@@ -95,7 +97,7 @@ public class Property extends Space implements Asset {
 
 
     protected boolean ownershipSwitchedTo(Agent a){
-        if (board.contains(a)){
+        if (getBoard().contains(a)){
             owner = a;
             return true;
         }
@@ -108,7 +110,9 @@ public class Property extends Space implements Asset {
             notifySpaceObservers();
         }
         else if (ownedByPlayer && !p.equals(owner)){
+            System.out.println(p.getWallet() + ": " + getRent());
             chargeRent(p);
+            System.out.println(p.getWallet());
         }
     }
 
@@ -119,6 +123,13 @@ public class Property extends Space implements Asset {
             spaceObserver.offerPopUp();
         }
     }
+
+//    public void notifyPurchase() {
+//        String purchaseNotification = getOwner().getName() + " bought " + getName() + ".";
+//        for(ISpaceObserver spaceObserver : getMySpaceObserverList()){
+//            spaceObserver.logPurchase(purchaseNotification);
+//        }
+//    }
 
     protected double getRent() {
         return rent;
@@ -143,10 +154,6 @@ public class Property extends Space implements Asset {
 
     public boolean isMortgaged(){
         return mortgaged;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public double getMortgageValue() {

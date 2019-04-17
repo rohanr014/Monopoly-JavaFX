@@ -157,17 +157,20 @@ public class Player extends Bank{
         return true;
     }
 
-    @Override
-    public boolean giveMoney(Agent agent, double m){
-        if (getWallet()<m) {
-//            prob should throw something here? better than boolean?
-            return false;
-        }
-        agent.addToWallet(m);
-        setWallet(getWallet() - m);
-        return true;
-//        MORE LOGIC FOR BANKRUPTING
-    }
+//    @Override
+//    public boolean giveMoney(Agent agent, double m){
+//        if (getWallet()<m) {
+////            prob should throw something here? better than boolean?
+//            return false;
+//        }
+//        if (agent == null) {
+//            System.out.println("bruh");
+//        }
+//        agent.addToWallet(m);
+//        setWallet(getWallet() - m);
+//        return true;
+////        MORE LOGIC FOR BANKRUPTING
+//    }
 
     public void addCard(HoldableCard holdableCard) {
         cards.add(holdableCard);

@@ -135,4 +135,9 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     }
 
+    @Override
+    public void logPurchase(String transaction) {
+
+    }
+
 }
