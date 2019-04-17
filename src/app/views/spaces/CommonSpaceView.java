@@ -13,6 +13,7 @@ public class CommonSpaceView extends SpaceView<CommonSpace> {
     public void initialize(){
         myRoot = new Pane();
         myRoot.setStyle("-fx-background-color: white");
+
     }
 
     @Override

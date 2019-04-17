@@ -40,6 +40,7 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
         myRoot.getChildren().addAll(myVBox);
 
         myRoot.hoverProperty().addListener(e->onHover());
+
     }
 
     @Override
