@@ -1,9 +1,11 @@
 package app.views.spaces;
 
 import app.engine.space.ColorProperty;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 
 public class ColorPropertyView extends SpaceView<ColorProperty> {
     private VBox myVBox;
@@ -28,7 +30,9 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
         myRoot = new StackPane();
         myRoot.getChildren().addAll(myVBox);
 
-        myRoot.hoverProperty().addListener(e->onHover());
+
+        myRoot.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> onClick());
     }
 
     @Override
@@ -39,14 +43,9 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
 
     public Pane getMyRoot(){return myRoot;}
 
-    @Override
-    public void spaceUpdate() {
 
-    }
-
-    private void onHover() {
+    private void onClick() {
         DetailColorProperty dcp = new DetailColorProperty(myModel);
         dcp.adjustSize();
-
     }
 }

@@ -95,15 +95,9 @@ public class VanillaBoardView extends BoardView {
 
         // vertical
     }
-    private void createSpaceViews(){
 
-    }
-
-
-    public void boardUpdate(Board model){
-        myBoard = model;
-        //call subsequent methods to reset the values that need to be updated
-
+    public List<SpaceView> getMySpaceViews(){
+        return mySpaceViews;
     }
 
 
@@ -111,4 +105,27 @@ public class VanillaBoardView extends BoardView {
     public Pane getMyRoot() {
         return myRoot;
     }
+
+    @Override
+    public void boardUpdate() {
+
+
+    }
+
+    @Override
+    public void boardUpdate(Space start, Space end) {
+        int startInd = mySpaces.indexOf(start);
+        int endInd = mySpaces.indexOf(end);
+        mySpaceViews.get(startInd).spaceUpdate();
+        mySpaceViews.get(endInd).spaceUpdate();
+        System.out.println("Start index: " + startInd + ", End index: " + endInd);
+
+    }
+
+
+    @Override
+    public void boardUpdate(Board board) {
+
+    }
+
 }

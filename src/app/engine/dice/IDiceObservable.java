@@ -4,7 +4,7 @@ import app.engine.board.IBoardObserver;
 
 public interface IDiceObservable {
 
-    void addDicedObserver(IDiceObserver o);
+    void addDiceObserver(IDiceObserver o);
     void removeDiceObserver(IDiceObserver o);
     void notifyDiceObservers();
 

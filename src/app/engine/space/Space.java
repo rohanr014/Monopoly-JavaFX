@@ -11,8 +11,11 @@ public abstract class Space implements ISpaceObservable {
     private Board gameBoard;
     private String name;
 
+    private List<ISpaceObserver> mySpaceObserverList;
+
     public Space(String name){
         currentOccupants = new ArrayList<>();
+        mySpaceObserverList = new ArrayList<>();
         this.name = name;
     }
 
@@ -20,7 +23,7 @@ public abstract class Space implements ISpaceObservable {
     /**
      * Function for space to perform action on player that
      * lands on it
-     * @param p player to perform the action upon
+     * @param occupant perform the action upon the palyer
      */
     public void onLand(Player occupant){
         addToCurrentOccupants(occupant);
@@ -48,21 +51,35 @@ public abstract class Space implements ISpaceObservable {
         return name;
     }
 
+    public List<Player> getCurrentOccupants() {
+        return currentOccupants;
+    }
+
+    public List<ISpaceObserver> getMySpaceObserverList(){
+        return mySpaceObserverList;
+    }
     @Override
-    public void addSpaceObserver(ISpaceObserver o){}
+    public void addSpaceObserver(ISpaceObserver o){
+        mySpaceObserverList.add(o);
+    }
 
     @Override
-    public void removeSpaceObserver(ISpaceObserver o){}
+    public void removeSpaceObserver(ISpaceObserver o){
+        mySpaceObserverList.remove(o);
+    }
 
     @Override
-    public void notifySpaceObservers(){}
+    public void notifySpaceObservers(){
+        for(ISpaceObserver spaceObserver : mySpaceObserverList){
+            spaceObserver.spaceUpdate();
+        }
+    }
 
     public String getName() {
         return name;
     }
 
     public Board getBoard() {
-        System.out.println(gameBoard);
         return gameBoard;
     }
 }

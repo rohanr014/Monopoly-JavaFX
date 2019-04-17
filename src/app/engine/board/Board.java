@@ -7,26 +7,30 @@ import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
 import app.engine.card.Card;
+import app.engine.dice.IDiceObservable;
+import app.engine.dice.IDiceObserver;
 import app.engine.space.Property;
 import app.engine.space.Space;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Board implements IBoardObservable{
+public class Board implements IBoardObservable, IDiceObservable {
     private Queue<Card> communityChest;
     private Queue<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
+    private ArrayList<Player> playersByTurn;
     private Player currentPlayer;
     private Bank bank;
     private List<Dice> gameDice;
     private int doublesCounter;
     private int[] lastRoll;
-
+    private List<IDiceObserver> myDiceObserverList;
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
     private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
+    private boolean firstTurnTest = true;
 
     //dice types?
 
@@ -38,11 +42,12 @@ public class Board implements IBoardObservable{
     public Board(ResourceBundle propertyFile){
         GameSetup setup = new GameSetup(propertyFile, this);
         myObserverList = new ArrayList<>();
+        myDiceObserverList = new ArrayList<>();
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
+        playersByTurn = new ArrayList<>(players);
         spaces = Collections.unmodifiableList(setup.getSpaces());
-
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
@@ -86,6 +91,7 @@ public class Board implements IBoardObservable{
             bank.giveMoney(player, getGoMoney());
         }
         destination.onLand(player);
+        notifyBoardObservers(spaces.get(start), destination);
     }
 
     /**
@@ -94,7 +100,7 @@ public class Board implements IBoardObservable{
      */
 
     public void move(Player player, int steps){
-        var end = player.getCurrentSpace() + steps;
+        var end = (player.getCurrentSpace() + steps)%40;
         move(player, spaces.get(end));
     }
 
@@ -113,7 +119,6 @@ public class Board implements IBoardObservable{
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
-        System.out.println(player);
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
@@ -121,9 +126,20 @@ public class Board implements IBoardObservable{
                 doublesCounter++;
                 checkIfDoublesSendsToJail(player);
             }
-            move(player, getLastRollSum());
+            if (!(firstTurnTest)) {
+                move(player, getLastRollSum());
+            }
+            if (firstTurnTest) {
+                move(player, 7);
+                firstTurnTest = false;
+            }
+
+
         }
-        notifyBoardObservers();
+        for(int num : lastRoll){
+            System.out.println(num);
+        }
+        notifyDiceObservers();
         //return lastRoll;
     }
 
@@ -366,11 +382,31 @@ public class Board implements IBoardObservable{
     }
 
     @Override
-    public void notifyBoardObservers() {
-        for(IBoardObserver o : this.myObserverList){
-            o.boardUpdate(this);
+    public void notifyBoardObservers(){
+
+    }
+
+    public void notifyBoardObservers(Space start, Space end) {
+        for(IBoardObserver o : myObserverList){
+            System.out.println("notify observers " + start.getName() + " " + end.getName());
+            o.boardUpdate(start, end);
         }
 
+    }
+
+
+    public void addDiceObserver(IDiceObserver o){
+        myDiceObserverList.add(o);
+    }
+
+    public void removeDiceObserver(IDiceObserver o){
+        myDiceObserverList.remove(o);
+    }
+
+    public void notifyDiceObservers(){
+        for(IDiceObserver diceObserver : myDiceObserverList){
+            diceObserver.diceUpdate(lastRoll);
+        }
     }
 
 
@@ -395,6 +431,7 @@ public class Board implements IBoardObservable{
         return spaces;
     }
 
+
     public Collection<Card> getChanceCards() {
         return chanceCards;
     }
@@ -417,5 +454,9 @@ public class Board implements IBoardObservable{
 
     public Player getWinner() {
         return winner;
+    }
+
+    public List<Player> getPlayersByTurn() {
+        return playersByTurn;
     }
 }
