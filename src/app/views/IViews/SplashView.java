@@ -41,11 +41,8 @@ public class SplashView implements IView {
         myRoot.setHgap(10);
         setIcon();
         setScene();
-<<<<<<< HEAD
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
         myScene.getStylesheets().add(getClass().getResource("/splashScreen.css").toExternalForm());
-=======
->>>>>>> 1fc436713e881cd828e68024121d20c614925d7e
 
         VBox all = new VBox();
 
@@ -67,7 +64,6 @@ public class SplashView implements IView {
         myRoot.getChildren().add(all);
         myRoot.setAlignment(Pos.CENTER);
 
-        myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
     }
 
     private void setScene(){
@@ -98,15 +94,15 @@ public class SplashView implements IView {
 
     private void startGame(){
         new GameSettingView(myMainController);
-        System.out.println("start game pressed");
+
     }
 
     private void loadGame(){
-        System.out.println("load game pressed");
+
 
     }
     private void makeGame(){
-        System.out.println("make game pressed");
+
 
     }
 

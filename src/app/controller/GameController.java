@@ -22,6 +22,7 @@ public class GameController {
         myMainView = mainView;
         registerBoardObservers();
         registerSpaceObservers();
+        initialize();
     }
 
 

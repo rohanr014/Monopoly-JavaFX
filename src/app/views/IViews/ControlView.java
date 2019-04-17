@@ -70,23 +70,21 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     private void pressedSell(){
-        System.out.println("pressed Sell");
+
 
     }
 
     private void pressedBuy(){
-        System.out.println("pressed Buy");
 
     }
 
     private void pressedMortgage(){
-        System.out.println("pressed Mortgage");
 
 
     }
 
     private void pressedUnmortgage(){
-        System.out.println("Pressed unmortgage");
+
 
     }
 
