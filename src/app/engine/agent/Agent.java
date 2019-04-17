@@ -2,6 +2,7 @@ package app.engine.agent;
 
 import app.engine.board.Board;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public abstract class Agent implements IAgentObservable{
 
     public Agent(double initBalance) {
         wallet = initBalance;
+        myObserverList = new ArrayList<>();
     }
 
 
