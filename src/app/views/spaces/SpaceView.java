@@ -3,6 +3,7 @@ package app.views.spaces;
 import app.engine.agent.Player;
 import app.engine.space.ISpaceObserver;
 import app.engine.space.Space;
+import app.views.popups.BuyAuctionView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -60,5 +61,8 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         myRoot.getChildren().add(playerViews);
     }
 
-    
+
+    private void landed() {
+        BuyAuctionView bav = new BuyAuctionView("Buy/Auction");
+    }
 }
