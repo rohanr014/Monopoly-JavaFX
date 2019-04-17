@@ -1,7 +1,6 @@
 package app.views.popups;
 
 
-import app.views.popups.PopUpView;
 import javafx.scene.Scene;
 
 public class CardView extends PopUpView {

@@ -21,18 +21,54 @@ public class AgentView implements IAgentObserver, IView {
     private int myHouseNum;
     private String myPiece;
     protected Player myPlayer;
+    private LogHistoryView myLogHistoryView;
     private Bank myBank;
 
+    private VBox vbox;
+    private HBox hbox1;
+    private HBox hbox2;
 
+    private Text nameText;
+    private Text cashText;
 
-    public AgentView(Player agent){//take in correct paramaters
+    private Text hotelText;
+    private Text houseText;
+
+    public AgentView(Player agent, LogHistoryView logHistoryView){//take in correct paramaters
         myPlayer = agent;
+        setMyCash(myPlayer.getWallet());
+        myLogHistoryView = logHistoryView;
         initializePlayer();
+
     }
 
-    public AgentView(Bank bank){//take in correct paramaters
+    public AgentView(Bank bank, LogHistoryView logHistoryView){//take in correct paramaters
         myBank = bank;
+        myLogHistoryView = logHistoryView;
         initializeBank();
+    }
+
+    private void setPlayerRoot(){
+        vbox = new VBox();
+        hbox1 = new HBox();
+        hbox2 = new HBox();
+        nameText = new Text(myPlayer.getName());
+        hbox1.getChildren().add(nameText);
+        //add "piece: "+piece image
+        cashText = new Text("$" + Integer.toString((int) myCash) );
+        hbox2.getChildren().add(cashText);
+        Button info = new Button();
+        info.setOnAction(e-> new PlayerDetailsView(myPlayer));
+        hbox1.getChildren().add(info);
+        hotelText = new Text("Number of Hotels : " + Integer.toString(myHotelNum));
+        houseText = new Text("Number of Houses : " + Integer.toString(myHouseNum));
+        hbox2.getChildren().add(hotelText);
+        hbox2.getChildren().add(houseText);
+        vbox.getChildren().add(hbox1);
+        vbox.getChildren().add(hbox2);
+        vbox.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        myRoot.getChildren().add(vbox);
+
     }
 
     private void initializePlayer(){
@@ -47,7 +83,6 @@ public class AgentView implements IAgentObserver, IView {
 
     private void initialize(){
         myRoot = new Pane();
-
     }
 
     private void setBankRoot(){
@@ -58,33 +93,29 @@ public class AgentView implements IAgentObserver, IView {
     }
 
 
-    private void setPlayerRoot(){
-        var tempPane = new VBox();
-        var tempPane1 = new HBox();
-        var tempPane2 = new HBox();
-        tempPane1.getChildren().add(new Text(myPlayer.getName()));
-        //add "piece: "+piece image
-        tempPane1.getChildren().add(new Text("$" + Integer.toString((int) myCash) ));
-        Button info = new Button();
-        info.setOnAction(e-> new PlayerDetailsView(myPlayer));
-        tempPane1.getChildren().add(info);
-        tempPane2.getChildren().add(new Text("Number of Hotels : " + Integer.toString(myHotelNum)));
-        tempPane2.getChildren().add(new Text("Number of Houses : " + Integer.toString(myHouseNum)));
-        tempPane.getChildren().add(tempPane1);
-        tempPane.getChildren().add(tempPane2);
-        tempPane.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        myRoot.getChildren().add(tempPane);
-
-    }
 
     public double getMyCash() { return myCash; }
 
     public void setMyCash(double cash) { this.myCash = cash; }
 
     @Override
-    public void agentUpdate(String logAction) {//why does this need board as an input?
-        System.out.println(logAction);
+    public void agentUpdate(String logAction) {
+        myLogHistoryView.addTransactionLog(logAction);
+        setMyCash(myPlayer.getWallet());
+        updateCashText();
+
     }
+
+    private void updateCashText(){
+        hbox2.getChildren().removeAll(cashText,hotelText,houseText);
+        cashText = new Text("$" + Integer.toString((int) myCash) );
+        hbox2.getChildren().add(cashText);
+        hotelText = new Text("Number of Hotels : " + Integer.toString(myHotelNum));
+        houseText = new Text("Number of Houses : " + Integer.toString(myHouseNum));
+        hbox2.getChildren().addAll(hotelText,houseText);
+    }
+
+
 
     @Override
     public Pane getMyRoot(){

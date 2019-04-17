@@ -29,13 +29,13 @@ public class GameController {
         initialize();
     }
 
-
     public void initialize(){
         myBoard.startTurn();
     }
+
     private void registerAgentObservers(){
         List<AgentView> agentViewList = myMainView.getMyAssetView().getMyAgentViewList();
-        List<Agent>  agentList =myBoard.getMyAgentList();
+        List<Agent>  agentList = myBoard.getMyAgentList();
 
         for(int i= 0; i<agentViewList.size();i++){
             agentList.get(i).addAgentObserver(agentViewList.get(i));
@@ -47,12 +47,11 @@ public class GameController {
     }
 
     private void registerSpaceObservers(){
-        List<SpaceView> temp = myMainView.getMyVanillaBoardView().getMySpaceViews();
-        myBoard.getSpaces().forEach(space -> {
-            for (SpaceView spaceView : temp) {
-                space.addSpaceObserver(spaceView);
-            }
-        });
+        List<SpaceView> tempView = myMainView.getMyVanillaBoardView().getMySpaceViews();
+        List<Space> tempSpace = myBoard.getSpaces();
+        for(int i = 0; i<tempView.size(); i++){
+            tempSpace.get(i).addSpaceObserver(tempView.get(i));
+        }
 
     }
 

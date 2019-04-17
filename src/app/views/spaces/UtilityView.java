@@ -10,11 +10,11 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilityView extends SpaceView<Utility> {
+public class UtilityView extends PropertyView<Utility> {
     private List<ImageView> myPlayerViews;
 
     public UtilityView(Utility model) {
-        super(model.getName(), model);
+        super(model);
         myPlayerViews = new ArrayList<>();
         //myPlayerViews.addAll(gamePieceViews);
     }

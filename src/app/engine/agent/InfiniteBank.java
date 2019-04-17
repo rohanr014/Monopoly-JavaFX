@@ -2,7 +2,7 @@ package app.engine.agent;
 
 public class InfiniteBank extends Bank {
     public InfiniteBank() {
-        super(0);
+        super(0, "infinite bank");
     }
 
     @Override

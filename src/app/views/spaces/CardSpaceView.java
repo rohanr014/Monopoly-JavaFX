@@ -29,10 +29,11 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     @Override
     public void initialize() {
         myRoot = new StackPane();
+
         tempCard = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("community-chest-space.jpg")));
         tempCard.setFitWidth(40);
         tempCard.setFitHeight(40);//need to not hard code this
-        myRoot.getChildren().addAll(tempCard);
+        myRoot.getChildren().add(tempCard);
 
 
     }
@@ -44,4 +45,8 @@ public class CardSpaceView extends SpaceView<CardSpace> {
 
     }
 
+    @Override
+    public void offerPopUp() {
+
+    }
 }

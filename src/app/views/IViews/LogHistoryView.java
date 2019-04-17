@@ -26,12 +26,16 @@ public class LogHistoryView implements IView {
         vbox = new VBox();
         myScrollPane.setContent(vbox);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setPrefSize(800, 100);
+        myScrollPane.setPrefSize(650, 100);
         myRoot.getChildren().add(myScrollPane);
     }
 
     public void addMovementLog(String str){
         vbox.getChildren().add(new Text(str));
+    }
+
+    public void addTransactionLog(String tx) {
+        vbox.getChildren().add(new Text(tx));
     }
 
     public Pane getMyRoot(){
