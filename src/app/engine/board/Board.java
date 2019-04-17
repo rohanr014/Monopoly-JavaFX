@@ -18,6 +18,7 @@ public class Board implements IBoardObservable{
     private Queue<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
+    private ArrayList<Player> playersByTurn;
     private Player currentPlayer;
     private Bank bank;
     private List<Dice> gameDice;
@@ -40,8 +41,8 @@ public class Board implements IBoardObservable{
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
+        playersByTurn = new ArrayList<>(players);
         spaces = Collections.unmodifiableList(setup.getSpaces());
-
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
@@ -410,5 +411,9 @@ public class Board implements IBoardObservable{
 
     public Player getWinner() {
         return winner;
+    }
+
+    public List<Player> getPlayersByTurn() {
+        return playersByTurn;
     }
 }
