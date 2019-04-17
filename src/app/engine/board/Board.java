@@ -32,16 +32,19 @@ public class Board implements IBoardObservable, IDiceObservable {
     private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
     private boolean firstTurnTest = true;
 
+    private List<Agent> myAgentList;
     //dice types?
 
     public Board(String directory, String filename) throws IOException {
         this(GameFileHandler.getGamedata(directory, filename));
         myObserverList = new ArrayList<>();
+        myAgentList = new ArrayList<>();
     }
 
     public Board(ResourceBundle propertyFile){
         GameSetup setup = new GameSetup(propertyFile, this);
         myObserverList = new ArrayList<>();
+        myAgentList = new ArrayList<>();
         myDiceObserverList = new ArrayList<>();
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
@@ -51,6 +54,10 @@ public class Board implements IBoardObservable, IDiceObservable {
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
+        myAgentList.add(bank);
+        playersByTurn.forEach(e->{
+            myAgentList.add(e);
+        });
         //System.out.println(players.poll().getName());
     }
 
@@ -59,6 +66,8 @@ public class Board implements IBoardObservable, IDiceObservable {
             space.initializeSpace(this);
         }
     }
+
+    public List<Agent> getMyAgentList() {return myAgentList;}
 
     public Player startTurn() {
         currentPlayer = players.poll();

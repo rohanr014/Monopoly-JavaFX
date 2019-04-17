@@ -28,6 +28,7 @@ public class LogHistoryView implements IView {
     }
 
 
+
     public Pane getMyRoot(){
         return myRoot;
     }

@@ -20,14 +20,13 @@ public class AgentView implements IAgentObserver, IView {
     private int myHotelNum;
     private int myHouseNum;
     private String myPiece;
-    private Player myPlayer;
+    protected Player myPlayer;
     private Bank myBank;
 
-    private Agent myModel;
 
 
-    public AgentView(Player player){//take in correct paramaters
-        myPlayer = player;
+    public AgentView(Player agent){//take in correct paramaters
+        myPlayer = agent;
         initializePlayer();
     }
 
