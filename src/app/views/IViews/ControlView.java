@@ -4,6 +4,7 @@ package app.views.IViews;
 import app.engine.board.Board;
 import app.engine.board.IBoardObserver;
 import app.engine.dice.IDiceObserver;
+import app.engine.space.Space;
 import app.views.utility.ButtonMaker;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -31,13 +32,11 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private Button myMortgageButton;
     private Button myUnmortgageButton;
     private Button myRollDiceButton;
-
+    private Button myEndTurnButton;
     private StackPane myDiceDisplay;
     private Circle myDiceContainer;
 
     private ResourceBundle myResources;
-
-
 
     public ControlView(Board board){
         myBoard = board;
@@ -50,12 +49,12 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         var tempPane = new HBox();
         mySellButton = ButtonMaker.makeButton("Sell", e->pressedSell());
         myMortgageButton = ButtonMaker.makeButton("Mortgage", e->pressedMortgage());
+        myEndTurnButton = ButtonMaker.makeButton("End Turn", e-> pressedEndTurn());
         myUnmortgageButton = ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage());
         myRollDiceButton = ButtonMaker.makeButton("Roll Dice", e-> rollDice());
-        tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton, myRollDiceButton, makeDiceDisplay());
+        myEndTurnButton.setDisable(true);
+        tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton,  myEndTurnButton, myRollDiceButton, makeDiceDisplay());
         myRoot.getChildren().add(tempPane);
-
-
     }
 
     private StackPane makeDiceDisplay(){
@@ -70,30 +69,33 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     private void pressedSell(){
-        System.out.println("pressed Sell");
+
 
     }
 
-    private void pressedBuy(){
-        System.out.println("pressed Buy");
+    private void pressedEndTurn(){
+        myBoard.endTurn();
 
+        myRollDiceButton.setDisable(false);
+        myEndTurnButton.setDisable(true);
     }
 
     private void pressedMortgage(){
-        System.out.println("pressed Mortgage");
 
 
     }
 
     private void pressedUnmortgage(){
-        System.out.println("Pressed unmortgage");
 
     }
 
     private void rollDice(){
-        myBoard.rollDice(myBoard.getCurrentPlayer());
 
-        System.out.println("pressed rolled dice");
+        myBoard.rollDice(myBoard.getCurrentPlayer());
+        myRollDiceButton.setDisable(true);
+        myEndTurnButton.setDisable(false);
+
+
     }
 
 
@@ -106,20 +108,41 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     @Override
     public void diceUpdate(int[] dice_value) {
+        myDiceDisplay.getChildren().remove(myDiceText);
         int i = 0;
         for(int num : dice_value){
+            System.out.println("came into forloop");
             i = i + num;
         }
-        this.diceValue = i;
+
+        diceValue = i;
+        resetDiceValue();
+        //myBoard.move(myBoard.getCurrentPlayer(),diceValue);//need to check if its best to do it this way
 
     }
 
+    private void resetDiceValue(){
+        myDiceText = null;
+        myDiceText = new Text(Integer.toString(diceValue));
+        myDiceText.setFont(new Font(20));
+        myDiceDisplay.getChildren().add(myDiceText);
+
+    }
+
+
+    @Override
     public void boardUpdate() {
-        diceValue = this.myBoard.getLastRollSum();
+
     }
 
     @Override
-    public void boardUpdate(Board board) {
+    public void boardUpdate(Space start, Space end) {
 
     }
+
+    @Override
+    public void logPurchase(String transaction) {
+
+    }
+
 }

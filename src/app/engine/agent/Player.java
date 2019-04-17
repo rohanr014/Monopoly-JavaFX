@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Bank{
-    private String name;
     private String pieceFile;
     private List<Property> properties;
     private List<HoldableCard> cards;
@@ -22,9 +21,8 @@ public class Player extends Bank{
 
 
     public Player(String playerName, String file, double initBalance){
-        super(initBalance);
-        name = playerName;
-        pieceFile = file;
+        super(initBalance, playerName);
+        pieceFile = file + ".png";
         properties = new ArrayList<>();
         cards = new ArrayList<>();
     }
@@ -32,7 +30,7 @@ public class Player extends Bank{
     //player mortgages p, returns false if method fails
     public boolean mortgage(Property property){
         if (property.mortgage()) {
-            logAction = name + " mortgaged " + property.getMyName() + ".";
+            notifyAgentObservers(getName() + " mortgaged " + property.getMyName() + ".");
             return true;
         }
         return false;
@@ -41,7 +39,7 @@ public class Player extends Bank{
     //player unmortgages p, returns false if method fails
     public boolean unmortgage(Property property){
         if (property.unmortgage()) {
-            logAction = name + " unmortgaged " + property.getMyName() + ".";
+            notifyAgentObservers(getName() + " unmortgaged " + property.getMyName() + ".");
         }
         return false;
     }
@@ -49,7 +47,7 @@ public class Player extends Bank{
     //player builds house on cp, returns false if method fails
     boolean buildHouse(ColorProperty colorProp){
         if (colorProp.buildHouse()) {
-            logAction = name + " built a house on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(getName() + " built a house on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -57,7 +55,7 @@ public class Player extends Bank{
     //player builds hotel on cp, returns false if method fails
     boolean buildHotel(ColorProperty colorProp){
         if (colorProp.buildHotel()) {
-            logAction = name + " built a hotel on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(getName() + " built a hotel on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -65,7 +63,7 @@ public class Player extends Bank{
     //player sells house on cp, returns false if method fails
     boolean sellHouse(ColorProperty colorProp){
         if (colorProp.sellHouse()) {
-            logAction = name + " sold a house on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(getName() + " sold a house on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -73,7 +71,7 @@ public class Player extends Bank{
     //player sells hotel on cp, returns false if method fails
     boolean sellHotel(ColorProperty colorProp){
         if (colorProp.sellHotel()) {
-            logAction = name + " sold a hotel on " + colorProp.getMyName() + ".";
+            notifyAgentObservers(getName() + " sold a hotel on " + colorProp.getMyName() + ".");
         }
         return false;
     }
@@ -103,10 +101,6 @@ public class Player extends Bank{
 
     public List<HoldableCard> getCards() {
         return cards;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getPieceFile() {
@@ -162,6 +156,21 @@ public class Player extends Bank{
         removeCard(card);
         return true;
     }
+
+//    @Override
+//    public boolean giveMoney(Agent agent, double m){
+//        if (getWallet()<m) {
+////            prob should throw something here? better than boolean?
+//            return false;
+//        }
+//        if (agent == null) {
+//            System.out.println("bruh");
+//        }
+//        agent.addToWallet(m);
+//        setWallet(getWallet() - m);
+//        return true;
+////        MORE LOGIC FOR BANKRUPTING
+//    }
 
     public void addCard(HoldableCard holdableCard) {
         cards.add(holdableCard);

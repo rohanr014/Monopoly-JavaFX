@@ -2,6 +2,7 @@ package app.engine.agent;
 
 import app.engine.board.Board;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import java.util.List;
@@ -11,10 +12,13 @@ public abstract class Agent implements IAgentObservable{
     private List<IAgentObserver> myObserverList;
     private int numHousesOwned;
     private int numHotelsOwned;
+    private String myName;
 
 
-    public Agent(double initBalance) {
+    public Agent(double initBalance, String name) {
         wallet = initBalance;
+        myName = name;
+        myObserverList = new ArrayList<>();
     }
 
 
@@ -39,6 +43,8 @@ public abstract class Agent implements IAgentObservable{
         return wallet;
     }
 
+    public String getName() { return myName; }
+
     //methods required for observer pattern
     @Override
     public void addAgentObserver(IAgentObserver o) {
@@ -50,10 +56,12 @@ public abstract class Agent implements IAgentObservable{
         myObserverList.remove(o);
     }
 
+
     @Override
-    public void notifyAgentObservers() {
+    public void notifyAgentObservers(String logAction) {
+        System.out.println(logAction);
         for(IAgentObserver o : myObserverList){
-            o.agentUpdate(wallet);
+            o.agentUpdate(logAction);
         }
     }
 

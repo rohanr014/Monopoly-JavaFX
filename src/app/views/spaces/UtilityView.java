@@ -1,18 +1,27 @@
 package app.views.spaces;
 
 import app.engine.space.Utility;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class UtilityView extends SpaceView<Utility> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class UtilityView extends PropertyView<Utility> {
+    private List<ImageView> myPlayerViews;
+
     public UtilityView(Utility model) {
-        super(model.getName(), model);
+        super(model);
+        myPlayerViews = new ArrayList<>();
+        //myPlayerViews.addAll(gamePieceViews);
     }
 
     @Override
     public void initialize() {
-        myRoot = new Pane();
+        myRoot = new StackPane();
         myRoot.setStyle("-fx-background-color: SKYBLUE");
     }
 
@@ -20,8 +29,4 @@ public class UtilityView extends SpaceView<Utility> {
     public void adjustSize() {
     }
 
-    @Override
-    public void spaceUpdate() {
-
-    }
 }

@@ -5,27 +5,35 @@ import app.engine.board.Board;
 import app.engine.space.Space;
 import app.views.spaces.SpaceViewFactory;
 import app.views.spaces.SpaceView;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class VanillaBoardView extends BoardView {
+public class VanillaBoardView extends BoardView {//need to be scrolled down automatically
     private Pane myRoot;
     private Board myBoard;
     private List<Space> mySpaces;
     private List<SpaceView> mySpaceViews;
     private SpaceViewFactory mySpaceFactory;
+    private LogHistoryView myLogHistoryView;
 
-    public VanillaBoardView(Board board){
+    private ImageView myBoardLogo;
+
+    public VanillaBoardView(Board board, LogHistoryView logHistoryView){
         myRoot = new Pane();
         myRoot.setStyle("-fx-background-color: BEIGE;");
         myBoard = board;
         mySpaceViews = new ArrayList<>();
         mySpaceFactory = new SpaceViewFactory();
-
+        myLogHistoryView = logHistoryView;
         initializeBoard();
+        setLogo();
+    }
+    public void initialSetting(){
+        mySpaceViews.get(0).spaceUpdate();
     }
 
     private void initializeBoard(){
@@ -33,6 +41,16 @@ public class VanillaBoardView extends BoardView {
         loadSpacesToList();
         deploySpacesOnBoard();
 
+    }
+
+    private void setLogo(){
+        myBoardLogo = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
+        myBoardLogo.setFitWidth(400);
+        myBoardLogo.setFitHeight(100);
+        myBoardLogo.setX(140);
+        myBoardLogo.setY(250);
+        myBoardLogo.setRotate(-45);
+        myRoot.getChildren().add(myBoardLogo);
     }
 
     private void loadSpacesToList(){
@@ -95,15 +113,9 @@ public class VanillaBoardView extends BoardView {
 
         // vertical
     }
-    private void createSpaceViews(){
 
-    }
-
-
-    public void boardUpdate(Board model){
-        myBoard = model;
-        //call subsequent methods to reset the values that need to be updated
-
+    public List<SpaceView> getMySpaceViews(){
+        return mySpaceViews;
     }
 
 
@@ -111,4 +123,33 @@ public class VanillaBoardView extends BoardView {
     public Pane getMyRoot() {
         return myRoot;
     }
+
+    @Override
+    public void boardUpdate() {
+
+
+    }
+
+    @Override
+    public void boardUpdate(Space start, Space end) {
+        int startInd = mySpaces.indexOf(start);
+        int endInd = mySpaces.indexOf(end);
+        mySpaceViews.get(startInd).spaceUpdate();
+        mySpaceViews.get(endInd).spaceUpdate();
+        String strPlayerName = myBoard.getCurrentPlayer().getName();
+        myLogHistoryView.addMovementLog(strPlayerName + " moved from " + myBoard.getSpaces().get(startInd).getName() + " to " + myBoard.getSpaces().get(endInd).getName() + ".");
+        //System.out.println("Start index: " + startInd + ", End index: " + endInd);
+
+    }
+
+    public void logPurchase(String transaction) {
+        myLogHistoryView.addTransactionLog(transaction);
+    }
+
+
+    @Override
+    public void boardUpdate(Board board) {
+
+    }
+
 }
