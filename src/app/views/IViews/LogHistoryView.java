@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 
 
 public class LogHistoryView implements IView {
+    private static final int SCROLL_WIDTH = 650;
+    private static final int SCROLL_HEIGHT = 100;
+
 
     private Pane myRoot;
     private ScrollPane myScrollPane;
@@ -26,7 +29,7 @@ public class LogHistoryView implements IView {
         vbox = new VBox();
         myScrollPane.setContent(vbox);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setPrefSize(650, 100);
+        myScrollPane.setPrefSize(SCROLL_WIDTH, SCROLL_HEIGHT);
         myRoot.getChildren().add(myScrollPane);
     }
 

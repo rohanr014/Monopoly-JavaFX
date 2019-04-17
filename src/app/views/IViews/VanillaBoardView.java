@@ -13,6 +13,9 @@ import java.util.List;
 
 
 public class VanillaBoardView extends BoardView {//need to be scrolled down automatically
+    private static final int SIZE = 600;
+    private static final int PER_ROW = 10;
+
     private Pane myRoot;
     private Board myBoard;
     private List<Space> mySpaces;
@@ -60,10 +63,10 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
     }
 
     private void deploySpacesOnBoard(){
-        double xsize = 600;
-        double ysize = 600;
+        double xsize = SIZE;
+        double ysize = SIZE;
 
-        int numberOfCardsOnASide = 10;
+        int numberOfCardsOnASide = PER_ROW;
 
         double dx = xsize/numberOfCardsOnASide;
         double dy = ysize/numberOfCardsOnASide;
@@ -89,6 +92,7 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
             root.setLayoutY((numberOfCardsOnASide*2-i) * dy);
             root.setPrefWidth(dx);
             root.setPrefHeight(dy);
+            root.setRotate(90);
         }
 
         // top
@@ -98,6 +102,7 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
             root.setLayoutY(0);
             root.setPrefWidth(dx);
             root.setPrefHeight(dy);
+            root.setRotate(180);
         }
 
         // right
@@ -107,6 +112,7 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
             root.setLayoutY((i-3*numberOfCardsOnASide) * dy);
             root.setPrefWidth(dx);
             root.setPrefHeight(dy);
+            root.setRotate(270);
         }
 
         mySpaceViews.forEach(SpaceView::adjustSize);

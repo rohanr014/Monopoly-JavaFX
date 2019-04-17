@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private static final int DISPLAY_RADIUS = 10;
+    private static final int FONT_SIZE = 20;
     private static final Color DISPLAY_COLOR = Color.BEIGE;
 
     private Pane myRoot;
@@ -61,7 +62,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         myDiceDisplay = new StackPane();
         myDiceContainer = new Circle(DISPLAY_RADIUS, DISPLAY_COLOR);
         myDiceText = new Text(Integer.toString(diceValue));
-        myDiceText.setFont(new Font(20));
+        myDiceText.setFont(new Font(FONT_SIZE));
         myDiceDisplay.getChildren().addAll(myDiceContainer,myDiceText);
 
         return myDiceDisplay;
@@ -124,7 +125,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private void resetDiceValue(){
         myDiceText = null;
         myDiceText = new Text(Integer.toString(diceValue));
-        myDiceText.setFont(new Font(20));
+        myDiceText.setFont(new Font(FONT_SIZE));
         myDiceDisplay.getChildren().add(myDiceText);
 
     }
