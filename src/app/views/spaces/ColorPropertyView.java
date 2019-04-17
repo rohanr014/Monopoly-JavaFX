@@ -7,12 +7,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-public class ColorPropertyView extends SpaceView<ColorProperty> {
+public class ColorPropertyView extends PropertyView<ColorProperty> {
     private VBox myVBox;
     private Rectangle colorHeader;
 
     public ColorPropertyView(ColorProperty model) {
-        super(model.getName(), model);
+        super(model);
     }
 
     public String getMyName(){

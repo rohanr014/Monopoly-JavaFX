@@ -105,10 +105,17 @@ public class Property extends Space implements Asset {
     @Override
     protected void invokeAction(Player p) {
         if (!ownedByPlayer){
-            //trigger prompt for player to buy
+            notifySpaceObservers();
         }
         else if (ownedByPlayer && !p.equals(owner)){
             chargeRent(p);
+        }
+    }
+
+    @Override
+    public void notifySpaceObservers(){
+        for(ISpaceObserver spaceObserver : getMySpaceObserverList()){
+            spaceObserver.offerPopUp();
         }
     }
 
