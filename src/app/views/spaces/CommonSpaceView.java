@@ -19,8 +19,4 @@ public class CommonSpaceView extends SpaceView<CommonSpace> {
     public void adjustSize() {
 
     }
-
-    public void spaceUpdate(){
-
-    }
 }

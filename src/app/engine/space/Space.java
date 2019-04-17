@@ -51,6 +51,10 @@ public abstract class Space implements ISpaceObservable {
         return name;
     }
 
+    public List<Player> getCurrentOccupants() {
+        return currentOccupants;
+    }
+
     @Override
     public void addSpaceObserver(ISpaceObserver o){
         mySpaceObserverList.add(o);

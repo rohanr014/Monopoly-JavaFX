@@ -5,14 +5,16 @@ import app.engine.space.Space;
 import javafx.scene.image.ImageView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpaceViewFactory {
 
-    private List<ImageView> myImageViewList;
+    private List<ImageView> myGamePieceViews;
 
     public SpaceViewFactory() {
-
+        myGamePieceViews = new ArrayList<>();
+        //myGamePieceViews.addAll(gamePieceViews);
     }
 
     public SpaceView createSpace(Space space){
@@ -20,7 +22,7 @@ public class SpaceViewFactory {
             Class cls = Class.forName("app.views.spaces." + space.getClass().getSimpleName() + "View");
             Constructor cons = cls.getConstructors()[0];
             return (SpaceView) cons.newInstance(space);
-        }catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | InstantiationException e){
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | InstantiationException e){
             e.printStackTrace();
         }
         throw new RuntimeException();
