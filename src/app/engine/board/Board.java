@@ -219,10 +219,14 @@ public class Board implements IBoardObservable, IDiceObservable {
     /////////////////////
 
     private boolean checkForGo(int start, int spacePosition) {
-        if (currentPlayer.isInJail()){
+        if (currentPlayer.isInJail() || start==getGoIndex()){
             return false;
         }
-        return checkIfPass(start, spacePosition, getGoIndex());
+        if (checkIfPass(start, spacePosition, getGoIndex())){
+            System.out.println("Passed go");
+            return true;
+        }
+        return false;
     }
 
     private boolean checkIfPass(int start, int end, int targetSpaceIndex) {
