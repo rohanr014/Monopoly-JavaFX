@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 abstract class PopUpView {
     private Stage myStage;
     private String myTitle;
+    private Scene myScene;
 
 
     public PopUpView(String title){
@@ -15,7 +16,9 @@ abstract class PopUpView {
         myStage = new Stage();
         myStage.setTitle(myTitle);
         myStage.setResizable(false);
-        myStage.setScene(myScene());
+        myScene = myScene();
+        myStage.setScene(myScene);
+        myScene.getStylesheets().add(getClass().getResource("/popup.css").toExternalForm());
         myStage.show();
     }
 
