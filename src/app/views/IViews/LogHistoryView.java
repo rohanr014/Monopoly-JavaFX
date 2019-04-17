@@ -34,6 +34,10 @@ public class LogHistoryView implements IView {
         vbox.getChildren().add(new Text(str));
     }
 
+    public void addTransactionLog(String tx) {
+        vbox.getChildren().add(new Text(tx));
+    }
+
     public Pane getMyRoot(){
         return myRoot;
     }

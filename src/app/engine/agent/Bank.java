@@ -4,8 +4,8 @@ import app.engine.board.Board;
 
 public class Bank extends Agent{
 
-    public Bank(double initBalance) {
-        super(initBalance);
+    public Bank(double initBalance, String name) {
+        super(initBalance, name);
     }
 
     @Override
@@ -16,6 +16,7 @@ public class Bank extends Agent{
         }
         agent.addToWallet(m);
         setWallet(getWallet()-m);
+        notifyAgentObservers(getName() + " paid " + agent.getName() + " $" + m + ".");
         return true;
 //        MORE LOGIC FOR BANKRUPTING
     }
