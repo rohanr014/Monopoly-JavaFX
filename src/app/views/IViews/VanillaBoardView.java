@@ -6,6 +6,8 @@ import app.engine.space.Space;
 import app.views.spaces.SpaceViewFactory;
 import app.views.spaces.SpaceView;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
     private SpaceViewFactory mySpaceFactory;
     private LogHistoryView myLogHistoryView;
 
+    private ImageView myBoardLogo;
+
     public VanillaBoardView(Board board, LogHistoryView logHistoryView){
         myRoot = new Pane();
         myRoot.setStyle("-fx-background-color: BEIGE;");
@@ -27,6 +31,7 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
         mySpaceFactory = new SpaceViewFactory();
         myLogHistoryView = logHistoryView;
         initializeBoard();
+        setLogo();
     }
     public void initialSetting(){
         mySpaceViews.get(0).spaceUpdate();
@@ -37,6 +42,16 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
         loadSpacesToList();
         deploySpacesOnBoard();
 
+    }
+
+    private void setLogo(){
+        myBoardLogo = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Monopoly_logo.png")));
+        myBoardLogo.setFitWidth(400);
+        myBoardLogo.setFitHeight(100);
+        myBoardLogo.setX(140);
+        myBoardLogo.setY(250);
+        myBoardLogo.setRotate(-45);
+        myRoot.getChildren().add(myBoardLogo);
     }
 
     private void loadSpacesToList(){
