@@ -24,7 +24,7 @@ public class Player extends Bank{
     public Player(String playerName, String file, double initBalance){
         super(initBalance);
         name = playerName;
-        pieceFile = file;
+        pieceFile = file + ".png";
         properties = new ArrayList<>();
         cards = new ArrayList<>();
     }

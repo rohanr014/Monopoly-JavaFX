@@ -58,6 +58,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         playersByTurn.forEach(e->{
             myAgentList.add(e);
         });
+        spaces.get(0).getCurrentOccupants().addAll(players);
         //System.out.println(players.poll().getName());
     }
 
@@ -135,18 +136,15 @@ public class Board implements IBoardObservable, IDiceObservable {
                 doublesCounter++;
                 checkIfDoublesSendsToJail(player);
             }
-            if (!(firstTurnTest)) {
+//            if (!(firstTurnTest)) {
                 move(player, getLastRollSum());
-            }
-            if (firstTurnTest) {
-                move(player, 7);
-                firstTurnTest = false;
-            }
+
+//            if (firstTurnTest) {
+//                move(player, 7);
+//                firstTurnTest = false;
+//            }
 
 
-        }
-        for(int num : lastRoll){
-            System.out.println(num);
         }
         notifyDiceObservers();
         //return lastRoll;

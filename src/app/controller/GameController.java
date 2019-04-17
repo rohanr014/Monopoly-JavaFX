@@ -29,10 +29,10 @@ public class GameController {
         initialize();
     }
 
-
     public void initialize(){
         myBoard.startTurn();
     }
+
     private void registerAgentObservers(){
         List<AgentView> agentViewList = myMainView.getMyAssetView().getMyAgentViewList();
         List<Agent>  agentList =myBoard.getMyAgentList();

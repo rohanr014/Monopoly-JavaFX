@@ -29,9 +29,7 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
         initializeBoard();
     }
     public void initialSetting(){
-        mySpaceViews.forEach(space->{
-            space.spaceUpdate();
-        });
+        mySpaceViews.get(0).spaceUpdate();
     }
 
     private void initializeBoard(){
