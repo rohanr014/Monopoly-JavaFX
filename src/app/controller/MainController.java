@@ -5,6 +5,8 @@ import app.engine.board.Board;
 import app.views.IViews.MainView;
 import app.views.IViews.SplashView;
 import app.views.spaces.ColorPropertyView;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -25,8 +27,9 @@ public class MainController {
     public MainController(Stage stage){
         mySplashView = new SplashView(this);
         myStage = stage;
-        myStage.setTitle("monopoly_tobe_replaced");
+        myStage.setTitle("Monopoly");
         myStage.setResizable(false);
+
         //myStage.setScene(new Scene(CPV.initialize(), 100, 130, Color.CYAN));
         myStage.setScene(mySplashView.getMyScene());
         myStage.show();
