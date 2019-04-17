@@ -84,7 +84,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     private void pressedUnmortgage(){
-
+        System.out.println("Pressed unmortgage");
 
     }
 
@@ -104,14 +104,26 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     @Override
     public void diceUpdate(int[] dice_value) {
+        myDiceDisplay.getChildren().remove(myDiceText);
         int i = 0;
         for(int num : dice_value){
+            System.out.println("came into forloop");
             i = i + num;
         }
-        this.diceValue = i;
+
+        diceValue = i;
+        System.out.println(diceValue);
+        resetDiceValue();
 
     }
 
+    private void resetDiceValue(){
+        myDiceText = null;
+        myDiceText = new Text(Integer.toString(diceValue));
+        myDiceText.setFont(new Font(20));
+        myDiceDisplay.getChildren().add(myDiceText);
+
+    }
     public void boardUpdate() {
         diceValue = this.myBoard.getLastRollSum();
     }

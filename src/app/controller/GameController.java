@@ -21,6 +21,7 @@ public class GameController {
         myBoard = board;
         myMainView = mainView;
         registerBoardObservers();
+        registerDiceObservers();
         registerSpaceObservers();
         initialize();
     }
@@ -31,6 +32,9 @@ public class GameController {
 
     }
 
+    public void registerDiceObservers(){
+        myBoard.addDiceObserver(myMainView.getMyControlView());
+    }
 
     private void registerSpaceObservers(){
         List<SpaceView> temp = myMainView.getMyVanillaBoardView().getMySpaceViews();

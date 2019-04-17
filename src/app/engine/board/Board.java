@@ -7,13 +7,15 @@ import app.engine.agent.Agent;
 import app.engine.agent.Bank;
 import app.engine.agent.Player;
 import app.engine.card.Card;
+import app.engine.dice.IDiceObservable;
+import app.engine.dice.IDiceObserver;
 import app.engine.space.Property;
 import app.engine.space.Space;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Board implements IBoardObservable{
+public class Board implements IBoardObservable, IDiceObservable {
     private Queue<Card> communityChest;
     private Queue<Card> chanceCards;
     private List<Space> spaces;
@@ -24,7 +26,7 @@ public class Board implements IBoardObservable{
     private List<Dice> gameDice;
     private int doublesCounter;
     private int[] lastRoll;
-
+    private List<IDiceObserver> myDiceObserverList;
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
     private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
@@ -39,6 +41,7 @@ public class Board implements IBoardObservable{
     public Board(ResourceBundle propertyFile){
         GameSetup setup = new GameSetup(propertyFile, this);
         myObserverList = new ArrayList<>();
+        myDiceObserverList = new ArrayList<>();
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
@@ -114,7 +117,7 @@ public class Board implements IBoardObservable{
     public void rollDice(Player player){
         lastRoll = gameDice.get(0).rollAllDice();
 
-        System.out.println(player);
+        System.out.println(player.getName());
         if (player.isInJail()) {
             handleJailRolls(player);
         } else {
@@ -124,6 +127,10 @@ public class Board implements IBoardObservable{
             }
             move(player, getLastRollSum());
         }
+        for(int num : lastRoll){
+            System.out.println(num);
+        }
+        notifyDiceObservers();
         notifyBoardObservers();
         //return lastRoll;
     }
@@ -372,6 +379,22 @@ public class Board implements IBoardObservable{
             o.boardUpdate(this);
         }
 
+    }
+
+
+    public void addDiceObserver(IDiceObserver o){
+        myDiceObserverList.add(o);
+    }
+
+    public void removeDiceObserver(IDiceObserver o){
+        myDiceObserverList.remove(o);
+    }
+
+    public void notifyDiceObservers(){
+        System.out.println("here");
+        for(IDiceObserver diceObserver : myDiceObserverList){
+            diceObserver.diceUpdate(lastRoll);
+        }
     }
 
 
