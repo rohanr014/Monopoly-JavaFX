@@ -28,6 +28,11 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
         myLogHistoryView = logHistoryView;
         initializeBoard();
     }
+    public void initialSetting(){
+        mySpaceViews.forEach(space->{
+            space.spaceUpdate();
+        });
+    }
 
     private void initializeBoard(){
         mySpaces = myBoard.getSpaces();
