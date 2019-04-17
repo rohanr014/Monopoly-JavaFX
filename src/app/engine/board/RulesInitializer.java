@@ -15,9 +15,9 @@ public class RulesInitializer {
     private ResourceBundle myBundle;
     private ResourceBundle rulesBundle;
 
-    public RulesInitializer(String bundleName) {
-        myBundle = ResourceBundle.getBundle(bundleName);
-        rulesBundle = ResourceBundle.getBundle(myBundle.getString("rules_file"));
+
+    public RulesInitializer(ResourceBundle rulesFile) {
+        myBundle = rulesFile;
         numDoublesTilGoToJail = Integer.parseInt(myBundle.getString("DoublesForJail"));
         goMoney = Double.parseDouble(myBundle.getString("GoMoney"));
         sellToBankMult = Double.parseDouble(myBundle.getString("SaleToBankMultiplier"));
