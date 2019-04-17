@@ -145,9 +145,6 @@ public class Board implements IBoardObservable, IDiceObservable {
 
 
         }
-        for(int num : lastRoll){
-            System.out.println(num);
-        }
         notifyDiceObservers();
         //return lastRoll;
     }
