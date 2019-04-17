@@ -28,6 +28,8 @@ public class MainView{
         myLogHistoryView = new LogHistoryView(board);
         setComponents();
         myScene = new Scene(myRoot, 1100,800);
+        myScene.getStylesheets().add(getClass().getResource("/vanilla.css").toExternalForm());
+
     }
 
     private void setComponents(){

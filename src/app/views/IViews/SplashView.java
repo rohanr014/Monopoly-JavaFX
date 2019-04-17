@@ -42,6 +42,7 @@ public class SplashView implements IView {
         setIcon();
         setScene();
         myScene = new Scene(myRoot, SPLASH_WIDTH,  SPLASH_HEIGHT);
+        myScene.getStylesheets().add(getClass().getResource("/splashScreen.css").toExternalForm());
 
     }
 

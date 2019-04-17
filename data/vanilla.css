@@ -1,0 +1,67 @@
+.button {
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 2;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+.root{
+    -fx-background-color: BEIGE;
+}
+.color-picker {
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+
+.combo-box{
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+
+.cell{
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+.slider{
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+}
+.text-field{
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-border-color: GREY;
+}
+.label{
+    -fx-text-fill: #006464;
+    -fx-background-color: WHITE;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+.text-area{
+    -fx-font: normal bold 20px 'serif';
+}

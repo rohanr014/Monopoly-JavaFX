@@ -1,6 +1,7 @@
 package app.views.IViews;
 
 import app.engine.board.Board;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -12,6 +13,7 @@ public class LogHistoryView implements IView {
     private ScrollPane myScrollPane;
     private Board myBoard;
     private VBox vbox;
+    private Scene myScene;
 
 
     public LogHistoryView(Board board){
