@@ -1,16 +1,27 @@
 package app.views.spaces;
 
+import app.engine.agent.Player;
 import app.engine.space.ColorProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ColorPropertyView extends SpaceView<ColorProperty> {
     private VBox myVBox;
     private Rectangle colorHeader;
+    private List<ImageView> myPlayerViews;
 
     public ColorPropertyView(ColorProperty model) {
         super(model.getName(), model);
+        myPlayerViews = new ArrayList<>();
+        //myPlayerViews.addAll(gamePieceViews);
     }
 
     public String getMyName(){
@@ -39,14 +50,9 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
 
     public Pane getMyRoot(){return myRoot;}
 
-    @Override
-    public void spaceUpdate() {
-
-    }
 
     private void onHover() {
         DetailColorProperty dcp = new DetailColorProperty(myModel);
         dcp.adjustSize();
-
     }
 }

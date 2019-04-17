@@ -18,6 +18,7 @@ public class Board implements IBoardObservable{
     private Queue<Card> chanceCards;
     private List<Space> spaces;
     private Queue<Player> players;
+    private ArrayList<Player> playersByTurn;
     private Player currentPlayer;
     private Bank bank;
     private List<Dice> gameDice;
@@ -26,6 +27,7 @@ public class Board implements IBoardObservable{
 
     private List<IBoardObserver> myObserverList;
     private Player winner = null;
+    private ResourceBundle myBundle = ResourceBundle.getBundle("boardValues");
 
     //dice types?
 
@@ -40,8 +42,8 @@ public class Board implements IBoardObservable{
         communityChest = setup.getCommunityChest();
         chanceCards = setup.getChanceCards();
         players = setup.getPlayers();
+        playersByTurn = new ArrayList<>(players);
         spaces = Collections.unmodifiableList(setup.getSpaces());
-
         initializeSpaces();
         gameDice = setup.getDice();
         bank = setup.getBank();
@@ -241,17 +243,18 @@ public class Board implements IBoardObservable{
     /////////////////////
 
     private int getNumDoublesTilGoToJail() {
-        return 3;
+        String val = myBundle.getString("DoublesForJail");
+        return Integer.parseInt(val);
     }
 
     private double getGoMoney() {
-//        REPLACE WITH PROP FILE VALUES
-        return 200;
+        String val = myBundle.getString("GoMoney");
+        return Double.parseDouble(val);
     }
 
     private double getSellToBankMultiplier() {
-        //GETS BANK MODIFIER FROM Properties file
-        return .5;
+        String val = myBundle.getString("SaleToBankMultiplier");
+        return Double.parseDouble(val);
     }
 
     private int getGoIndex() {
@@ -264,18 +267,23 @@ public class Board implements IBoardObservable{
     }
 
     public double getUnmortgageMultiplier() {
-        return 1.1;
+        String val = myBundle.getString("UnmortgageMultiplier");
+        return Double.parseDouble(val);
     }
 
-    private double getJailFee() { return 50;
+    private double getJailFee() {
+        String val = myBundle.getString("GetOutOfJailFee");
+        return Double.parseDouble(val);
     }
 
     private int getMaxTurnsInJail() {
-        return 3;
+        String val = myBundle.getString("MaxTurnsInJail");
+        return Integer.parseInt(val);
     }
 
     public double getHoldableCardSellValue() {
-        return 30;
+        String val = myBundle.getString("HoadableCardSaleValue");
+        return Double.parseDouble(val);
     }
 
     /////////////////////
@@ -410,5 +418,9 @@ public class Board implements IBoardObservable{
 
     public Player getWinner() {
         return winner;
+    }
+
+    public List<Player> getPlayersByTurn() {
+        return playersByTurn;
     }
 }
