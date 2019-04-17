@@ -13,9 +13,10 @@ public class Player extends Bank{
     private String pieceFile;
     private List<Property> properties;
     private List<HoldableCard> cards;
+    private int currentSpace;
+    private String logAction;
 
 //    MAGIC VALUES
-    private int currentSpace = 0;
     private boolean inJail = false;
     private int numTurnsInJail = 0;
 
@@ -30,31 +31,50 @@ public class Player extends Bank{
 
     //player mortgages p, returns false if method fails
     public boolean mortgage(Property property){
-        return property.mortgage();
+        if (property.mortgage()) {
+            logAction = name + " mortgaged " + property.getMyName() + ".";
+            return true;
+        }
+        return false;
     }
 
     //player unmortgages p, returns false if method fails
     public boolean unmortgage(Property property){
-        return property.unmortgage();
+        if (property.unmortgage()) {
+            logAction = name + " unmortgaged " + property.getMyName() + ".";
+        }
+        return false;
     }
 
     //player builds house on cp, returns false if method fails
     boolean buildHouse(ColorProperty colorProp){
+        if (colorProp.buildHouse()) {
+            logAction = name + " built a house on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
     //player builds hotel on cp, returns false if method fails
     boolean buildHotel(ColorProperty colorProp){
+        if (colorProp.buildHotel()) {
+            logAction = name + " built a hotel on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
     //player sells house on cp, returns false if method fails
     boolean sellHouse(ColorProperty colorProp){
+        if (colorProp.sellHouse()) {
+            logAction = name + " sold a house on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
     //player sells hotel on cp, returns false if method fails
     boolean sellHotel(ColorProperty colorProp){
+        if (colorProp.sellHotel()) {
+            logAction = name + " sold a hotel on " + colorProp.getMyName() + ".";
+        }
         return false;
     }
 
