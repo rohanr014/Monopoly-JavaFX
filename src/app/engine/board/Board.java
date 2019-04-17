@@ -257,8 +257,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         for (int x: lastRoll){
             sum += x;
         }
-        //return sum;
-        return 6;
+        return sum;
     }
 
     /////////////////////
