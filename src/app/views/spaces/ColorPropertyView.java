@@ -47,6 +47,5 @@ public class ColorPropertyView extends SpaceView<ColorProperty> {
     private void onHover() {
         DetailColorProperty dcp = new DetailColorProperty(myModel);
         dcp.adjustSize();
-
     }
 }

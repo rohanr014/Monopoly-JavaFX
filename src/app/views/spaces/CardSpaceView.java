@@ -1,16 +1,12 @@
 package app.views.spaces;
 
 import app.engine.space.CardSpace;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 public class CardSpaceView extends SpaceView<CardSpace> {
-    private ImageView myCardImageView;
     private String tempCard;
-
 
     public CardSpaceView(CardSpace model){ super(model.getName(),model); }
     public String getMyName(){return myName;}
@@ -29,7 +25,8 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     }
 
     @Override
-    public void spaceUpdate() {
+    public void spaceUpdate() {//
+
 
     }
 }
