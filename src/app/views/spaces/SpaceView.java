@@ -61,5 +61,4 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         myRoot.getChildren().add(playerViews);
     }
 
-
 }

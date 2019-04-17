@@ -21,4 +21,9 @@ public class CommonSpaceView extends SpaceView<CommonSpace> {
     public void adjustSize() {
 
     }
+
+    @Override
+    public void offerPopUp() {
+
+    }
 }

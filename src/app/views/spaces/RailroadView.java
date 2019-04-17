@@ -13,11 +13,11 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RailroadView extends SpaceView<Railroad> {
+public class RailroadView extends PropertyView<Railroad> {
     private List<ImageView> myPlayerViews;
 
     public RailroadView(Railroad model){
-        super(model.getName(), model);
+        super(model);
         myPlayerViews = new ArrayList<>();
         //myPlayerViews.addAll(gamePieceViews);
     }

@@ -47,12 +47,11 @@ public class GameController {
     }
 
     private void registerSpaceObservers(){
-        List<SpaceView> temp = myMainView.getMyVanillaBoardView().getMySpaceViews();
-        myBoard.getSpaces().forEach(space -> {
-            for (SpaceView spaceView : temp) {
-                space.addSpaceObserver(spaceView);
-            }
-        });
+        List<SpaceView> tempView = myMainView.getMyVanillaBoardView().getMySpaceViews();
+        List<Space> tempSpace = myBoard.getSpaces();
+        for(int i = 0; i<tempView.size(); i++){
+            tempSpace.get(i).addSpaceObserver(tempView.get(i));
+        }
 
     }
 

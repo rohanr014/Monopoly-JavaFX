@@ -75,6 +75,10 @@ public abstract class Space implements ISpaceObservable {
         }
     }
 
+    public List<ISpaceObserver> getSpaceObservers() {
+        return mySpaceObserverList;
+    }
+
     public String getName() {
         return name;
     }
