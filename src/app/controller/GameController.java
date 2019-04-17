@@ -35,7 +35,7 @@ public class GameController {
     private void registerSpaceObservers(){
         List<SpaceView> temp = myMainView.getMyVanillaBoardView().getMySpaceViews();
         myBoard.getSpaces().forEach(space -> {
-            for(SpaceView spaceView : temp){
+            for (SpaceView spaceView : temp) {
                 space.addSpaceObserver(spaceView);
             }
         });

@@ -23,10 +23,6 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         myModel = model;
         initialize();
         myRoot.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        StackPane view = new StackPane();
-        ImageView carView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("car.png"), 40, 40, false, false));
-        view.getChildren().add(carView);
-        myRoot.getChildren().add(view);
     }
 
     public abstract void initialize();
