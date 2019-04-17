@@ -62,7 +62,4 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
     }
 
 
-    private void landed(Space input) {
-        BuyAuctionView bav = new BuyAuctionView("Buy/Auction");
-    }
 }
