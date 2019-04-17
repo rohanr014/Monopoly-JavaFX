@@ -69,7 +69,7 @@ public class Property extends Space implements Asset {
     }
 
     public boolean unmortgage() {
-        boolean success = owner.giveMoney(getBoard().getBank(), mortgageValue*getBoard().getUnmortgageMultiplier());
+        boolean success = owner.giveMoney(getBoard().getBank(), mortgageValue*getBoard().getRules().getUnmortgageMultiplier());
         if (success) {
             mortgaged = false;
             rent = calculateRent();
