@@ -219,6 +219,9 @@ public class Board implements IBoardObservable, IDiceObservable {
     /////////////////////
 
     private boolean checkForGo(int start, int spacePosition) {
+        if (currentPlayer.isInJail()){
+            return false;
+        }
         return checkIfPass(start, spacePosition, getGoIndex());
     }
 
