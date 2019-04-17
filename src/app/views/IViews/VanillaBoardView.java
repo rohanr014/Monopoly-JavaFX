@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VanillaBoardView extends BoardView {
+public class VanillaBoardView extends BoardView {//need to be scrolled down automatically
     private Pane myRoot;
     private Board myBoard;
     private List<Space> mySpaces;
@@ -120,7 +120,7 @@ public class VanillaBoardView extends BoardView {
         mySpaceViews.get(startInd).spaceUpdate();
         mySpaceViews.get(endInd).spaceUpdate();
         String strPlayerName = myBoard.getCurrentPlayer().getName();
-        myLogHistoryView.addMovementLog(strPlayerName + "moved from " + myBoard.getSpaces().get(startInd).getName() + "to " + myBoard.getSpaces().get(endInd).getName() + ".");
+        myLogHistoryView.addMovementLog(strPlayerName + " moved from " + myBoard.getSpaces().get(startInd).getName() + " to " + myBoard.getSpaces().get(endInd).getName() + ".");
         //System.out.println("Start index: " + startInd + ", End index: " + endInd);
 
     }

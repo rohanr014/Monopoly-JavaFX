@@ -32,6 +32,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private Button myMortgageButton;
     private Button myUnmortgageButton;
     private Button myRollDiceButton;
+    private Button myEndTurnButton;
     private StackPane myDiceDisplay;
     private Circle myDiceContainer;
 
@@ -50,12 +51,11 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         var tempPane = new HBox();
         mySellButton = ButtonMaker.makeButton("Sell", e->pressedSell());
         myMortgageButton = ButtonMaker.makeButton("Mortgage", e->pressedMortgage());
+        myEndTurnButton = ButtonMaker.makeButton("End Turn", e-> pressedEndTurn());
         myUnmortgageButton = ButtonMaker.makeButton("Unmortgage",e->pressedUnmortgage());
         myRollDiceButton = ButtonMaker.makeButton("Roll Dice", e-> rollDice());
-        tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton, myRollDiceButton, makeDiceDisplay());
+        tempPane.getChildren().addAll(mySellButton, myMortgageButton, myUnmortgageButton,  myEndTurnButton, myRollDiceButton, makeDiceDisplay());
         myRoot.getChildren().add(tempPane);
-
-
     }
 
     private StackPane makeDiceDisplay(){
@@ -74,8 +74,9 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     }
 
-    private void pressedBuy(){
-
+    private void pressedEndTurn(){
+        myBoard.endTurn();
+        System.out.println("pressed End Turn");
     }
 
     private void pressedMortgage(){
