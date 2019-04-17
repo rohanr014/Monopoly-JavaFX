@@ -24,6 +24,9 @@ public class MainView{
         myRoot = new BorderPane();
         myLogHistoryView = new LogHistoryView(board);
         myVanillaBoardView = new VanillaBoardView(board, myLogHistoryView);
+
+        myVanillaBoardView.initialSetting();
+
         myAssetView = new AssetView(board, myLogHistoryView);
         myControlView = new ControlView(board);
 

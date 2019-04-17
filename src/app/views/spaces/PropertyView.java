@@ -2,6 +2,7 @@ package app.views.spaces;
 
 import app.engine.space.Property;
 import app.engine.space.Space;
+import app.views.popups.BuyAuctionView;
 import javafx.scene.layout.StackPane;
 
 public class PropertyView<M extends Property> extends SpaceView<M> {
@@ -21,8 +22,7 @@ public class PropertyView<M extends Property> extends SpaceView<M> {
 
     @Override
     public void offerPopUp() {
-        
-
+        BuyAuctionView bav = new BuyAuctionView("Buy/Auction");
     }
 
 }

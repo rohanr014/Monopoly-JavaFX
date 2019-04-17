@@ -284,7 +284,7 @@ public class GameSetup {
         }
 
         else{
-            return new Bank(Double.parseDouble(bankString));
+            return new Bank(Double.parseDouble(bankString), "bank");
         }
     }
 }

@@ -11,8 +11,8 @@ class BankTest {
 
     @BeforeEach
     void setup(){
-        b1 = new Bank(100);
-        b2 = new Bank(50);
+        b1 = new Bank(100, "bank");
+        b2 = new Bank(50, "bank");
     }
 
     @Test

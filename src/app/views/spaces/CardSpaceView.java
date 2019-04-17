@@ -44,4 +44,8 @@ public class CardSpaceView extends SpaceView<CardSpace> {
 
     }
 
+    @Override
+    public void offerPopUp() {
+
+    }
 }

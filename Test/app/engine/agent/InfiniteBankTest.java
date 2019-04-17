@@ -12,7 +12,7 @@ class InfiniteBankTest {
     @BeforeEach
     void setup(){
         b1 = new InfiniteBank();
-        b2 = new Bank(100);
+        b2 = new Bank(100, "infinite bank");
     }
 
     @Test

@@ -58,6 +58,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         playersByTurn.forEach(e->{
             myAgentList.add(e);
         });
+        spaces.get(0).getCurrentOccupants().addAll(players);
         //System.out.println(players.poll().getName());
     }
 

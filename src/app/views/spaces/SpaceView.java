@@ -3,6 +3,7 @@ package app.views.spaces;
 import app.engine.agent.Player;
 import app.engine.space.ISpaceObserver;
 import app.engine.space.Space;
+import app.views.popups.BuyAuctionView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -50,7 +51,7 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
 
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
-                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(player.getPieceFile()), 40, 40, false, false));
+                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(player.getPieceFile()) , 40, 40, false, false));
                 myPlayerPieces.put(player, gamePiece);
             }
             if (!(playerViews.getChildren().contains(myPlayerPieces.get(player)))) {
@@ -59,5 +60,4 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
         }
         myRoot.getChildren().add(playerViews);
     }
-
 }
