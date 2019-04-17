@@ -128,6 +128,10 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
 
     }
 
+    public void logPurchase(String transaction) {
+        myLogHistoryView.addTransactionLog(transaction);
+    }
+
 
     @Override
     public void boardUpdate(Board board) {

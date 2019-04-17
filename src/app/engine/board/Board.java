@@ -51,9 +51,9 @@ public class Board implements IBoardObservable, IDiceObservable {
         players = setup.getPlayers();
         playersByTurn = new ArrayList<>(players);
         spaces = Collections.unmodifiableList(setup.getSpaces());
+        bank = setup.getBank();
         initializeSpaces();
         gameDice = setup.getDice();
-        bank = setup.getBank();
         myAgentList.add(bank);
         playersByTurn.forEach(e->{
             myAgentList.add(e);
@@ -257,7 +257,8 @@ public class Board implements IBoardObservable, IDiceObservable {
         for (int x: lastRoll){
             sum += x;
         }
-        return sum;
+        //return sum;
+        return 6;
     }
 
     /////////////////////
@@ -391,6 +392,13 @@ public class Board implements IBoardObservable, IDiceObservable {
     @Override
     public void notifyBoardObservers(){
 
+    }
+
+    public void notifyPurchase() {
+        String purchaseNotification = currentPlayer.getName() + " bought " + spaces.get(currentPlayer.getCurrentSpace()).getName() + ".";
+        for(IBoardObserver boardObserver : myObserverList){
+            boardObserver.logPurchase(purchaseNotification);
+        }
     }
 
     public void notifyBoardObservers(Space start, Space end) {

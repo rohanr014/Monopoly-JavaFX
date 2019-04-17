@@ -59,6 +59,7 @@ public abstract class Agent implements IAgentObservable{
 
     @Override
     public void notifyAgentObservers(String logAction) {
+        System.out.println(logAction);
         for(IAgentObserver o : myObserverList){
             o.agentUpdate(logAction);
         }

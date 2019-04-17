@@ -25,4 +25,9 @@ public class PropertyView<M extends Property> extends SpaceView<M> {
         BuyAuctionView bav = new BuyAuctionView(myModel);
     }
 
+    @Override
+    public void addPurchaseToLog(String purchase) {
+
+    }
+
 }

@@ -38,8 +38,8 @@ public class BuyAuctionView extends PopUpView {
         return new Scene(myRoot, Color.DARKGREEN);
     }
 
-    private void pressedBuy(){
-
+    private void pressedBuy() {
+        myProperty.boughtBy(myProperty.getCurrentOccupants().get(myProperty.getCurrentOccupants().size() - 1));
     }
 
     private void pressedAuction(){

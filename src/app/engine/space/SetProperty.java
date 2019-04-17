@@ -20,6 +20,7 @@ public abstract class SetProperty extends Property {
     public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents) {
         this(name, purchaseCost,  mortgageValue);
         possibleRents = allRents;
+        setRent(allRents[0]);
     }
 
     public void fillCompleteSet(SetProperty... totalSet) {
