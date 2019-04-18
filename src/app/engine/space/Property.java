@@ -2,7 +2,6 @@ package app.engine.space;
 
 import app.engine.agent.Agent;
 import app.engine.Asset;
-import app.engine.agent.Bank;
 import app.engine.board.Board;
 import app.engine.agent.Player;
 
@@ -69,7 +68,7 @@ public class Property extends Space implements Asset {
     }
 
     public boolean unmortgage() {
-        boolean success = owner.giveMoney(getBoard().getBank(), mortgageValue*getBoard().getUnmortgageMultiplier());
+        boolean success = owner.giveMoney(getBoard().getBank(), mortgageValue*getBoard().getRules().getUnmortgageMultiplier());
         if (success) {
             mortgaged = false;
             rent = calculateRent();
@@ -92,7 +91,7 @@ public class Property extends Space implements Asset {
     }
     
     public double getValue() {
-        return getBoard().getSellPrice(getPurchaseCost());
+        return getPurchaseCost() / getBoard().getRules().getSellToBankMultiplier();
     }
 
 

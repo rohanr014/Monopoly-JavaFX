@@ -1,13 +1,5 @@
 package app.engine.space;
 
-import app.engine.agent.Agent;
-import app.engine.Asset;
-import app.engine.board.Board;
-import app.engine.agent.Player;
-
-import java.awt.*;
-import java.util.Collection;
-
 //subclass for Color Properties
 public class ColorProperty extends SetProperty{
     private boolean monopoly;
