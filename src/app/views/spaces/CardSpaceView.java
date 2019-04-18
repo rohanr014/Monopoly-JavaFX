@@ -30,7 +30,7 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     public void initialize() {
         myRoot = new StackPane();
 
-        tempCard = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("community-chest-space.jpg")));
+        tempCard = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Vanilla/Space-Photos/community-chest-space.jpg")));
         tempCard.setFitWidth(40);
         tempCard.setFitHeight(40);//need to not hard code this
         myRoot.getChildren().add(tempCard);
