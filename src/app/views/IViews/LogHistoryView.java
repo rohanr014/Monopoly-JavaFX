@@ -27,6 +27,7 @@ public class LogHistoryView implements IView {
         myScrollPane.setContent(vbox);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         myScrollPane.setPrefSize(650, 100);
+        myScrollPane.vvalueProperty().bind(vbox.heightProperty());
         myRoot.getChildren().add(myScrollPane);
     }
 
