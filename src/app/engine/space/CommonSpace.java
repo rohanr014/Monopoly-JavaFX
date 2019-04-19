@@ -10,11 +10,28 @@ public class CommonSpace extends Space{
     private double amountMoney;
     private String destinationSpaceName;
 
+    private String imageName;
+
     public CommonSpace(String name, String destinationName, int steps, double money){
         super(name);
         destinationSpaceName = destinationName;
         stepsToMove = steps;
         amountMoney = money;
+    }
+
+    public CommonSpace(String name, String destinationName, String imageName){
+        this(name, destinationName);
+        this.imageName = imageName;
+    }
+
+    public CommonSpace(String name, double money, String imageName){
+        this(name, money);
+        this.imageName = imageName;
+    }
+
+    public CommonSpace(String name, int steps, String imageName){
+        this(name, steps);
+        this.imageName = imageName;
     }
 
 //    space moves player to another space with the name destinationName
@@ -69,4 +86,6 @@ public class CommonSpace extends Space{
     public int getStepsToMove() {
         return stepsToMove;
     }
+    public String getImageName() { return imageName; }
+
 }

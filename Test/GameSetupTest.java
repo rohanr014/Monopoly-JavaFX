@@ -93,7 +93,7 @@ class GameSetupTest {
 
     @Test
     void getPerkCards(){
-        ArrayList<Card> testChest = (ArrayList<Card>)test.getCommunityChest();
+        LinkedList<Card> testChest = (LinkedList<Card>) test.getCommunityChest();
 
         ArrayList<String> chestNames = new ArrayList<String>();
 
@@ -103,7 +103,7 @@ class GameSetupTest {
 
         Collections.sort(chestNames);
 
-        ArrayList<Card> testChance = (ArrayList<Card>) test.getChanceCards();
+        LinkedList<Card> testChance = (LinkedList<Card>) test.getChanceCards();
         ArrayList<String> chanceNames = new ArrayList<String>();
 
         for(Card card:testChance){

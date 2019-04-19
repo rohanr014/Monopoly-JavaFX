@@ -21,7 +21,12 @@ public class ColorProperty extends SetProperty{
         this.myColor = colorString;
     }
 
-    @Override
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost, String colorString, String imageName) {
+        this(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost, colorString);
+        this.imageName = imageName;
+    }
+
+        @Override
     public double calculateRent() {
         if (monopoly) {
             if (hotels == 0) {
