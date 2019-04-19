@@ -15,6 +15,11 @@ public class Railroad extends SetProperty {
         super(name, purchaseCost, mortgageValue, allRents);
     }
 
+    public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents, String imageName) {
+        this(name, purchaseCost, mortgageValue, allRents);
+        this.imageName = imageName;
+    }
+
     @Override
     public double calculateRent() {
         int numSharedProperties = sharedSet.size();

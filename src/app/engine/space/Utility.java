@@ -16,6 +16,12 @@ public class Utility extends SetProperty {
 
     }
 
+    public Utility(String name, double purchaseCost, double mortgageValue, double[] allRentMultipliers, String imageName) {
+        this(name, purchaseCost, mortgageValue, allRentMultipliers);
+        this.imageName = imageName;
+
+    }
+
     @Override
     public double calculateRent() {
         var roll = getBoard().getLastRollSum();
