@@ -165,39 +165,87 @@ public class GameSetup {
         return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
     }
 
+
+
     private Space makeRR(String propFile, boolean isRailroad){
         ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
 
-        String name = currentBundle.getString(NAME_KEY);
+
         double purchaseCost = Double.parseDouble(currentBundle.getString(SALE_PRICE_KEY));
         double mortgageValue = Double.parseDouble(currentBundle.getString(MORTGAGE_KEY));
         String[] rentStrings = currentBundle.getString(RENTS_KEY).split(",");
 
-        if(isRailroad) {
-            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+        String fullName = currentBundle.getString(NAME_KEY);
+        String[] fullNameSplit = fullName.split(",");
+
+        String name = null;
+        String imageName = null;
+
+        if(fullNameSplit.length > 1){
+            name = fullNameSplit[0];
+            imageName = fullNameSplit[1];
+
         }
         else{
-            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            name = fullName;
+        }
+
+        // IS THERE A BETTER WAY TO DO THIS?
+
+        if(imageName == null){
+            if(isRailroad) {
+                return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            }
+            else{
+                return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+            }
+        }
+
+        else{
+            if(isRailroad) {
+                return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
+            }
+            else{
+                return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
+            }
         }
     }
 
     private Space makeMoney(String propFile){
         ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
 
-        String name = moneyBundle.getString(NAME_KEY);
         double moneyGiven = Double.parseDouble(moneyBundle.getString(MONEY_KEY));
 
+        String fullName = moneyBundle.getString(NAME_KEY);
+        String[] fullNameSplit = fullName.split(",");
 
-        return new CommonSpace(name, moneyGiven);
+        if(fullNameSplit.length > 1){
+            String name = fullNameSplit[0];
+            String imageName = fullNameSplit[1];
+            return new CommonSpace(name, moneyGiven, imageName);
+        }
+        else{
+            return new CommonSpace(fullName, moneyGiven);
+        }
     }
 
     private Space makeMoveSpace(String propFile){
         ResourceBundle moveBundle = ResourceBundle.getBundle(propFile);
 
-        String name = moveBundle.getString("name");
         String destinationName = moveBundle.getString("destination");
 
-        return new CommonSpace(name, destinationName);
+        String fullName = moveBundle.getString(NAME_KEY);
+        String[] fullNameSplit = fullName.split(",");
+
+        if(fullNameSplit.length > 1){
+            String name = fullNameSplit[0];
+            String imageName = fullNameSplit[1];
+            return new CommonSpace(name, destinationName, imageName);
+        }
+        else{
+            return new CommonSpace(fullName, destinationName);
+        }
+
     }
 
 

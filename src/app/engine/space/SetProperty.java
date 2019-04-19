@@ -10,6 +10,7 @@ public abstract class SetProperty extends Property {
     protected Set<SetProperty> completeSet;
     protected Set<SetProperty> sharedSet;
     protected double[] possibleRents;
+    protected String imageName;
 
     public SetProperty(String name, double purchaseCost, double mortgageValue) {
         super(name, purchaseCost, mortgageValue);
@@ -22,6 +23,8 @@ public abstract class SetProperty extends Property {
         possibleRents = allRents;
         setRent(allRents[0]);
     }
+
+
 
     public void fillCompleteSet(SetProperty... totalSet) {
         for (SetProperty sp : totalSet){
@@ -74,5 +77,7 @@ public abstract class SetProperty extends Property {
         return sharedSet.size();
     }
 
-
+    public String getImageName() {
+        return imageName;
+    }
 }
