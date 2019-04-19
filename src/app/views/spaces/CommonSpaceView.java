@@ -8,7 +8,6 @@ import javafx.scene.layout.StackPane;
 public class CommonSpaceView extends SpaceView<CommonSpace> {
     private ImageView myCommonImageView;
 
-
     public CommonSpaceView(CommonSpace model) {
         super(model.getName(), model);
     }
