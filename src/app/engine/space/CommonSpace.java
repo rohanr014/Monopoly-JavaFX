@@ -9,6 +9,7 @@ public class CommonSpace extends Space{
     private final int stepsToMove;
     private double amountMoney;
     private String destinationSpaceName;
+
     private String imageName;
 
     public CommonSpace(String name, String destinationName, int steps, double money){
@@ -85,4 +86,6 @@ public class CommonSpace extends Space{
     public int getStepsToMove() {
         return stepsToMove;
     }
+    public String getImageName() { return imageName; }
+
 }
