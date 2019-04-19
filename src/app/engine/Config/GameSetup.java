@@ -10,6 +10,8 @@ import app.engine.board.Board;
 import app.engine.space.*;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class GameSetup {
@@ -96,157 +98,42 @@ public class GameSetup {
     }
 
 
-    private void createSpaces(){
+    private void createSpaces() {
         String spacesFile = myBundle.getString(SPACES_FILE_KEY);
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
-        for(String currentKey: spacesKeys){
+        SpaceMaker currentSpaceMaker = new SpaceMaker(chance, communityChest);
+
+        for (String currentKey : spacesKeys) {
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
 
             Space currentSpace = null;
 
-            if(currentValue[1].equalsIgnoreCase(COLOR_PROP_DESIGNATION)){
-                currentSpace = makeCP(currentValue[2]);
-            }
-            else if(currentValue[1].equalsIgnoreCase(RAILROAD_DESIGNATION)){
-                currentSpace = makeRR(currentValue[2], true);
-            }
-            else if(currentValue[1].equalsIgnoreCase(UTILITY_DESIGNATION)){
-                currentSpace = makeRR(currentValue[2], false);
-            }
-
-            else if(currentValue[1].equalsIgnoreCase(CHANCE_DESIGNATION)){
-                currentSpace = new CardSpace(currentValue[1], chance);
-            }
-            else if(currentValue[1].equalsIgnoreCase(COMMUNITY_CHEST_DESIGNATION)){
-                currentSpace = new CardSpace(currentValue[1], communityChest);
-            }
-            else if(currentValue[1].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
-                currentSpace = makeMoveSpace(currentValue[2]);
-            }
-            else if(currentValue[1].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
-                currentSpace = makeMoney(currentValue[2]);
-            }
-
-            if(currentSpace == null){
-                System.out.println(FoundSpaceWithInvalidType + currentValue[0]);
-            }
-
-            spaces.add(currentSpace);
-        }
-
-    }
-
-    private double[] stringsToDoubles(String[] strings){
-        double[] toReturn = new double[strings.length];
-
-        for(int i=0; i<strings.length; i++){
-            toReturn[i] = Double.parseDouble(strings[i]);
-        }
-
-        return toReturn;
-    }
-
-    private Space makeCP(String propFile){
-        ResourceBundle cpBundle = ResourceBundle.getBundle(propFile);
-
-        String name = cpBundle.getString(NAME_KEY);
-
-        double purchaseCost = Double.parseDouble(cpBundle.getString(SALE_PRICE_KEY));
-        double housePrice = Double.parseDouble(cpBundle.getString(HOUSE_PRICE_KEY));
-        double hotelPrice = Double.parseDouble(cpBundle.getString(HOTEL_PRICE_KEY));
-        double mortgageValue = Double.parseDouble(cpBundle.getString(MORTGAGE_KEY));
-        String colorString = cpBundle.getString(COLOR_KEY);
-
-        String[] rentStrings = cpBundle.getString(RENTS_KEY).split(",");
-        //System.out.println(name);
-
-        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
-    }
+            String funcName = currentValue[1];
 
 
+            Class spaceMakerClass = currentSpaceMaker.getClass();
 
-    private Space makeRR(String propFile, boolean isRailroad){
-        ResourceBundle currentBundle = ResourceBundle.getBundle(propFile);
+            try {
 
+                Method funcToCall = spaceMakerClass.getDeclaredMethod(funcName, String.class);
+                currentSpace = (Space) funcToCall.invoke(currentSpaceMaker, currentValue[2]);
 
-        double purchaseCost = Double.parseDouble(currentBundle.getString(SALE_PRICE_KEY));
-        double mortgageValue = Double.parseDouble(currentBundle.getString(MORTGAGE_KEY));
-        String[] rentStrings = currentBundle.getString(RENTS_KEY).split(",");
+                spaces.add(currentSpace);
 
-        String fullName = currentBundle.getString(NAME_KEY);
-        String[] fullNameSplit = fullName.split(",");
-
-        String name = null;
-        String imageName = null;
-
-        if(fullNameSplit.length > 1){
-            name = fullNameSplit[0];
-            imageName = fullNameSplit[1];
-
-        }
-        else{
-            name = fullName;
-        }
-
-        // IS THERE A BETTER WAY TO DO THIS?
-
-        if(imageName == null){
-            if(isRailroad) {
-                return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
-            }
-            else{
-                return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
-            }
-        }
-
-        else{
-            if(isRailroad) {
-                return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
-            }
-            else{
-                return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
+            } catch (NoSuchMethodException e) {
+                System.out.println("Couldn't find method " + funcName + " for space " + currentValue[0]);
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                System.out.println("Invocation target exception - see funcName in prop file");
+                e.printStackTrace();
             }
         }
     }
 
-    private Space makeMoney(String propFile){
-        ResourceBundle moneyBundle = ResourceBundle.getBundle(propFile);
-
-        double moneyGiven = Double.parseDouble(moneyBundle.getString(MONEY_KEY));
-
-        String fullName = moneyBundle.getString(NAME_KEY);
-        String[] fullNameSplit = fullName.split(",");
-
-        if(fullNameSplit.length > 1){
-            String name = fullNameSplit[0];
-            String imageName = fullNameSplit[1];
-            return new CommonSpace(name, moneyGiven, imageName);
-        }
-        else{
-            return new CommonSpace(fullName, moneyGiven);
-        }
-    }
-
-    private Space makeMoveSpace(String propFile){
-        ResourceBundle moveBundle = ResourceBundle.getBundle(propFile);
-
-        String destinationName = moveBundle.getString("destination");
-
-        String fullName = moveBundle.getString(NAME_KEY);
-        String[] fullNameSplit = fullName.split(",");
-
-        if(fullNameSplit.length > 1){
-            String name = fullNameSplit[0];
-            String imageName = fullNameSplit[1];
-            return new CommonSpace(name, destinationName, imageName);
-        }
-        else{
-            return new CommonSpace(fullName, destinationName);
-        }
-
-    }
 
 
     private void createPlayers () {
