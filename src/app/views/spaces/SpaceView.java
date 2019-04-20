@@ -9,8 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +55,10 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
 
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
-                ImageView gamePiece = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(player.getPieceFile()) , 40, 40, false, false));
+                System.out.println("Piece file is " + player.getPieceFile());
+
+
+                ImageView gamePiece = new ImageView(new Image(player.getPieceFile() , 40, 40, false, false));
                 myPlayerPieces.put(player, gamePiece);
             }
             if (!(playerViews.getChildren().contains(myPlayerPieces.get(player)))) {

@@ -24,7 +24,7 @@ public class GameFileHandler {
                 var output = new BufferedWriter(new FileWriter(file));
 
                 for (int i = 0; i < playerNames.size(); i++) {
-                    String currentPlayerString = "player" + i + "=" + playerNames.get(i) + "," + playerPieces.get(i);
+                    String currentPlayerString = "player" + i + "=" + playerNames.get(i) + "," + directory + "/" + "Pieces/" + playerPieces.get(i);
                     output.write(currentPlayerString + "\n");
                 }
 
