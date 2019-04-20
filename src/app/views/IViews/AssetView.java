@@ -5,9 +5,10 @@ import app.engine.agent.Player;
 import app.engine.board.Board;
 import app.views.IViews.AgentView;
 import app.views.IViews.IView;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class AssetView implements IView {
         myAgentViewList = new ArrayList<>();
         myLogHistoryView = logHistoryView;
         setRoot();
+        rootFormating();
     }
 
     public List<AgentView> getMyAgentViewList(){
@@ -46,6 +48,10 @@ public class AssetView implements IView {
             tempPane.getChildren().add(agentView.getMyRoot());
         }
         myRoot.getChildren().add(tempPane);
+    }
+
+    private void rootFormating(){
+        myRoot.setPadding(new Insets(10));
     }
 
 
