@@ -58,7 +58,7 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
                 System.out.println("Piece file is " + player.getPieceFile());
 
 
-                ImageView gamePiece = new ImageView(new Image(player.getPieceFile() , 40, 40, false, false));
+                ImageView gamePiece = new ImageView(new Image(new File(player.getPieceFile()).toURI().toString() , 40, 40, false, false));
                 myPlayerPieces.put(player, gamePiece);
             }
             if (!(playerViews.getChildren().contains(myPlayerPieces.get(player)))) {
