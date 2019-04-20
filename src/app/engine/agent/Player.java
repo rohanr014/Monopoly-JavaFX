@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Player extends Bank{
     private String pieceFile;
-    private List<Property> properties;
+
     private List<HoldableCard> cards;
     private int currentSpace;
     private String logAction;
@@ -23,7 +23,6 @@ public class Player extends Bank{
     public Player(String playerName, String file, double initBalance){
         super(initBalance, playerName);
         pieceFile = file + ".png";
-        properties = new ArrayList<>();
         cards = new ArrayList<>();
     }
 
@@ -93,10 +92,6 @@ public class Player extends Bank{
 
     public void setCurrentSpace(int newSpace){
         currentSpace = newSpace;
-    }
-
-    public List<Property> getProperties() {
-        return properties;
     }
 
     public List<HoldableCard> getCards() {
@@ -178,5 +173,14 @@ public class Player extends Bank{
 
     public void removeCard(HoldableCard holdableCard) {
         cards.remove(holdableCard);
+    }
+
+    public boolean hasBuildings() {
+        for (Property p: getProperties()){
+            if (p.hasBuildings()){
+                return true;
+            }
+        }
+        return false;
     }
 }

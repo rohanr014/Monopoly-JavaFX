@@ -3,6 +3,8 @@ package app.engine.board;
 import app.engine.agent.Player;
 import app.engine.space.Property;
 
+import java.util.List;
+
 public class ButtonPermissions {
     private final Board board;
 
@@ -69,7 +71,7 @@ public class ButtonPermissions {
     }
 
 
-    public boolean canBuy(Player player, Property prop){
-        return (player.getWallet()>=prop.getPurchaseCost());
+    public boolean canBuy(Player player, List<? extends Property> prop){
+        return (player.getWallet()>=prop.get(0).getPurchaseCost());
     }
 }
