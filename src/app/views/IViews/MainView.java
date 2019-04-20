@@ -2,6 +2,7 @@ package app.views.IViews;
 
 
 import app.engine.board.Board;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +23,7 @@ public class MainView{
     public MainView(Board board){
         myBoard = board;
         myRoot = new BorderPane();
+        myRoot.setPadding(new Insets(5));
         myLogHistoryView = new LogHistoryView(board);
         myVanillaBoardView = new VanillaBoardView(board, myLogHistoryView);
 
