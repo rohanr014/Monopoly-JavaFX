@@ -13,20 +13,26 @@ public class Property extends Space implements Asset {
     private boolean ownedByPlayer;
     private boolean mortgaged;
     private double unmortgageValue;
+    private int houses;
+    private double housePrice;
+    private int hotels;
+    private double hotelPrice;
 
 
     //mostly for utilities
 
-    public Property(String name, double purchaseCost, double mortgageValue) {
+    public Property(String name, double purchaseCost, double mortgageValue, double houseCost, double hotelCost) {
         super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
+        housePrice = houseCost;
+        hotelPrice = hotelCost;
 
     }
 
     //for every other property
-    public Property(String name, double purchaseCost, double mortgageValue, double rent) {
-        this(name, purchaseCost, mortgageValue);
+    public Property(String name, double purchaseCost, double mortgageValue, double rent, double houseCost, double hotelCost) {
+        this(name, purchaseCost, mortgageValue, houseCost, hotelCost);
         this.rent = rent;
     }
 
@@ -95,10 +101,13 @@ public class Property extends Space implements Asset {
     }
 
 
-    protected boolean ownershipSwitchedTo(Agent a){
+    public boolean ownershipSwitchedTo(Agent a){
         if (getBoard().contains(a)){
+            owner.removeProperty(this);
+            a.addProperty(this);
             owner = a;
             return true;
+
         }
         return false;
     }
@@ -165,6 +174,30 @@ public class Property extends Space implements Asset {
 
     public double getPurchaseCost() {
         return purchaseCost;
+    }
+
+    public int getHouses() {
+        return houses;
+    }
+
+    public int getHotels() {
+        return hotels;
+    }
+
+    public void setHouses(int amount) {houses=amount;}
+
+    public void setHotels(int amount) {hotels=amount;}
+
+    public double getHotelCost() {
+        return hotelPrice;
+    }
+
+    public double getHouseCost() {
+        return housePrice;
+    }
+
+    public boolean hasBuildings() {
+        return (getHouses() > 0 || getHotels() >0);
     }
 
 //    @Override

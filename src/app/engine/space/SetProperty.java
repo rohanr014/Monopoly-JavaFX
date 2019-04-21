@@ -12,14 +12,14 @@ public abstract class SetProperty extends Property {
     protected double[] possibleRents;
     protected String imageName;
 
-    public SetProperty(String name, double purchaseCost, double mortgageValue) {
-        super(name, purchaseCost, mortgageValue);
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double houseCost, double hotelCost) {
+        super(name, purchaseCost, mortgageValue, houseCost, hotelCost);
         sharedSet = new HashSet<>();
         completeSet = new HashSet<>();
     }
 
-    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents) {
-        this(name, purchaseCost,  mortgageValue);
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
+        this(name, purchaseCost,  mortgageValue, houseCost, hotelCost);
         possibleRents = allRents;
         setRent(allRents[0]);
     }
@@ -33,7 +33,7 @@ public abstract class SetProperty extends Property {
     }
 
     @Override
-    protected boolean ownershipSwitchedTo(Agent a){
+    public boolean ownershipSwitchedTo(Agent a){
         if (!super.ownershipSwitchedTo(a)){
             return false;
         }
@@ -59,7 +59,6 @@ public abstract class SetProperty extends Property {
     public boolean setRent(double newRent) {
         return super.setRent(newRent);
     }
-
 
     public Collection<SetProperty> getSharedSet() {
         return sharedSet;

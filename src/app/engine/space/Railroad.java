@@ -4,19 +4,17 @@ import app.engine.board.Board;
 
 public class Railroad extends SetProperty {
 
-    public Railroad(String name, double purchaseCost, double mortgageValue) {
-        super(name, purchaseCost, mortgageValue);
-
-
+    public Railroad(String name, double purchaseCost, double mortgageValue, double houseCost, double hotelCost) {
+        super(name, purchaseCost, mortgageValue, houseCost, hotelCost);
     }
 
-    public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents) {
+    public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
 
-        super(name, purchaseCost, mortgageValue, allRents);
+        super(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost);
     }
 
-    public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents, String imageName) {
-        this(name, purchaseCost, mortgageValue, allRents);
+    public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents, String imageName, double houseCost, double hotelCost) {
+        this(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost);
         this.imageName = imageName;
     }
 

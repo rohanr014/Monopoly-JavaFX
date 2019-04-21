@@ -1,8 +1,10 @@
 package app.engine.agent;
 
 import app.engine.board.Board;
+import app.engine.space.Property;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 import java.util.List;
@@ -10,15 +12,15 @@ import java.util.List;
 public abstract class Agent implements IAgentObservable{
     private double wallet;
     private List<IAgentObserver> myObserverList;
-    private int numHousesOwned;
-    private int numHotelsOwned;
     private String myName;
+    private List<Property> properties;
 
 
     public Agent(double initBalance, String name) {
         wallet = initBalance;
         myName = name;
         myObserverList = new ArrayList<>();
+        properties = new ArrayList<>();
     }
 
 
@@ -73,7 +75,20 @@ public abstract class Agent implements IAgentObservable{
         return Double.compare(agent.wallet, wallet) == 0;
     }
 
-    public boolean hasBuildings() {
-        return (numHousesOwned>0||numHotelsOwned>0);
+    public void addAllProperties(Collection<Property> propsToAdd) {
+        properties.addAll(propsToAdd);
     }
+
+    public void addProperty(Property property) {
+        properties.add(property);
+    }
+
+    public void removeProperty(Property property) {
+        properties.remove(property);
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
 }
