@@ -56,8 +56,7 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
-    private Queue<Card> communityChest;
-    private Queue<Card> chance;
+
 
     private Map<String,Queue<Card>> perkCards;
 
@@ -76,18 +75,15 @@ public class GameSetup {
         rules = new RulesInitializer(rulesBundle);
 
 
-
-        communityChest = makePerkCards(COMMUNITY_KEY);
-        chance = makePerkCards(CHANCE_KEY);
         players = new LinkedList<>();
         spaces = new ArrayList<>();
 
+        perkCards = makePerkCards();
         createPlayers();
         createSpaces();
 
         // use communityCards and chanceCards as arguments for makePerkCards
-        communityChest = makePerkCards(COMMUNITY_CHEST_FILE_KEY);
-        chance = makePerkCards(CHANCE_FILE_KEY);
+
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -109,7 +105,7 @@ public class GameSetup {
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
-        SpaceMaker currentSpaceMaker = new SpaceMaker(chance, communityChest);
+        SpaceMaker currentSpaceMaker = new SpaceMaker(perkCards);
 
         for (String currentKey : spacesKeys) {
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
@@ -117,7 +113,6 @@ public class GameSetup {
             Space currentSpace = null;
 
             String funcName = currentValue[1];
-
 
             Class spaceMakerClass = currentSpaceMaker.getClass();
 
@@ -133,7 +128,7 @@ public class GameSetup {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                System.out.println("Invocation target exception - see funcName in prop file");
+                System.out.println("Invocation target exception - see funcName in prop file for key " + currentKey + " with func name " + funcName + "with arg " + currentValue[2]);
                 e.printStackTrace();
             }
         }
@@ -159,7 +154,9 @@ public class GameSetup {
         }
     }
 
-    private void makePerkCards(){
+    private Map<String, Queue<Card>> makePerkCards(){
+        Map<String, Queue<Card>> toBeReturned = new HashMap<>();
+
         ResourceBundle cardsBundle = ResourceBundle.getBundle(myBundle.getString(PERK_KEY));
 
         for(String key:cardsBundle.keySet()){
@@ -197,68 +194,30 @@ public class GameSetup {
                 throw new NullPointerException("Detected invalid card declaration for card at key " + key);
             }
 
-            if(!perkCards.containsKey(pileName)){
-                perkCards.put(pileName, new LinkedList<Card>());
+            if(!toBeReturned.containsKey(pileName)){
+                toBeReturned.put(pileName, new LinkedList<Card>());
             }
 
-            perkCards.get(pileName).add(tempCard);
+            toBeReturned.get(pileName).add(tempCard);
         }
-    }
-
-    private Queue<Card> makePerkCards(String keyName){
-        Queue<Card> toBeReturned = new LinkedList<>();
-
-        ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
-
-        // order not really necessary here, so sticking with enumeration data structure and directly adding
-        // to ArrayList
-
-        for(String key:chestBundle.keySet()){
-
-            Card tempCard;
-
-            String[] valueSplit = chestBundle.getString(key).split(">");
-            String description = valueSplit[0];
-
-            if(valueSplit[1].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
-                String amount = valueSplit[2];
-
-                tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
-                toBeReturned.add(tempCard);
-            }
-
-            else if(valueSplit[1].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
-                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[2]);
-                toBeReturned.add(tempCard);
-            }
-
-            else if(valueSplit[1].equalsIgnoreCase(MOVE_NUMBER_DESIGNATION)){
-                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
-                toBeReturned.add(tempCard);
-            }
-
-            else if(valueSplit[1].equalsIgnoreCase("HOLD")){
-                try {
-                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 2, valueSplit.length));
-                    toBeReturned.add(tempCard);
-
-                } catch (Exception e) {
-                    System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
-                    e.printStackTrace();
-                }
-            }
-        }
-
         return toBeReturned;
     }
 
 
-    public Queue<Card> getCommunityChest() {
-        return communityChest;
+    public Map<String, Queue<Card>> getPerkCards() {
+        return perkCards;
     }
 
+    @Deprecated
+    public Queue<Card> getCommunityChest() {
+        // return communityChest;
+        return null;
+    }
+
+    @Deprecated
     public Queue<Card> getChanceCards() {
-        return chance;
+        // return chance;
+        return null;
     }
 
     public Queue<Player> getPlayers() {

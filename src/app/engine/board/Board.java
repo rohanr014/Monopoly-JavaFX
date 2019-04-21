@@ -9,11 +9,15 @@ import app.engine.agent.Player;
 import app.engine.card.Card;
 import app.engine.dice.IDiceObservable;
 import app.engine.dice.IDiceObserver;
-import app.engine.space.Property;
 import app.engine.space.Space;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.ResourceBundle;
+import java.util.Collections;
+import java.util.Collection;
 
 public class Board implements IBoardObservable, IDiceObservable {
 
@@ -58,9 +62,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         initializeSpaces();
         gameDice = setup.getDice();
         myAgentList.add(bank);
-        playersByTurn.forEach(e->{
-            myAgentList.add(e);
-        });
+        myAgentList.addAll(playersByTurn);
         spaces.get(0).getCurrentOccupants().addAll(players);
         buttonPermissions = new ButtonPermissions(this);
         //System.out.println(players.poll().getName());
@@ -72,7 +74,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         }
     }
 
-    public List<Agent> getMyAgentList() {return myAgentList;}
+
 
     public Player startTurn() {
         currentPlayer = players.poll();
@@ -334,7 +336,6 @@ public class Board implements IBoardObservable, IDiceObservable {
         return spaces;
     }
 
-
     public Collection<Card> getChanceCards() {
         return chanceCards;
     }
@@ -370,4 +371,6 @@ public class Board implements IBoardObservable, IDiceObservable {
     public ButtonPermissions getButtonPermissions() {
         return buttonPermissions;
     }
+
+    public List<Agent> getMyAgentList() {return myAgentList;}
 }

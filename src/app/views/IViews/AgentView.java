@@ -8,6 +8,8 @@ import app.engine.board.Board;
 import app.views.popups.PlayerDetailsView;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -49,25 +51,36 @@ public class AgentView implements IAgentObserver, IView {
         initializeBank();
     }
 
+
     private void setPlayerRoot(){
         vbox = new VBox();
+        vbox.setSpacing(1);
+
         hbox1 = new HBox();
-        hbox2 = new HBox();
+        hbox1.setSpacing(10);
+
         nameText = new Text(myPlayer.getName());
         hbox1.getChildren().add(nameText);
-        //add "piece: "+piece image
-        cashText = new Text("$" + Integer.toString((int) myCash) );
-        hbox2.getChildren().add(cashText);
+
         Button info = new Button();
+        info.setText("Click here to view your assets.");
         info.setOnAction(e-> new PlayerDetailsView(myPlayer));
         hbox1.getChildren().add(info);
-        hotelText = new Text("Number of Hotels : " + Integer.toString(myHotelNum));
-        houseText = new Text("Number of Houses : " + Integer.toString(myHouseNum));
+
+        hbox2 = new HBox();
+        hbox2.setSpacing(10);
+        cashText = new Text("$" + myCash );
+        hbox2.getChildren().add(cashText);
+
+        hotelText = new Text("Number of Hotels: " + Integer.toString(myHotelNum));
+        houseText = new Text("Number of Houses: " + Integer.toString(myHouseNum));
         hbox2.getChildren().add(hotelText);
         hbox2.getChildren().add(houseText);
+
         vbox.getChildren().add(hbox1);
         vbox.getChildren().add(hbox2);
-        vbox.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        vbox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
         myRoot.getChildren().add(vbox);
 
     }
@@ -116,7 +129,7 @@ public class AgentView implements IAgentObserver, IView {
             return;
         }
 
-        hbox2.getChildren().removeAll(cashText,hotelText,houseText);
+        hbox2.getChildren().removeAll(cashText, hotelText, houseText);
         cashText = new Text("$" + Integer.toString((int) myCash) );
         hbox2.getChildren().add(cashText);
         hotelText = new Text("Number of Hotels : " + Integer.toString(myHotelNum));

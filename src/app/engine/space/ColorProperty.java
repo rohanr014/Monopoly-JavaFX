@@ -3,38 +3,32 @@ package app.engine.space;
 //subclass for Color Properties
 public class ColorProperty extends SetProperty{
     private boolean monopoly;
-    private int houses;
-    private double housePrice;
-    private int hotels;
-    private double hotelPrice;
     private double[] developmentRents;
     private String name;
     private String myColor;
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost,String colorString) {
-        super(name, purchaseCost, mortgageValue, allRents);
-        housePrice = houseCost;
-        hotelPrice = hotelCost;
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost,String colorString) {
+        super(name, purchaseCost, mortgageValue, allRents, buildCost);
         developmentRents = allRents;
         //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
         this.name = name;
         this.myColor = colorString;
     }
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost, String colorString, String imageName) {
-        this(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost, colorString);
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost, String colorString, String imageName) {
+        this(name, purchaseCost, mortgageValue, allRents, buildCost, colorString);
         this.imageName = imageName;
     }
 
         @Override
     public double calculateRent() {
         if (monopoly) {
-            if (hotels == 0) {
-                if (houses == 0) {
+            if (getHotels() == 0) {
+                if (getHouses() == 0) {
                     setRent(getRent() * 2);
                 }
                 else {
-                    setRent(developmentRents[houses]);
+                    setRent(developmentRents[getHouses()]);
                 }
             }
             else {
@@ -46,7 +40,7 @@ public class ColorProperty extends SetProperty{
 
     @Override
     public boolean mortgage() {
-        if (hotels == 0 && houses == 0 ){
+        if (getHotels() == 0 && getHouses() == 0 ){
             return super.mortgage();
         } else {
 //            throw sell houses
@@ -54,12 +48,10 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
-    public double getHotelCost() {
-        return hotelPrice;
-    }
+
 
     public boolean buildHouse() {
-        if (houses == 4 || (!(monopoly))) {
+        if (getHouses() == 4 || (!(monopoly))) {
             return false;
         }
         int minHouses = 0;
@@ -75,8 +67,8 @@ public class ColorProperty extends SetProperty{
             }
         }
         if (this.getHouses() != minHouses) {return false;}
-        if (getOwner().giveMoney(getBoard().getBank(), housePrice)) {
-            houses++;
+        if (getOwner().giveMoney(getBoard().getBank(), getHouseCost())) {
+            setHouses(getHouses()+1);
             calculateRent();
             return true;
         }
@@ -95,8 +87,8 @@ public class ColorProperty extends SetProperty{
                 }
             }
         }
-        if (getOwner().giveMoney(getBoard().getBank(), hotelPrice)) {
-            hotels++;
+        if (getOwner().giveMoney(getBoard().getBank(), getHotelCost())) {
+            setHotels(getHotels()+1);
             calculateRent();
             return true;
         }
@@ -107,8 +99,8 @@ public class ColorProperty extends SetProperty{
         if (getHouses() == 0) {
             return false;
         }
-        else if (getBoard().getBank().giveMoney(getOwner(), housePrice)) {
-            houses--;
+        else if (getBoard().getBank().giveMoney(getOwner(), getHouseCost())) {
+            setHouses(getHouses()-1);
             calculateRent();
             return true;
         }
@@ -119,21 +111,15 @@ public class ColorProperty extends SetProperty{
         if (getHotels() == 0) {
             return false;
         }
-        else if (getBoard().getBank().giveMoney(getOwner(), hotelPrice)) {
-            hotels--;
+        else if (getBoard().getBank().giveMoney(getOwner(), getHotelCost())) {
+            setHotels(getHotels()-1);
             calculateRent();
             return true;
         }
         return false;
     }
 
-    public int getHouses() {
-        return houses;
-    }
 
-    public int getHotels() {
-        return hotels;
-    }
 
     public String getMyColor() {
         return myColor;

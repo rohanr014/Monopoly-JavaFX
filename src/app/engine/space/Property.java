@@ -13,20 +13,30 @@ public class Property extends Space implements Asset {
     private boolean ownedByPlayer;
     private boolean mortgaged;
     private double unmortgageValue;
+    private int houses;
+    private int hotels;
+    private double buildCost;
 
-
-    //mostly for utilities
 
     public Property(String name, double purchaseCost, double mortgageValue) {
         super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
+    }
 
+
+    //mostly for utilities
+
+    public Property(String name, double purchaseCost, double mortgageValue, double buildCost) {
+        super(name);
+        this.purchaseCost = purchaseCost;
+        this.mortgageValue = mortgageValue;
+        this.buildCost = buildCost;
     }
 
     //for every other property
-    public Property(String name, double purchaseCost, double mortgageValue, double rent) {
-        this(name, purchaseCost, mortgageValue);
+    public Property(String name, double purchaseCost, double mortgageValue, double rent, double buildCost) {
+        this(name, purchaseCost, mortgageValue, buildCost);
         this.rent = rent;
     }
 
@@ -95,10 +105,13 @@ public class Property extends Space implements Asset {
     }
 
 
-    protected boolean ownershipSwitchedTo(Agent a){
+    public boolean ownershipSwitchedTo(Agent a){
         if (getBoard().contains(a)){
+            owner.removeProperty(this);
+            a.addProperty(this);
             owner = a;
             return true;
+
         }
         return false;
     }
@@ -165,6 +178,36 @@ public class Property extends Space implements Asset {
 
     public double getPurchaseCost() {
         return purchaseCost;
+    }
+
+    public int getHouses() {
+        return houses;
+    }
+
+    public int getHotels() {
+        return hotels;
+    }
+
+    public void setHouses(int amount) {houses=amount;}
+
+    public void setHotels(int amount) {hotels=amount;}
+
+    public double getBuildCost() {
+        return buildCost;
+    }
+
+    @Deprecated
+    public double getHotelCost() {
+        return buildCost;
+    }
+
+    @Deprecated
+    public double getHouseCost() {
+        return buildCost;
+    }
+
+    public boolean hasBuildings() {
+        return (getHouses() > 0 || getHotels() >0);
     }
 
 //    @Override
