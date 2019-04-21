@@ -46,7 +46,7 @@ public class GameSettingView extends PopUpView {
 
     private void setGameTypes() {
         myGameOptions = new ComboBox();
-        myGameOptions.getItems().addAll("vanilla");
+        myGameOptions.getItems().addAll("vanilla", "dukeopoly");
         myGameOptions.setPromptText("Choose a game mode");
         myRoot.getChildren().add(myGameOptions);
 
@@ -60,7 +60,7 @@ public class GameSettingView extends PopUpView {
     }
 
     private void handleSubmit(){
-        myMainController.setGameName(myGameOptions.getItems().get(0));
+        myMainController.setGameName(myGameOptions.getValue());
 
         new PlayerView(myMainController);
         super.getMyStage().close();
