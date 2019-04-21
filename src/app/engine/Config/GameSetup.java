@@ -21,6 +21,8 @@ public class GameSetup {
     private static final String COMMUNITY_KEY = "communityCards";
     private static final String CHANCE_KEY = "chanceCards";
 
+    private static final String PERK_KEY = "perkCards";
+
     private static final String COMMUNITY_CHEST_FILE_KEY = "communityCards";
     private static final String CHANCE_FILE_KEY = "chanceCards";
 
@@ -57,6 +59,8 @@ public class GameSetup {
     private Queue<Card> communityChest;
     private Queue<Card> chance;
 
+    private Map<String,Queue<Card>> perkCards;
+
     private Board myBoard;
     private RulesInitializer rules;
 
@@ -70,6 +74,8 @@ public class GameSetup {
         rulesBundle = ResourceBundle.getBundle(highBundle.getString(RULES_KEY));
         myBoard = b;
         rules = new RulesInitializer(rulesBundle);
+
+
 
         communityChest = makePerkCards(COMMUNITY_KEY);
         chance = makePerkCards(CHANCE_KEY);
@@ -116,7 +122,6 @@ public class GameSetup {
             Class spaceMakerClass = currentSpaceMaker.getClass();
 
             try {
-
                 Method funcToCall = spaceMakerClass.getDeclaredMethod(funcName, String.class);
                 currentSpace = (Space) funcToCall.invoke(currentSpaceMaker, currentValue[2]);
 
@@ -151,6 +156,52 @@ public class GameSetup {
                 players.add(currentPlayer);
 
             }
+        }
+    }
+
+    private void makePerkCards(){
+        ResourceBundle cardsBundle = ResourceBundle.getBundle(myBundle.getString(PERK_KEY));
+
+        for(String key:cardsBundle.keySet()){
+            String[] valueSplit = cardsBundle.getString(key).split(">");
+
+            String description = valueSplit[0];
+            String pileName = valueSplit[1];
+
+            Card tempCard = null;
+
+            if(valueSplit[2].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
+                String amount = valueSplit[3];
+                tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
+            }
+
+            else if(valueSplit[2].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
+                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[3]);
+            }
+
+            else if(valueSplit[2].equalsIgnoreCase(MOVE_NUMBER_DESIGNATION)){
+                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[3]));
+            }
+
+            else if(valueSplit[2].equalsIgnoreCase("HOLD")){
+                try {
+                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 3, valueSplit.length));
+
+                } catch (Exception e) {
+                    System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
+                    e.printStackTrace();
+                }
+            }
+
+            if(tempCard == null){
+                throw new NullPointerException("Detected invalid card declaration for card at key " + key);
+            }
+
+            if(!perkCards.containsKey(pileName)){
+                perkCards.put(pileName, new LinkedList<Card>());
+            }
+
+            perkCards.get(pileName).add(tempCard);
         }
     }
 
