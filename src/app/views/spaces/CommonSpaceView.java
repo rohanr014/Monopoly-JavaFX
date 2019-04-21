@@ -18,6 +18,8 @@ public class CommonSpaceView extends SpaceView<CommonSpace> {
         myRoot = new StackPane();
         String name = this.getMyName();
 
+        System.out.println("Image name in common space is " + myModel.getImageName());
+
         myCommonImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myModel.getImageName())));
 
         //horrible coding right here, please refactor

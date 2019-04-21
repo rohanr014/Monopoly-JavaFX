@@ -4,6 +4,8 @@ import app.engine.card.Card;
 import app.engine.space.*;
 import org.w3c.dom.ls.LSResourceResolver;
 
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
@@ -18,12 +20,10 @@ public class SpaceMaker {
     private static final String RENTS_KEY = "rents";
     private static final String MONEY_KEY = "money";
 
-    private  Queue<Card> chance;
-    private Queue<Card> communityChest;
+    private  Map<String, Queue<Card>> perkCards;
 
-    public SpaceMaker(Queue<Card> chance, Queue<Card> communityChest) {
-        this.chance = chance;
-        this.communityChest = communityChest;
+    public SpaceMaker(Map<String, Queue<Card>> perkCards) {
+        this.perkCards = perkCards;
 
     }
 
@@ -52,7 +52,7 @@ public class SpaceMaker {
         String[] rentStrings = cpBundle.getString(RENTS_KEY).split(",");
         //System.out.println(name);
 
-        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, hotelPrice, colorString);
+        return new ColorProperty(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), housePrice, colorString);
     }
 
 
@@ -79,16 +79,15 @@ public class SpaceMaker {
         else{
             name = fullName;
         }
-        // IS THERE A BETTER WAY TO DO THIS?
 
-        if(imageName == null){
-            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
+        if(currentBundle.containsKey("housePrice")){
+            double buildPrice = Double.parseDouble(currentBundle.getString("housePrice"));
+            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName, buildPrice);
         }
 
-        else{
-            return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
+        return new Railroad(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
 
-        }
+
     }
 
     // DEAL WITH THIS REPEATED CODE ONCE REFLECTION IS WORKING
@@ -115,17 +114,7 @@ public class SpaceMaker {
             name = fullName;
         }
 
-
-        // IS THERE A BETTER WAY TO DO THIS?
-
-        if(imageName == null){
-            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings));
-        }
-
-        else{
-            return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
-
-        }
+        return new Utility(name, purchaseCost, mortgageValue, stringsToDoubles(rentStrings), imageName);
     }
 
     public Space makeMoney(String propFile){
@@ -169,19 +158,18 @@ public class SpaceMaker {
     public Space makeCardSpace(String propFile){
         ResourceBundle myBundle = ResourceBundle.getBundle(propFile);
 
-        String spaceName = myBundle.getString(NAME_KEY);
         String pileName = myBundle.getString("pile");
+        Queue<Card> associatedPile = perkCards.get(pileName);
 
-        if(pileName.equalsIgnoreCase("chance")){
-            return new CardSpace(spaceName, chance);
-        }
+        String spaceName = myBundle.getString(NAME_KEY);
+        String[] nameSplit = spaceName.split(",");
 
-        else if(pileName.equalsIgnoreCase("communityChest")){
-            return new CardSpace(spaceName, communityChest);
+        if(nameSplit.length > 1){
+            return new CardSpace(nameSplit[0], associatedPile, nameSplit[1]);
         }
 
         else{
-            return null;
+            return new CardSpace(spaceName, associatedPile);
         }
     }
 

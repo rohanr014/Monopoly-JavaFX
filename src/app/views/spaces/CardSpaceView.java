@@ -19,7 +19,7 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     private Rectangle myContainer;
 
     public CardSpaceView(CardSpace model){
-        super(model.getName(),model);
+        super(model.getName(), model);
         myPlayerViews = new ArrayList<>();
         //myPlayerViews.addAll(gamePieceViews);
     }
@@ -30,7 +30,9 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     public void initialize() {
         myRoot = new StackPane();
 
-        tempCard = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Vanilla/Space-Photos/community-chest-space.jpg")));
+        System.out.println("image name is " + myModel.getImageName());
+
+        tempCard = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myModel.getImageName())));
         tempCard.setFitWidth(40);
         tempCard.setFitHeight(40);//need to not hard code this
         myRoot.getChildren().add(tempCard);
