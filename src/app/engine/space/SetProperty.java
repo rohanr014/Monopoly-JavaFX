@@ -25,7 +25,6 @@ public abstract class SetProperty extends Property {
     }
 
 
-
     public void fillCompleteSet(SetProperty... totalSet) {
         for (SetProperty sp : totalSet){
             completeSet.add(sp);

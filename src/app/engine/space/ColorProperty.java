@@ -20,7 +20,7 @@ public class ColorProperty extends SetProperty{
         this.imageName = imageName;
     }
 
-        @Override
+    @Override
     public double calculateRent() {
         if (monopoly) {
             if (getHotels() == 0) {
@@ -55,16 +55,15 @@ public class ColorProperty extends SetProperty{
             return false;
         }
         int minHouses = 0;
-        for (SetProperty sp : sharedSet) {
-            if (sp instanceof ColorProperty) {
-                ColorProperty cp = (ColorProperty) sp;
+        for (SetProperty cp : sharedSet) {
+            //if (sp instanceof ColorProperty) {
+                //ColorProperty cp = (ColorProperty) sp;
                 if (cp.getHouses() > this.getHouses() + 1 || cp.getHouses() < this.getHouses() - 1) {
                     return false;
                 }
                 if (cp.getHouses() < minHouses) {
                     minHouses = cp.getHouses();
                 }
-            }
         }
         if (this.getHouses() != minHouses) {return false;}
         if (getOwner().giveMoney(getBoard().getBank(), getHouseCost())) {
@@ -79,14 +78,13 @@ public class ColorProperty extends SetProperty{
         if (this.getHouses() != 4) {
             return false;
         }
-        for (SetProperty sp : sharedSet) {
-            if (sp instanceof ColorProperty) {
-                ColorProperty cp = (ColorProperty) sp;
+        for (SetProperty cp : sharedSet) {
+            //if (sp instanceof ColorProperty) {
+                //ColorProperty cp = (ColorProperty) sp;
                 if (cp.getHouses() < this.getHouses() && cp.getHotels() == 0) {
                     return false;
                 }
             }
-        }
         if (getOwner().giveMoney(getBoard().getBank(), getHotelCost())) {
             setHotels(getHotels()+1);
             calculateRent();
