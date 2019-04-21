@@ -21,6 +21,8 @@ public class GameSetup {
     private static final String COMMUNITY_KEY = "communityCards";
     private static final String CHANCE_KEY = "chanceCards";
 
+    private static final String PERK_KEY = "perkCards";
+
     private static final String COMMUNITY_CHEST_FILE_KEY = "communityCards";
     private static final String CHANCE_FILE_KEY = "chanceCards";
 
@@ -54,8 +56,9 @@ public class GameSetup {
 
     private Queue<Player> players;
     private List<Space> spaces;
-    private Queue<Card> communityChest;
-    private Queue<Card> chance;
+
+
+    private Map<String,Queue<Card>> perkCards;
 
     private Board myBoard;
     private RulesInitializer rules;
@@ -71,17 +74,16 @@ public class GameSetup {
         myBoard = b;
         rules = new RulesInitializer(rulesBundle);
 
-        communityChest = makePerkCards(COMMUNITY_KEY);
-        chance = makePerkCards(CHANCE_KEY);
+
         players = new LinkedList<>();
         spaces = new ArrayList<>();
 
+        perkCards = makePerkCards();
         createPlayers();
         createSpaces();
 
         // use communityCards and chanceCards as arguments for makePerkCards
-        communityChest = makePerkCards(COMMUNITY_CHEST_FILE_KEY);
-        chance = makePerkCards(CHANCE_FILE_KEY);
+
     }
 
     private String[] getSpaceKeys(ResourceBundle spacesBundle){
@@ -103,7 +105,7 @@ public class GameSetup {
         ResourceBundle spacesBundle = ResourceBundle.getBundle(spacesFile);
         String[] spacesKeys = getSpaceKeys(spacesBundle);
 
-        SpaceMaker currentSpaceMaker = new SpaceMaker(chance, communityChest);
+        SpaceMaker currentSpaceMaker = new SpaceMaker(perkCards);
 
         for (String currentKey : spacesKeys) {
             String[] currentValue = spacesBundle.getString(currentKey).split(",");
@@ -112,11 +114,9 @@ public class GameSetup {
 
             String funcName = currentValue[1];
 
-
             Class spaceMakerClass = currentSpaceMaker.getClass();
 
             try {
-
                 Method funcToCall = spaceMakerClass.getDeclaredMethod(funcName, String.class);
                 currentSpace = (Space) funcToCall.invoke(currentSpaceMaker, currentValue[2]);
 
@@ -128,7 +128,7 @@ public class GameSetup {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                System.out.println("Invocation target exception - see funcName in prop file");
+                System.out.println("Invocation target exception - see funcName in prop file for key " + currentKey + " with func name " + funcName + "with arg " + currentValue[2]);
                 e.printStackTrace();
             }
         }
@@ -154,60 +154,70 @@ public class GameSetup {
         }
     }
 
-    private Queue<Card> makePerkCards(String keyName){
-        Queue<Card> toBeReturned = new LinkedList<>();
+    private Map<String, Queue<Card>> makePerkCards(){
+        Map<String, Queue<Card>> toBeReturned = new HashMap<>();
 
-        ResourceBundle chestBundle = ResourceBundle.getBundle(myBundle.getString(keyName));
+        ResourceBundle cardsBundle = ResourceBundle.getBundle(myBundle.getString(PERK_KEY));
 
-        // order not really necessary here, so sticking with enumeration data structure and directly adding
-        // to ArrayList
+        for(String key:cardsBundle.keySet()){
+            String[] valueSplit = cardsBundle.getString(key).split(">");
 
-        for(String key:chestBundle.keySet()){
-
-            Card tempCard;
-
-            String[] valueSplit = chestBundle.getString(key).split(">");
             String description = valueSplit[0];
+            String pileName = valueSplit[1];
 
-            if(valueSplit[1].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
-                String amount = valueSplit[2];
+            Card tempCard = null;
 
+            if(valueSplit[2].equalsIgnoreCase(MONEY_SPACE_DESIGNATION)){
+                String amount = valueSplit[3];
                 tempCard = new MoneyCard(description, myBoard, Double.parseDouble(amount));
-                toBeReturned.add(tempCard);
             }
 
-            else if(valueSplit[1].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
-                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[2]);
-                toBeReturned.add(tempCard);
+            else if(valueSplit[2].equalsIgnoreCase(MOVE_SPACE_DESIGNATION)){
+                tempCard = new MoveSpaceCard(description, myBoard, valueSplit[3]);
             }
 
-            else if(valueSplit[1].equalsIgnoreCase(MOVE_NUMBER_DESIGNATION)){
-                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[2]));
-                toBeReturned.add(tempCard);
+            else if(valueSplit[2].equalsIgnoreCase(MOVE_NUMBER_DESIGNATION)){
+                tempCard = new MoveNumberCard(description, myBoard, Integer.parseInt(valueSplit[3]));
             }
 
-            else if(valueSplit[1].equalsIgnoreCase("HOLD")){
+            else if(valueSplit[2].equalsIgnoreCase("HOLD")){
                 try {
-                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 2, valueSplit.length));
-                    toBeReturned.add(tempCard);
+                    tempCard = new HoldableCard(description, myBoard, Arrays.copyOfRange(valueSplit, 3, valueSplit.length));
 
                 } catch (Exception e) {
                     System.out.println("Unable to add card with description " + description + ". Check declaration in properties file");
                     e.printStackTrace();
                 }
             }
-        }
 
+            if(tempCard == null){
+                throw new NullPointerException("Detected invalid card declaration for card at key " + key);
+            }
+
+            if(!toBeReturned.containsKey(pileName)){
+                toBeReturned.put(pileName, new LinkedList<Card>());
+            }
+
+            toBeReturned.get(pileName).add(tempCard);
+        }
         return toBeReturned;
     }
 
 
-    public Queue<Card> getCommunityChest() {
-        return communityChest;
+    public Map<String, Queue<Card>> getPerkCards() {
+        return perkCards;
     }
 
+    @Deprecated
+    public Queue<Card> getCommunityChest() {
+        // return communityChest;
+        return null;
+    }
+
+    @Deprecated
     public Queue<Card> getChanceCards() {
-        return chance;
+        // return chance;
+        return null;
     }
 
     public Queue<Player> getPlayers() {
