@@ -46,9 +46,11 @@ public class MainController {
     }
 
     private void setGame(){
+        String directory = myGameMode.substring(0,1).toUpperCase() + myGameMode.substring(1);
+        String rules = myGameMode + "Rules";
         ResourceBundle bundle =
                 GameFileHandler.createPropertiesFile(
-                        "Vanilla","Game1", myPlayerNames, myPlayerPieces, myGameMode,"vanillaRules");
+                        directory,"Game1", myPlayerNames, myPlayerPieces, myGameMode, rules);
         myBoard = new Board(bundle);
         myMainView = new MainView(myBoard);
         myGameController = new GameController(myBoard, myMainView);
