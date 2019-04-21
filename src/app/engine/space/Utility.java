@@ -31,4 +31,6 @@ public class Utility extends SetProperty {
         return newRent;
     }
 
+    public String getImageName(){return this.imageName;}
+
 }
