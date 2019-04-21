@@ -6,8 +6,6 @@ public class Railroad extends SetProperty {
 
     public Railroad(String name, double purchaseCost, double mortgageValue) {
         super(name, purchaseCost, mortgageValue);
-
-
     }
 
     public Railroad(String name, double purchaseCost, double mortgageValue, double[] allRents) {
