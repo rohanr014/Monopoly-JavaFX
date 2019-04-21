@@ -19,7 +19,7 @@ public class CardSpaceView extends SpaceView<CardSpace> {
     private Rectangle myContainer;
 
     public CardSpaceView(CardSpace model){
-        super(model.getName(),model);
+        super(model.getName(), model);
         myPlayerViews = new ArrayList<>();
         //myPlayerViews.addAll(gamePieceViews);
     }
