@@ -122,6 +122,7 @@ public class Player extends Bank{
 
 
     public void goToJail() {
+        notifyAgentObservers(getName() + " is now in Jail.");
         setIsInJail(true);
     }
 

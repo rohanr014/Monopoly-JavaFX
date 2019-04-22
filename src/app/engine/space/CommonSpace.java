@@ -60,7 +60,12 @@ public class CommonSpace extends Space{
             getBoard().move(player, stepsToMove);
         }
         if (amountMoney!=0){
-            getBoard().getBank().giveMoney(player, amountMoney);
+            if (amountMoney < 0) {
+                player.giveMoney(getBoard().getBank(), amountMoney * (-1));
+            }
+            else {
+                getBoard().getBank().giveMoney(player, amountMoney);
+            }
         }
     }
 

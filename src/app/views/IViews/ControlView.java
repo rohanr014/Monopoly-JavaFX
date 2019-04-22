@@ -26,6 +26,7 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private Board myBoard;
     private Text myDiceText;
     private int diceValue;
+    private int[] diceValues;
 
 
     private Button mySellButton;
@@ -91,7 +92,9 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     private void rollDice(){
 
         myBoard.rollDice(myBoard.getCurrentPlayer());
-        myRollDiceButton.setDisable(true);
+        if (!(myBoard.isDoubles(myBoard.getLastRollArray()))) {
+            myRollDiceButton.setDisable(true);
+        }
         myEndTurnButton.setDisable(false);
 
 
@@ -106,14 +109,12 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
     }
 
     @Override
-    public void diceUpdate(int[] dice_value) {
+    public void diceUpdate(int[] roll) {
         myDiceDisplay.getChildren().remove(myDiceText);
-        int i = 0;
-        for(int num : dice_value){
-            i = i + num;
+        diceValues = new int[roll.length];
+        for (int i = 0; i < roll.length; i++) {
+            diceValues[i] = roll[i];
         }
-
-        diceValue = i;
         resetDiceValue();
         //myBoard.move(myBoard.getCurrentPlayer(),diceValue);//need to check if its best to do it this way
 
@@ -121,7 +122,14 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     private void resetDiceValue(){
         myDiceText = null;
-        myDiceText = new Text(Integer.toString(diceValue));
+        String diceValuesView = "";
+        for (int i = 0; i < diceValues.length; i++) {
+            diceValuesView += diceValues[i];
+            if (i != diceValues.length - 1) {
+                diceValuesView += ", ";
+            }
+        }
+        myDiceText = new Text(diceValuesView);
         myDiceText.setFont(new Font(20));
         myDiceDisplay.getChildren().add(myDiceText);
 

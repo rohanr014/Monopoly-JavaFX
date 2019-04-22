@@ -143,6 +143,7 @@ public class Board implements IBoardObservable, IDiceObservable {
             handleJailRolls(player);
         } else {
             if (isDoubles(lastRoll)){
+                notifyBoardObservers(player.getName() + " has rolled doubles.");
                 doublesCounter++;
                 checkIfDoublesSendsToJail(player);
             }
@@ -192,7 +193,8 @@ public class Board implements IBoardObservable, IDiceObservable {
     }
 
     private void checkIfDoublesSendsToJail(Player player) {
-        if (doublesCounter==rules.getNumDoublesTilGoToJail()){
+        if (doublesCounter == rules.getNumDoublesTilGoToJail()){
+            notifyBoardObservers(player.getName() + " has rolled " + rules.getNumDoublesTilGoToJail() + " doubles in a row!");
             player.goToJail();
         }
     }
@@ -262,8 +264,8 @@ public class Board implements IBoardObservable, IDiceObservable {
         for (int x: lastRoll){
             sum += x;
         }
-        return 7;
-        //return sum;
+        //return 4;
+        return sum;
     }
 
 
