@@ -143,7 +143,7 @@ public class Board implements IBoardObservable, IDiceObservable {
                 checkIfDoublesSendsToJail(player);
             }
 //            if (!(firstTurnTest)) {
-                move(player, getLastRollSum());
+            move(player, getLastRollSum());
 //            if (firstTurnTest) {
 //                move(player, 7);
 //                firstTurnTest = false;
@@ -252,125 +252,14 @@ public class Board implements IBoardObservable, IDiceObservable {
         return spaces.indexOf(space);
     }
 
-//    /seems like maybe should be in a dice class? Maybe a static dice helper class?
+    //    /seems like maybe should be in a dice class? Maybe a static dice helper class?
     public int getLastRollSum() {
         int sum = 0;
         for (int x: lastRoll){
             sum += x;
         }
-
+        //return sum;
         return sum;
-    }
-
-    /////////////////////
-    ///BELOW: METHODS THAT PULL FROM PROPERTIES FILE
-    /////////////////////
-
-    private int getNumDoublesTilGoToJail() {
-        String val = myBundle.getString("DoublesForJail");
-        return Integer.parseInt(val);
-    }
-
-    private double getGoMoney() {
-        String val = myBundle.getString("GoMoney");
-        return Double.parseDouble(val);
-    }
-
-    private double getSellToBankMultiplier() {
-        String val = myBundle.getString("SaleToBankMultiplier");
-        return Double.parseDouble(val);
-    }
-
-    private int getGoIndex() {
-//        gets Index of go in spaces from properties file (default is 0)
-        return 0;
-    }
-
-    private int getJailIndex() {
-        return 10;
-    }
-
-    public double getUnmortgageMultiplier() {
-        String val = myBundle.getString("UnmortgageMultiplier");
-        return Double.parseDouble(val);
-    }
-
-    private double getJailFee() {
-        String val = myBundle.getString("GetOutOfJailFee");
-        return Double.parseDouble(val);
-    }
-
-    private int getMaxTurnsInJail() {
-        String val = myBundle.getString("MaxTurnsInJail");
-        return Integer.parseInt(val);
-    }
-
-    public double getHoldableCardSellValue() {
-        String val = myBundle.getString("HoadableCardSaleValue");
-        return Double.parseDouble(val);
-    }
-
-    /////////////////////
-    ///BELOW: CanDoXXX() METHODS, for Controller in determining whether certain buttons are pressable
-    /////////////////////
-
-    public boolean canPayJailFee(Player player){
-        return canPay(player, getJailFee());
-    }
-
-    public boolean canPay(Player player, double amount){
-        return (player.getWallet()>=amount);
-    }
-
-
-//    if player has rolled and the roll wasn't doubles
-    public boolean canEndTurn(Player player){
-        if (lastRoll ==null){
-            return false;
-        }
-        return !(isDoubles(lastRoll) && doublesCounter < getNumDoublesTilGoToJail());
-    }
-
-    //    This could be a Player method, but some of the other CanDoXX() methods can't be in player so for now I'm keeping them together
-    public boolean canSell(Player player){
-        return (!player.getProperties().isEmpty() || !player.getCards().isEmpty() || player.hasBuildings());
-    }
-
-    public boolean canMortgage(Player player){
-        if (player.getProperties().isEmpty()){
-            return false;
-        }
-        for (Property prop: player.getProperties()){
-            if (!prop.isMortgaged()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean canUnmortgage(Player player){
-        if (player.getProperties().isEmpty()){
-            return false;
-        }
-        for (Property prop: player.getProperties()){
-            if (prop.isMortgaged() && player.getWallet()>=prop.getUnmortgageValue()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean canRoll(Player player){
-        if (lastRoll == null){
-            return true;
-        }
-//        MAGIC VALUE
-        return (doublesCounter > 0 && doublesCounter < 3 && isDoubles(lastRoll));
-    }
-
-
-    public boolean canBuy(Player player, Property prop){
-        return (player.getWallet()>=prop.getPurchaseCost());
     }
 
 
