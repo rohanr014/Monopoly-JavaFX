@@ -7,16 +7,16 @@ public class ColorProperty extends SetProperty{
     private String name;
     private String myColor;
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost,String colorString) {
-        super(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost);
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost,String colorString) {
+        super(name, purchaseCost, mortgageValue, allRents, buildCost);
         developmentRents = allRents;
         //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
         this.name = name;
         this.myColor = colorString;
     }
 
-    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost, String colorString, String imageName) {
-        this(name, purchaseCost, mortgageValue, allRents, houseCost, hotelCost, colorString);
+    public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost, String colorString, String imageName) {
+        this(name, purchaseCost, mortgageValue, allRents, buildCost, colorString);
         this.imageName = imageName;
     }
 

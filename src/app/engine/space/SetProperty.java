@@ -12,14 +12,30 @@ public abstract class SetProperty extends Property {
     protected double[] possibleRents;
     protected String imageName;
 
-    public SetProperty(String name, double purchaseCost, double mortgageValue, double houseCost, double hotelCost) {
-        super(name, purchaseCost, mortgageValue, houseCost, hotelCost);
+
+
+    public SetProperty(String name, double purchaseCost, double mortgageValue) {
+        super(name, purchaseCost, mortgageValue);
         sharedSet = new HashSet<>();
         completeSet = new HashSet<>();
     }
 
-    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double houseCost, double hotelCost) {
-        this(name, purchaseCost,  mortgageValue, houseCost, hotelCost);
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents) {
+        super(name, purchaseCost, mortgageValue);
+        sharedSet = new HashSet<>();
+        completeSet = new HashSet<>();
+        possibleRents = allRents;
+    }
+
+
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double buildCost) {
+        super(name, purchaseCost, mortgageValue, buildCost);
+        sharedSet = new HashSet<>();
+        completeSet = new HashSet<>();
+    }
+
+    public SetProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost) {
+        this(name, purchaseCost,  mortgageValue, buildCost);
         possibleRents = allRents;
         setRent(allRents[0]);
     }

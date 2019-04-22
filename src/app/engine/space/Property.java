@@ -14,25 +14,29 @@ public class Property extends Space implements Asset {
     private boolean mortgaged;
     private double unmortgageValue;
     private int houses;
-    private double housePrice;
     private int hotels;
-    private double hotelPrice;
+    private double buildCost;
+
+
+    public Property(String name, double purchaseCost, double mortgageValue) {
+        super(name);
+        this.purchaseCost = purchaseCost;
+        this.mortgageValue = mortgageValue;
+    }
 
 
     //mostly for utilities
 
-    public Property(String name, double purchaseCost, double mortgageValue, double houseCost, double hotelCost) {
+    public Property(String name, double purchaseCost, double mortgageValue, double buildCost) {
         super(name);
         this.purchaseCost = purchaseCost;
         this.mortgageValue = mortgageValue;
-        housePrice = houseCost;
-        hotelPrice = hotelCost;
-
+        this.buildCost = buildCost;
     }
 
     //for every other property
-    public Property(String name, double purchaseCost, double mortgageValue, double rent, double houseCost, double hotelCost) {
-        this(name, purchaseCost, mortgageValue, houseCost, hotelCost);
+    public Property(String name, double purchaseCost, double mortgageValue, double rent, double buildCost) {
+        this(name, purchaseCost, mortgageValue, buildCost);
         this.rent = rent;
     }
 
@@ -188,12 +192,18 @@ public class Property extends Space implements Asset {
 
     public void setHotels(int amount) {hotels=amount;}
 
-    public double getHotelCost() {
-        return hotelPrice;
+    public double getBuildCost() {
+        return buildCost;
     }
 
+    @Deprecated
+    public double getHotelCost() {
+        return buildCost;
+    }
+
+    @Deprecated
     public double getHouseCost() {
-        return housePrice;
+        return buildCost;
     }
 
     public boolean hasBuildings() {
