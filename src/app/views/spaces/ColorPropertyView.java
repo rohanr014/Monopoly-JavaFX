@@ -34,6 +34,21 @@ public class ColorPropertyView extends PropertyView<ColorProperty> {
         myRoot.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> onClick());
     }
+//    @Override
+//    public Pane initializePane(Pane pane) {
+//        colorHeader = new Rectangle();
+//        colorHeader.setFill(Color.valueOf(myModel.getMyColor()));
+//
+//        myVBox = new VBox();
+//        myVBox.getChildren().add(colorHeader);
+//
+//        pane = new StackPane();
+//        pane.getChildren().addAll(myVBox);
+//
+//        pane.addEventHandler(MouseEvent.MOUSE_CLICKED,
+//                e -> onClick());
+//        return pane;
+//    }
 
     @Override
     public void adjustSize() {

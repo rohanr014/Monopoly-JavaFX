@@ -23,7 +23,7 @@ public class UtilityView extends PropertyView<Utility> {
 
     @Override
     public void initialize() {
-        System.out.println("(U) Got to: " + this.getMyName());
+        //System.out.println("(U) Got to: " + this.getMyName());
         myRoot = new StackPane();
         //myRoot.setStyle("-fx-background-color: SKYBLUE");
         myUtilityImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myModel.getImageName())));

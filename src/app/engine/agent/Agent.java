@@ -67,13 +67,13 @@ public abstract class Agent implements IAgentObservable{
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Agent agent = (Agent) o;
-        return Double.compare(agent.wallet, wallet) == 0;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Agent agent = (Agent) o;
+//        return Double.compare(agent.wallet, wallet) == 0;
+//    }
 
     public void addAllProperties(Collection<Property> propsToAdd) {
         properties.addAll(propsToAdd);
@@ -90,5 +90,21 @@ public abstract class Agent implements IAgentObservable{
     public List<Property> getProperties() {
         return properties;
     }
+
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Agent)) {
+            return false;
+        }
+        Agent a = (Agent) o;
+        return (a.getName().equals(this.getName()) && Double.compare(a.wallet, wallet) == 0);
+    }
+
+//    @Override
+//    public String toString() {
+//        return getName();
+//    }
 
 }

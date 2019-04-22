@@ -19,7 +19,6 @@ public abstract class Space implements ISpaceObservable {
         this.name = name;
     }
 
-
     /**
      * Function for space to perform action on player that
      * lands on it

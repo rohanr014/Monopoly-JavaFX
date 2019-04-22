@@ -122,17 +122,15 @@ public class Property extends Space implements Asset {
             notifySpaceObservers();
         }
         else if (ownedByPlayer && !p.equals(owner)){
-            System.out.println(p.getWallet() + ": " + getRent());
             chargeRent(p);
-            System.out.println(p.getWallet());
         }
     }
 
     @Override
     public void notifySpaceObservers(){
-        System.out.println(getMySpaceObserverList().size());
         for(ISpaceObserver spaceObserver : getMySpaceObserverList()){
             spaceObserver.offerPopUp();
+            spaceObserver.spaceUpdate();
         }
     }
 

@@ -65,7 +65,6 @@ public class Board implements IBoardObservable, IDiceObservable {
         myAgentList.addAll(playersByTurn);
         spaces.get(0).getCurrentOccupants().addAll(players);
         buttonPermissions = new ButtonPermissions(this);
-        //System.out.println(players.poll().getName());
     }
 
     private void initializeSpaces() {
@@ -74,11 +73,10 @@ public class Board implements IBoardObservable, IDiceObservable {
         }
     }
 
-
-
     public Player startTurn() {
         currentPlayer = players.poll();
         players.add(currentPlayer);
+        notifyStartTurn();
         return currentPlayer;
     }
 
@@ -87,6 +85,7 @@ public class Board implements IBoardObservable, IDiceObservable {
         lastRoll = null;
         handleBankruptcy(currentPlayer);
         checkWin();
+        notifyEndTurn();
         startTurn();
     }
 
@@ -270,13 +269,11 @@ public class Board implements IBoardObservable, IDiceObservable {
     @Override
     public void addBoardObserver(IBoardObserver o) {
         this.myObserverList.add(o);
-
     }
 
     @Override
     public void removeBoardObserver(IBoardObserver o) {
         this.myObserverList.remove(o);
-
     }
 
     @Override
@@ -293,10 +290,22 @@ public class Board implements IBoardObservable, IDiceObservable {
 
     public void notifyBoardObservers(Space start, Space end) {
         for(IBoardObserver o : myObserverList){
-            System.out.println("notify observers " + start.getName() + " " + end.getName());
             o.boardUpdate(start, end);
         }
+    }
 
+    public void notifyStartTurn() {
+        String notification = currentPlayer.getName() + " has started their turn.";
+        for(IBoardObserver boardObserver : myObserverList){
+            boardObserver.logPurchase(notification);
+        }
+    }
+
+    public void notifyEndTurn() {
+        String notification = currentPlayer.getName() + " has ended their turn.";
+        for(IBoardObserver boardObserver : myObserverList){
+            boardObserver.logPurchase(notification);
+        }
     }
 
 

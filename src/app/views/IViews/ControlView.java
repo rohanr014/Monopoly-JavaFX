@@ -75,7 +75,6 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
 
     private void pressedEndTurn(){
         myBoard.endTurn();
-
         myRollDiceButton.setDisable(false);
         myEndTurnButton.setDisable(true);
     }
@@ -111,7 +110,6 @@ public class ControlView implements IView, IDiceObserver, IBoardObserver {
         myDiceDisplay.getChildren().remove(myDiceText);
         int i = 0;
         for(int num : dice_value){
-            System.out.println("came into forloop");
             i = i + num;
         }
 

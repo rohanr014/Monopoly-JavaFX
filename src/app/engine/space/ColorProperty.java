@@ -1,5 +1,7 @@
 package app.engine.space;
 
+import java.util.Set;
+
 //subclass for Color Properties
 public class ColorProperty extends SetProperty{
     private boolean monopoly;
@@ -10,7 +12,6 @@ public class ColorProperty extends SetProperty{
     public ColorProperty(String name, double purchaseCost, double mortgageValue, double[] allRents, double buildCost,String colorString) {
         super(name, purchaseCost, mortgageValue, allRents, buildCost);
         developmentRents = allRents;
-        //use Game Rules (ex: up to 4 houses per property, 1 hotel after 4 houses, etc. to take allRents and parse the correct sub-sets into houseRents[] and hotelRents[])
         this.name = name;
         this.myColor = colorString;
     }
@@ -22,7 +23,7 @@ public class ColorProperty extends SetProperty{
 
     @Override
     public double calculateRent() {
-        if (monopoly) {
+        if (checkMonopoly()) {
             if (getHotels() == 0) {
                 if (getHouses() == 0) {
                     setRent(getRent() * 2);
@@ -48,7 +49,14 @@ public class ColorProperty extends SetProperty{
         return false;
     }
 
-
+    public boolean checkMonopoly() {
+        for (SetProperty sp : completeSet) {
+            if ((!sharedSet.contains(sp)) && (!(sp.equals(this)))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean buildHouse() {
         if (getHouses() == 4 || (!(monopoly))) {
@@ -116,8 +124,6 @@ public class ColorProperty extends SetProperty{
         }
         return false;
     }
-
-
 
     public String getMyColor() {
         return myColor;

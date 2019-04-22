@@ -4,6 +4,7 @@ import app.engine.agent.Player;
 import app.engine.space.ISpaceObserver;
 import app.engine.space.Space;
 import app.views.popups.BuyAuctionView;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -20,10 +21,10 @@ import java.util.Map;
 
 public abstract class SpaceView<M extends Space> implements ISpaceObserver {
     protected Pane myRoot;
+    //private Pane blankRoot;
     protected String myName;
     protected M myModel;
     protected Map<Player, ImageView> myPlayerPieces;
-
     private StackPane playerViews;
 
 
@@ -38,32 +39,22 @@ public abstract class SpaceView<M extends Space> implements ISpaceObserver {
 
     public abstract void initialize();
     public abstract void adjustSize();
+    //public abstract Pane initializePane(Pane pane);
 
     public Pane getMyRoot(){return myRoot;}
     public String getMyName(){return myName;}
 
     public void spaceUpdate() {
-
-        //player.getChildren().remove();
-        myRoot.getChildren().remove(playerViews);
+        myRoot.getChildren().removeAll(myPlayerPieces.values());
         playerViews = new StackPane();
-//        for (Player player : myPlayerPieces.keySet()) {
-//            if (!(myModel.getCurrentOccupants().contains(player)) && playerViews.getChildren().contains(myPlayerPieces.get(player))) {
-//                playerViews.getChildren().remove(myPlayerPieces.get(player));
-//            }
-//        }
-
         for (Player player : myModel.getCurrentOccupants()) {
             if (!(myPlayerPieces.containsKey(player))) {
-
                 ImageView gamePiece = new ImageView(new Image(new File(player.getPieceFile()).toURI().toString() , 40, 40, false, false));
                 myPlayerPieces.put(player, gamePiece);
             }
-            if (!(playerViews.getChildren().contains(myPlayerPieces.get(player)))) {
-                playerViews.getChildren().add(myPlayerPieces.get(player));
-            }
+            playerViews.getChildren().add(myPlayerPieces.get(player));
         }
-        myRoot.getChildren().add(playerViews);
+        myRoot.getChildren().addAll(playerViews.getChildren());
     }
 
     public void addPurchaseToLog(String purchase) {

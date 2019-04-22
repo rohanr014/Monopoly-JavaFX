@@ -147,6 +147,8 @@ public class VanillaBoardView extends BoardView {//need to be scrolled down auto
         myLogHistoryView.addTransactionLog(transaction);
     }
 
+    public void logString(String action) { myLogHistoryView.addMovementLog(action);}
+
 
     @Override
     public void boardUpdate(Board board) {
