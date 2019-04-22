@@ -19,8 +19,6 @@ public class MoveSpaceCard extends Card {
 
     @Override
     public void invokeAction(Player currentOccupant) {
-        System.out.println(ds);
-        // TO DO: LOG DESCRIPTION TO IN-GAME LOGGER
         Board b = getBoard();
 
         Space destinationSpace = findSpace(b);

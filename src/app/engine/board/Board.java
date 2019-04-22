@@ -105,8 +105,9 @@ public class Board implements IBoardObservable, IDiceObservable {
 //            MAGIC VALUE
             bank.giveMoney(player, rules.getGoMoney());
         }
-        destination.onLand(player);
         notifyBoardObservers(spaces.get(start), destination);
+        destination.onLand(player);
+
     }
 
     /**
@@ -122,8 +123,12 @@ public class Board implements IBoardObservable, IDiceObservable {
     public void drawCard(Player player, Queue<Card> whichPile){
 //        cards add themselves back to their piles
         var card = whichPile.poll();
+
 //        setOriginPile() MUST be called before invokeAction()
         card.setOriginPile(whichPile);
+        //TODO: ASSIGN deckNAME to "Chance" or "Community Chest", these strings should be stored inside the Card class preferably
+        String deckName = "";
+        notifyBoardObservers(player.getName() + " drew a " + deckName + " card that reads: " + card.getDescription());
         card.invokeAction(player);
     }
 
@@ -257,8 +262,8 @@ public class Board implements IBoardObservable, IDiceObservable {
         for (int x: lastRoll){
             sum += x;
         }
+        return 7;
         //return sum;
-        return sum;
     }
 
 
@@ -276,9 +281,14 @@ public class Board implements IBoardObservable, IDiceObservable {
         this.myObserverList.remove(o);
     }
 
-    @Override
-    public void notifyBoardObservers(){
+    public void notifyBoardObservers() {
 
+    }
+
+    public void notifyBoardObservers(String action) {
+        for(IBoardObserver boardObserver : myObserverList){
+            boardObserver.logPurchase(action);
+        }
     }
 
     public void notifyPurchase() {
